@@ -70,6 +70,7 @@ import com.viettel.construction.model.api.issue.IssueHistoryEntityDTO;
 import com.viettel.construction.model.api.issue.IssueWorkItemDTO;
 import com.viettel.construction.model.api.issue.IssuseRequest;
 import com.viettel.construction.model.api.login.BaseRequest;
+import com.viettel.construction.model.api.plan.WoPlanDTORequest;
 import com.viettel.construction.model.api.update.ConstructionTaskDTOUpdateRequest;
 import com.viettel.construction.model.api.version.AppParamDTO;
 import com.viettel.construction.model.api.version.AppParamDTOResponse;
@@ -322,6 +323,10 @@ public class ApiManager {
                 break;
             case END_URL_GET_CONSTRUCTION_BGMB_LIST_BY_STATUS:
                 getListBgmb(responseClass, requestListener);
+                break;
+
+            case END_URL_GET_PLAN_ALL:
+                getWOPlanAll(responseClass, requestListener);
                 break;
         }
 
@@ -2336,4 +2341,64 @@ public class ApiManager {
         return json;
 
     }
+    // api plan
+    public <T> void getWOPlanAll(final Class<T> clazz, final IServerResultListener requestListener) {
+        String url = getUrl(VConstant.END_URL_GET_PLAN_ALL);
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+        Log.e("Tag: ", url);
+        ApiClient.getInstance().post1(url
+                , clazz, header
+                , convertModelRequestListPlan()
+                , requestListener);
+    }
+    private String convertModelRequestListPlan() {
+        Gson gson = new Gson();
+        EntangleManageDTORequest request = new EntangleManageDTORequest();
+        SysUserRequest sysUserRequest = VConstant.getUser();
+        request.setSysUserRequest(sysUserRequest);
+        String json = gson.toJson(request);
+        Log.e("Tag: ", json);
+        return json;
+    }
+
+    public <T> void insertPlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_INSERT_PLAN);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestPlan(woPlanDTORequest)
+                , requestListener);
+    }
+
+    public <T> void updatePlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_UPDATE_PLAN);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestPlan(woPlanDTORequest)
+                , requestListener);
+    }
+    public <T> void deletePlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_UPDATE_PLAN);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestPlan(woPlanDTORequest)
+                , requestListener);
+    }
+
+    private String convertModelRequestPlan(WoPlanDTORequest woPlanDTORequest) {
+        Gson gson = new Gson();
+        String json = gson.toJson(woPlanDTORequest);
+        Log.d(TAG, "convertModelRequestUpdateAcceptance - json :  " + json);
+        return json;
+    }
+
 }

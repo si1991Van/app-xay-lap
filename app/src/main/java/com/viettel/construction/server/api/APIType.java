@@ -17,6 +17,7 @@ public enum APIType {
     END_URL_ACCEPTANCE_LEVER_2,//Hang muc nghiem thu
     END_HANDOVER_HISTORY,//Lich su ban giao
     END_VOL_TIO,//Lich su ban giao
-    END_URL_GET_CONSTRUCTION_BGMB_LIST_BY_STATUS //list Cong trinh theo trang thai BGMB
+    END_URL_GET_CONSTRUCTION_BGMB_LIST_BY_STATUS, //list Cong trinh theo trang thai BGMB
+    END_URL_GET_PLAN_ALL //list ke hoach.
 
 }

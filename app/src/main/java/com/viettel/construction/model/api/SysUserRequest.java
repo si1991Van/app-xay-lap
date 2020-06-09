@@ -13,7 +13,6 @@ public class SysUserRequest implements Serializable{
     private long departmentId;
     private long sysGroupId;
     private String authorities;
-
     private int flag;
 
     public SysUserRequest() {

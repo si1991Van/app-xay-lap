@@ -16,18 +16,19 @@ import com.viettel.construction.R;
 import com.viettel.construction.appbase.AdapterFragmentListBase;
 import com.viettel.construction.appbase.ViewModelFragmentListBase;
 import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
+import com.viettel.construction.model.api.plan.ItemPlanRequest;
 
 import java.util.List;
 
 import butterknife.BindView;
 
 public class PlanItemAdapter
-        extends AdapterFragmentListBase<ConstructionAcceptanceCertDetailDTO,
+        extends AdapterFragmentListBase<ItemPlanRequest,
         PlanItemAdapter.PlanViewHolder> {
 
-    private IItemPlanClick<ConstructionAcceptanceCertDetailDTO> itemPlanClick;
+    private IItemPlanClick<ItemPlanRequest> itemPlanClick;
 
-    public PlanItemAdapter(Context context, List<ConstructionAcceptanceCertDetailDTO> listData, IItemPlanClick<ConstructionAcceptanceCertDetailDTO> itemPlanClick) {
+    public PlanItemAdapter(Context context, List<ItemPlanRequest> listData, IItemPlanClick<ItemPlanRequest> itemPlanClick) {
         super(context, listData);
 
         this.itemPlanClick = itemPlanClick;
@@ -35,9 +36,10 @@ public class PlanItemAdapter
 
     @Override
     public void onBindViewHolder(PlanViewHolder holder, int position) {
+        ItemPlanRequest item = getListData().get(position);
 
-        holder.tvCodeWo.setText("COGTRIH_SL");
-        holder.tvName.setText("XD mong cot duoi dat");
+        holder.tvCodeWo.setText(item.getCode()!= null ? item.getCode() : "COGTRIH_SL");
+        holder.tvName.setText(item.getName()!= null ? item.getName() :"XD mong cot duoi dat");
         switch (position){
             case 1:
                 holder.tvStatus.setText("Dang thuc hien");
@@ -55,7 +57,7 @@ public class PlanItemAdapter
 
         holder.itemView.setOnClickListener((v) -> {
             try {
-                itemRecyclerviewClick.onItemRecyclerViewclick((ConstructionAcceptanceCertDetailDTO) v.getTag());
+                itemRecyclerviewClick.onItemRecyclerViewclick((ItemPlanRequest) v.getTag());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -63,7 +65,7 @@ public class PlanItemAdapter
         //
         holder.txtEdit.setOnClickListener((v) -> {
             try {
-                itemPlanClick.onItemEditClick((ConstructionAcceptanceCertDetailDTO) v.getTag());
+                itemPlanClick.onItemEditClick((ItemPlanRequest) v.getTag());
                 notifyDataSetChanged();
                 notifyItemRangeChanged(position, getListData().size());
             } catch (Exception e) {
@@ -72,7 +74,7 @@ public class PlanItemAdapter
         });
         holder.txtDelete.setOnClickListener((v) -> {
             try {
-                itemPlanClick.onItemDeleteClick((ConstructionAcceptanceCertDetailDTO) v.getTag());
+                itemPlanClick.onItemDeleteClick((ItemPlanRequest) v.getTag());
                 notifyDataSetChanged();
                 notifyItemRangeChanged(position, getListData().size());
             } catch (Exception e) {

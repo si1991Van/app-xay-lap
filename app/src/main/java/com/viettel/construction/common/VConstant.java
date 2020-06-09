@@ -74,7 +74,10 @@ public class VConstant {
     // Request code camera
     public static final int REQUEST_CODE_CAMERA = 101;
     //URL API
-    public static final String BASE_URL = "http://10.61.19.230:9702/coms-service/service/";
+//    public static final String BASE_URL = "http://10.61.19.230:9702/coms-service/service/";
+    public static final String BASE_URL = "http://localhost:8084/coms-service/service/";
+
+
     //real
 //    public static final String BASE_URL = "http://10.30.145.74:8752/coms-service/service/";
 
@@ -173,6 +176,25 @@ public class VConstant {
 
     public static final String END_URL_IMAGE_CONSTRUCTION_IMAGE_DAILY = "ConstructionRestService/service/imageConstructionTaskDaily/";
     public static final String END_URL_INSERT_CONTRUCTION_TASK_DAILY = "ConstructionRestService/service/insertConstructionTaskDaily/";
+
+    //method plan
+    public static final String END_URL_GET_PLAN_ALL = "woPlanService/woPlanService/getAllWoPlan";
+    public static final String END_URL_INSERT_PLAN = "woPlanService/woPlanService/insertWoPlan";
+    public static final String END_URL_UPDATE_PLAN = "woPlanService/woPlanService/updateWoPlan";
+    public static final String END_URL_DELETE_PLAN = "woPlanService/woPlanService/deleteWoPlan";
+    public static final String END_URL_GET_ALL_WO = "";
+    //method WO
+    public static final String END_URL_SEARCH_WO = "";
+    public static final String END_URL_GET_LIST_CONSTRUCTION_WO = "";
+    public static final String END_URL_GET_LIST_TYPE_WO = "";
+    public static final String END_URL_GET_DETAIL_WO = "";
+    public static final String END_URL_ACCEPT_WO = "";
+    public static final String END_URL_REJECT_WO = "";
+    public static final String END_URL_PROCESSING_WO = "";
+    public static final String END_URL_REPORT_WO = "";
+    public static final String END_URL_FINISH_WO = "";
+
+
 
     public static final String FORMAT_TIME_CURRENT = "yyyy-mm-dd'T'HH:mm:ss.SSS";
     public static final int TOTAL = 0;

@@ -19,6 +19,8 @@ import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
 import com.viettel.construction.model.api.ConstructionAcceptanceDTOResponse;
 import com.viettel.construction.model.api.ResultInfo;
+import com.viettel.construction.model.api.plan.ItemPlanRequest;
+import com.viettel.construction.model.api.plan.PlanDTOResponse;
 import com.viettel.construction.screens.custom.dialog.DialogDeletePlan;
 import com.viettel.construction.screens.wo.WOItemFragment;
 import com.viettel.construction.server.api.APIType;
@@ -30,8 +32,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanceCertDetailDTO, ConstructionAcceptanceDTOResponse> implements
-        PlanItemAdapter.IItemPlanClick<ConstructionAcceptanceCertDetailDTO>,
+public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, PlanDTOResponse> implements
+        PlanItemAdapter.IItemPlanClick<ItemPlanRequest>,
         DialogDeletePlan.OnClickDialogForConfirm {
 
 
@@ -85,8 +87,8 @@ public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanc
         Log.e("Tag: ", listData.size() + "");
 //        return new AcceptanceLevel1Adapter(getContext(), listData);
         if (listData.size() == 0){
-            listData.add(new ConstructionAcceptanceCertDetailDTO());
-            listData.add(new ConstructionAcceptanceCertDetailDTO());
+            listData.add(new ItemPlanRequest());
+            listData.add(new ItemPlanRequest());
         }
 
         return new PlanItemAdapter(getContext(), listData, this);
@@ -100,12 +102,12 @@ public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanc
     }
 
     @Override
-    public List<ConstructionAcceptanceCertDetailDTO> dataSearch(String keyWord) {
+    public List<ItemPlanRequest> dataSearch(String keyWord) {
         return null;
     }
 
     @Override
-    public List<ExpandableListModel<String, ConstructionAcceptanceCertDetailDTO>> dataSearchExpandableList(String keyWord) {
+    public List<ExpandableListModel<String, ItemPlanRequest>> dataSearchExpandableList(String keyWord) {
         return null;
     }
 
@@ -125,24 +127,24 @@ public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanc
     }
 
     @Override
-    public List<ConstructionAcceptanceCertDetailDTO> menuItemClick(int menuItem) {
+    public List<ItemPlanRequest> menuItemClick(int menuItem) {
         //
 
         return null;
     }
 
     @Override
-    public List<ExpandableListModel<String, ConstructionAcceptanceCertDetailDTO>> menuItemClickExpandableList(int menuItem) {
+    public List<ExpandableListModel<String, ItemPlanRequest>> menuItemClickExpandableList(int menuItem) {
         return null;
     }
 
     @Override
-    public List<ConstructionAcceptanceCertDetailDTO> getResponseData(ConstructionAcceptanceDTOResponse result) {
-        List<ConstructionAcceptanceCertDetailDTO> data = new ArrayList<>();
+    public List<ItemPlanRequest> getResponseData(PlanDTOResponse result) {
+        List<ItemPlanRequest> data = new ArrayList<>();
         ResultInfo resultInfo = result.getResultInfo();
         if (resultInfo.getStatus().equals(VConstant.RESULT_STATUS_OK)) {
-            if (result.getListConstructionAcceptanceCertPagesDTO() != null) {
-                data = result.getListConstructionAcceptanceCertPagesDTO();
+            if (result.getWoPlan() != null) {
+                data = result.getWoPlan();
             }
         }
         return data;
@@ -156,16 +158,16 @@ public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanc
 
     @Override
     public APIType getAPIType() {
-        return APIType.END_URL_ACCEPTANCE_LEVER_1;
+        return APIType.END_URL_GET_PLAN_ALL;
     }
 
     @Override
-    public Class<ConstructionAcceptanceDTOResponse> responseEntityClass() {
-        return ConstructionAcceptanceDTOResponse.class;
+    public Class<PlanDTOResponse> responseEntityClass() {
+        return PlanDTOResponse.class;
     }
 
     @Override
-    public void onItemRecyclerViewclick(ConstructionAcceptanceCertDetailDTO item) {
+    public void onItemRecyclerViewclick(ItemPlanRequest item) {
         try {
             Fragment frag = new WOItemFragment();
             Bundle bundle = new Bundle();
@@ -180,7 +182,7 @@ public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanc
     }
 
     @Override
-    public void onItemRecyclerViewLongclick(ConstructionAcceptanceCertDetailDTO item) {
+    public void onItemRecyclerViewLongclick(ItemPlanRequest item) {
 
     }
 
@@ -193,7 +195,7 @@ public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanc
     }
 
     @Override
-    public void onItemEditClick(ConstructionAcceptanceCertDetailDTO item) {
+    public void onItemEditClick(ItemPlanRequest item) {
 
         adapter.notifyDataSetChanged();
         Intent addIssue = new Intent(getContext(), CreatePlanActivity.class);
@@ -202,7 +204,7 @@ public class PlanningItemFragment extends FragmentListBase<ConstructionAcceptanc
     }
 
     @Override
-    public void onItemDeleteClick(ConstructionAcceptanceCertDetailDTO item) {
+    public void onItemDeleteClick(ItemPlanRequest item) {
         adapter.notifyDataSetChanged();
         dialogDeletePlan.show();
         Toast.makeText(getContext(), "xoa ke hoach", Toast.LENGTH_LONG).show();
