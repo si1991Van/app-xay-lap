@@ -1,0 +1,2 @@
+# Referenced at /Users/vansi/Desktop/XayLap/app/build/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:23
+-keep class com.viettel.construction.common.App { <init>(...); }

@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/vansi/Desktop/XayLap/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_abill_with_paging.xml",
+        "source": "/Users/vansi/Desktop/XayLap/app/src/main/res/layout/fragment_abill_with_paging.xml"
+    },
+    {
+        "merged": "/Users/vansi/Desktop/XayLap/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/header_back_filter_layout.xml",
+        "source": "/Users/vansi/Desktop/XayLap/app/src/main/res/layout/header_back_filter_layout.xml"
+    },
+    {
+        "merged": "/Users/vansi/Desktop/XayLap/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/item_child_warehouse_with_paging.xml",
+        "source": "/Users/vansi/Desktop/XayLap/app/src/main/res/layout/item_child_warehouse_with_paging.xml"
+    },
+    {
+        "merged": "/Users/vansi/Desktop/XayLap/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/searchbox.xml",
+        "source": "/Users/vansi/Desktop/XayLap/app/src/main/res/layout/searchbox.xml"
+    }
+]

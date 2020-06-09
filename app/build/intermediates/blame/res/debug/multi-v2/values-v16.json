@@ -1,0 +1,57 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/vansi/Desktop/XayLap/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/Users/vansi/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.0.aar/4268eb002f00f8e2976a08882a8fb13f/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "270",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "438"
+                    }
+                },
+                {
+                    "source": "/Users/vansi/Desktop/XayLap/app/src/main/res/values-v16/styles.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "59",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "205"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "265"
+                    }
+                },
+                {
+                    "source": "/Users/vansi/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/859aa09b5a24ada9d6783aa95d8e73e8/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}

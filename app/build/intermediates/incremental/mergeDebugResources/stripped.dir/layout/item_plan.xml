@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey1"
+    android:paddingBottom="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp">
+    <com.daimajia.swipe.SwipeLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:id="@+id/swipe"
+        app:leftEdgeSwipeOffset="0dp"
+        app:rightEdgeSwipeOffset="0dp"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtEdit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@color/c5_darker"
+                android:text="Sửa"/>
+            <TextView
+                android:id="@+id/txtDelete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@color/pause_color"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="Xóa"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/recyclerview_item"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_8">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/BlackText_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Mã WO" />
+
+                    <TextView
+                        android:id="@+id/tv_code_wo"
+                        style="@style/BlackText_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:ellipsize="end"
+                        android:maxLines="2" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/BlackText_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Tên WO" />
+
+                    <TextView
+                        android:id="@+id/tv_name_wo"
+                        style="@style/BlackText_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:ellipsize="end"
+                        android:maxLines="2" />
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/BlackText_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/status" />
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        style="@style/BlackText_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:ellipsize="end"
+                        android:maxLines="2" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_4"
+                android:src="@drawable/ic_greater" />
+        </RelativeLayout>
+
+
+    </com.daimajia.swipe.SwipeLayout>
+
+</RelativeLayout>
