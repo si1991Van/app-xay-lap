@@ -16,14 +16,16 @@ import com.viettel.construction.appbase.ExpandableListModel;
 import com.viettel.construction.appbase.FragmentListBase;
 import com.viettel.construction.common.App;
 import com.viettel.construction.common.VConstant;
-import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
-import com.viettel.construction.model.api.ConstructionAcceptanceDTOResponse;
 import com.viettel.construction.model.api.ResultInfo;
-import com.viettel.construction.model.api.plan.ItemPlanRequest;
 import com.viettel.construction.model.api.plan.PlanDTOResponse;
+import com.viettel.construction.model.api.plan.WoPlanDTO;
+import com.viettel.construction.model.api.plan.WoPlanDTORequest;
+import com.viettel.construction.model.api.plan.WoPlanDTOResponse;
 import com.viettel.construction.screens.custom.dialog.DialogDeletePlan;
 import com.viettel.construction.screens.wo.WOItemFragment;
 import com.viettel.construction.server.api.APIType;
+import com.viettel.construction.server.api.ApiManager;
+import com.viettel.construction.server.service.IOnRequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +34,19 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, PlanDTOResponse> implements
-        PlanItemAdapter.IItemPlanClick<ItemPlanRequest>,
+public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, PlanDTOResponse> implements
+        PlanItemAdapter.IItemPlanClick<WoPlanDTO>,
         DialogDeletePlan.OnClickDialogForConfirm {
 
 
     private DialogDeletePlan dialogDeletePlan;
+    private WoPlanDTORequest woPlanDTORequest;
+
 
     @Override
     public void initData() {
         super.initData();
+        woPlanDTORequest = new WoPlanDTORequest();
     }
 
     @Override
@@ -85,12 +90,6 @@ public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, Plan
     @Override
     public AdapterFragmentListBase getAdapterInstance() {
         Log.e("Tag: ", listData.size() + "");
-//        return new AcceptanceLevel1Adapter(getContext(), listData);
-        if (listData.size() == 0){
-            listData.add(new ItemPlanRequest());
-            listData.add(new ItemPlanRequest());
-        }
-
         return new PlanItemAdapter(getContext(), listData, this);
     }
 
@@ -102,12 +101,12 @@ public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, Plan
     }
 
     @Override
-    public List<ItemPlanRequest> dataSearch(String keyWord) {
+    public List<WoPlanDTO> dataSearch(String keyWord) {
         return null;
     }
 
     @Override
-    public List<ExpandableListModel<String, ItemPlanRequest>> dataSearchExpandableList(String keyWord) {
+    public List<ExpandableListModel<String, WoPlanDTO>> dataSearchExpandableList(String keyWord) {
         return null;
     }
 
@@ -127,20 +126,20 @@ public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, Plan
     }
 
     @Override
-    public List<ItemPlanRequest> menuItemClick(int menuItem) {
+    public List<WoPlanDTO> menuItemClick(int menuItem) {
         //
 
         return null;
     }
 
     @Override
-    public List<ExpandableListModel<String, ItemPlanRequest>> menuItemClickExpandableList(int menuItem) {
+    public List<ExpandableListModel<String, WoPlanDTO>> menuItemClickExpandableList(int menuItem) {
         return null;
     }
 
     @Override
-    public List<ItemPlanRequest> getResponseData(PlanDTOResponse result) {
-        List<ItemPlanRequest> data = new ArrayList<>();
+    public List<WoPlanDTO> getResponseData(PlanDTOResponse result) {
+        List<WoPlanDTO> data = new ArrayList<>();
         ResultInfo resultInfo = result.getResultInfo();
         if (resultInfo.getStatus().equals(VConstant.RESULT_STATUS_OK)) {
             if (result.getWoPlan() != null) {
@@ -167,7 +166,7 @@ public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, Plan
     }
 
     @Override
-    public void onItemRecyclerViewclick(ItemPlanRequest item) {
+    public void onItemRecyclerViewclick(WoPlanDTO item) {
         try {
             Fragment frag = new WOItemFragment();
             Bundle bundle = new Bundle();
@@ -182,7 +181,7 @@ public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, Plan
     }
 
     @Override
-    public void onItemRecyclerViewLongclick(ItemPlanRequest item) {
+    public void onItemRecyclerViewLongclick(WoPlanDTO item) {
 
     }
 
@@ -195,8 +194,7 @@ public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, Plan
     }
 
     @Override
-    public void onItemEditClick(ItemPlanRequest item) {
-
+    public void onItemEditClick(WoPlanDTO item) {
         adapter.notifyDataSetChanged();
         Intent addIssue = new Intent(getContext(), CreatePlanActivity.class);
         addIssue.putExtra("EDIT_PLAN", item);
@@ -204,18 +202,48 @@ public class PlanningItemFragment extends FragmentListBase<ItemPlanRequest, Plan
     }
 
     @Override
-    public void onItemDeleteClick(ItemPlanRequest item) {
+    public void onItemDeleteClick(WoPlanDTO item) {
         adapter.notifyDataSetChanged();
         dialogDeletePlan.show();
-        Toast.makeText(getContext(), "xoa ke hoach", Toast.LENGTH_LONG).show();
+
+        woPlanDTORequest.setSysUserRequest(VConstant.getUser());
+        WoPlanDTO woPlanDTO = new WoPlanDTO();
+
+        woPlanDTO.setId(item.getId());
+        woPlanDTORequest.setWoPlanDTO(woPlanDTO);
+    }
+
+
+    private void deletePlan(){
+        ApiManager.getInstance().deletePlan(woPlanDTORequest, WoPlanDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                try {
+                    WoPlanDTOResponse response = WoPlanDTOResponse.class.cast(result);
+                    if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                        App.getInstance().setNeedUpdateRefund(true);
+                        Toast.makeText(getContext(), getString(R.string.delete_plan), Toast.LENGTH_SHORT).show();
+                        loadData();
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.delete_fail_plan), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                Toast.makeText(getContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
     public void onClickConfirmOfConfirm() {
-
-        // call api delete plan
         listData.clear();
-        loadData();
+        deletePlan();
         dialogDeletePlan.dismiss();
     }
 }

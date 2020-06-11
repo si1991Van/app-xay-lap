@@ -1,13 +1,28 @@
 package com.viettel.construction.screens.plan;
 
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.BaseCameraActivity;
-import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
+import com.viettel.construction.common.App;
+import com.viettel.construction.common.VConstant;
+import com.viettel.construction.model.api.plan.WoMappingPlanDTO;
+import com.viettel.construction.model.api.plan.WoPlanDTO;
+import com.viettel.construction.model.api.plan.WoPlanDTORequest;
+import com.viettel.construction.model.api.plan.WoPlanDTOResponse;
+import com.viettel.construction.server.api.APIType;
+import com.viettel.construction.server.api.ApiManager;
+import com.viettel.construction.server.service.IOnRequestListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +36,15 @@ public class CreatePlanActivity extends BaseCameraActivity {
     TextView txtSave;
     @BindView(R.id.txtHeader)
     TextView txtHeader;
-    private ConstructionAcceptanceCertDetailDTO item;
+    @BindView(R.id.ed_code_wo)
+    EditText edCodeWo;
+    @BindView(R.id.ed_name_wo)
+    EditText edNameWo;
+    @BindView(R.id.rcvData)
+    RecyclerView rcvData;
+
+    private WoPlanDTO item;
+    private WoPlanDTORequest woPlanDTORequest = new WoPlanDTORequest();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +60,74 @@ public class CreatePlanActivity extends BaseCameraActivity {
 
 
     private void initView(){
+        setUpView();
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) return;
         if (bundle.getSerializable("EDIT_PLAN") != null) {
-            item = (ConstructionAcceptanceCertDetailDTO) bundle.getSerializable("EDIT_PLAN");
+            item = (WoPlanDTO) bundle.getSerializable("EDIT_PLAN");
+            edCodeWo.setText(item.getCode());
+            edNameWo.setText(item.getName());
         }
 
-//        imgBack.setOnClickListener((v) -> {
-//            finish();
-//        });
-//        txtSave.setOnClickListener((v) ->{
-//            Toast.makeText(CreatePlanActivity.this, "Luu thanh cong", Toast.LENGTH_LONG).show();
-//        });
+    }
+
+    private void setUpView() {
+        //recyclerview
+        List<WoMappingPlanDTO> listData = new ArrayList<>();
+        // fix data wo
+        if (listData.size() == 0){
+            listData.add(new WoMappingPlanDTO());
+            listData.add(new WoMappingPlanDTO());
+            listData.add(new WoMappingPlanDTO());
+        }
+        PlanWoAdapter adapter = new PlanWoAdapter(this, listData);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+        rcvData.setLayoutManager(linearLayoutManager2);
+        rcvData.setAdapter(adapter);
+    }
+
+    private void updateAndInsertPlan(){
+        woPlanDTORequest.setSysUserRequest(VConstant.getUser());
+        if (item == null){
+            WoPlanDTO woPlanDTO = new WoPlanDTO();
+            woPlanDTO.setName(edNameWo.getText().toString());
+            woPlanDTO.setCode(edCodeWo.getText().toString());
+            woPlanDTO.setPlanType("2");
+            woPlanDTORequest.setWoPlanDTO(woPlanDTO);
+        }else {
+            // fix cung id
+            item.setId(57);
+            item.setStaffId(1234);
+            woPlanDTORequest.setWoPlanId(item.getId());
+            woPlanDTORequest.setWoPlanDTO(item);
+            woPlanDTORequest.getWoPlanDTO().setName(edNameWo.getText().toString());
+            woPlanDTORequest.getWoPlanDTO().setCode(edCodeWo.getText().toString());
+        }
+
+        ApiManager.getInstance().inserAndUpdatePlan(item == null ? APIType.END_URL_INSERT_PLAN : APIType.END_URL_UPDATE_PLAN, woPlanDTORequest, WoPlanDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                try {
+                    WoPlanDTOResponse response = WoPlanDTOResponse.class.cast(result);
+                    if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                        App.getInstance().setNeedUpdateRefund(true);
+                        Toast.makeText(CreatePlanActivity.this, item == null ? getString(R.string.insert_plan) : getString(R.string.update_plan), Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(CreatePlanActivity.this, item == null ? getString(R.string.insert_fail_plan) : getString(R.string.update_fail_plan), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                Toast.makeText(CreatePlanActivity.this, getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @OnClick(R.id.imgBack)
@@ -58,6 +137,6 @@ public class CreatePlanActivity extends BaseCameraActivity {
 
     @OnClick(R.id.txtSave)
     public void onClickSave() {
-        Toast.makeText(CreatePlanActivity.this, "Luu thanh cong", Toast.LENGTH_LONG).show();
+        updateAndInsertPlan();
     }
 }

@@ -15,20 +15,19 @@ import com.daimajia.swipe.SwipeLayout;
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.AdapterFragmentListBase;
 import com.viettel.construction.appbase.ViewModelFragmentListBase;
-import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
-import com.viettel.construction.model.api.plan.ItemPlanRequest;
+import com.viettel.construction.model.api.plan.WoPlanDTO;
 
 import java.util.List;
 
 import butterknife.BindView;
 
 public class PlanItemAdapter
-        extends AdapterFragmentListBase<ItemPlanRequest,
+        extends AdapterFragmentListBase<WoPlanDTO,
         PlanItemAdapter.PlanViewHolder> {
 
-    private IItemPlanClick<ItemPlanRequest> itemPlanClick;
+    private IItemPlanClick<WoPlanDTO> itemPlanClick;
 
-    public PlanItemAdapter(Context context, List<ItemPlanRequest> listData, IItemPlanClick<ItemPlanRequest> itemPlanClick) {
+    public PlanItemAdapter(Context context, List<WoPlanDTO> listData, IItemPlanClick<WoPlanDTO> itemPlanClick) {
         super(context, listData);
 
         this.itemPlanClick = itemPlanClick;
@@ -36,47 +35,28 @@ public class PlanItemAdapter
 
     @Override
     public void onBindViewHolder(PlanViewHolder holder, int position) {
-        ItemPlanRequest item = getListData().get(position);
+        WoPlanDTO item = getListData().get(position);
 
         holder.tvCodeWo.setText(item.getCode()!= null ? item.getCode() : "COGTRIH_SL");
         holder.tvName.setText(item.getName()!= null ? item.getName() :"XD mong cot duoi dat");
-        switch (position){
-            case 1:
-                holder.tvStatus.setText("Dang thuc hien");
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
-                break;
-            case 2:
-                holder.tvStatus.setText("Tu choi");
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c14));
-                break;
-                default:
-                    holder.tvStatus.setText("Cho FT tiep nhan");
-                    holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.gray));
-                    break;
-        }
-
+        holder.tvStatus.setText("3/10");
         holder.itemView.setOnClickListener((v) -> {
             try {
-                itemRecyclerviewClick.onItemRecyclerViewclick((ItemPlanRequest) v.getTag());
+                itemRecyclerviewClick.onItemRecyclerViewclick((WoPlanDTO) v.getTag());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-        //
         holder.txtEdit.setOnClickListener((v) -> {
             try {
-                itemPlanClick.onItemEditClick((ItemPlanRequest) v.getTag());
-                notifyDataSetChanged();
-                notifyItemRangeChanged(position, getListData().size());
+                itemPlanClick.onItemEditClick(getListData().get(position));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
         holder.txtDelete.setOnClickListener((v) -> {
             try {
-                itemPlanClick.onItemDeleteClick((ItemPlanRequest) v.getTag());
-                notifyDataSetChanged();
-                notifyItemRangeChanged(position, getListData().size());
+                itemPlanClick.onItemDeleteClick(getListData().get(position));
             } catch (Exception e) {
                 e.printStackTrace();
             }

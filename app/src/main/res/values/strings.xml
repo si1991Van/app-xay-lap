@@ -424,6 +424,14 @@
     <string name="ok">Kết thúc</string>
     <string name="done">Hoàn thành</string>
     <string name="ng">Chưa hoàn thành</string>
+    //plan
+    <string name="delete_plan">Đã xóa kế hoạch thành công</string>
+    <string name="delete_fail_plan">Xóa kế hoạch thất bại</string>
+    <string name="update_plan">Cập nhật kế hoạch thành công</string>
+    <string name="update_fail_plan">Cập nhật kế hoạch thất bại</string>
+    <string name="insert_plan">Thêm kế hoạch thành công</string>
+    <string name="insert_fail_plan">Thêm kế hoạch thất bại</string>
+
 
 
 </resources>

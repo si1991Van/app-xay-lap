@@ -75,7 +75,7 @@ public class VConstant {
     public static final int REQUEST_CODE_CAMERA = 101;
     //URL API
 //    public static final String BASE_URL = "http://10.61.19.230:9702/coms-service/service/";
-    public static final String BASE_URL = "http://localhost:8084/coms-service/service/";
+    public static final String BASE_URL = "http://10.61.18.229:8084/coms-service/service/";
 
 
     //real
@@ -178,7 +178,7 @@ public class VConstant {
     public static final String END_URL_INSERT_CONTRUCTION_TASK_DAILY = "ConstructionRestService/service/insertConstructionTaskDaily/";
 
     //method plan
-    public static final String END_URL_GET_PLAN_ALL = "woPlanService/woPlanService/getAllWoPlan";
+    public static final String END_URL_GET_PLAN_ALL = "woPlanService/woPlanService";
     public static final String END_URL_INSERT_PLAN = "woPlanService/woPlanService/insertWoPlan";
     public static final String END_URL_UPDATE_PLAN = "woPlanService/woPlanService/updateWoPlan";
     public static final String END_URL_DELETE_PLAN = "woPlanService/woPlanService/deleteWoPlan";

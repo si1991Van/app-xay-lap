@@ -2354,15 +2354,27 @@ public class ApiManager {
     }
     private String convertModelRequestListPlan() {
         Gson gson = new Gson();
-        EntangleManageDTORequest request = new EntangleManageDTORequest();
         SysUserRequest sysUserRequest = VConstant.getUser();
-        request.setSysUserRequest(sysUserRequest);
-        String json = gson.toJson(request);
+        sysUserRequest.setSysUserId(1234);
+        String json = gson.toJson(sysUserRequest);
         Log.e("Tag: ", json);
         return json;
     }
 
-    public <T> void insertPlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+    public <T> void inserAndUpdatePlan(APIType apiType, WoPlanDTORequest woPlanDTORequest, final Class<T> responseClazz, final IOnRequestListener requestListener){
+        switch (apiType){
+            case END_URL_INSERT_PLAN:
+                insertPlan(woPlanDTORequest, responseClazz, requestListener);
+                break;
+            case END_URL_UPDATE_PLAN:
+                updatePlan(woPlanDTORequest, responseClazz, requestListener);
+                break;
+        }
+
+
+    }
+
+    private <T> void insertPlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
         String url = getUrl(VConstant.END_URL_INSERT_PLAN);
         Map<String, String> header = new HashMap<>();
         Log.d(TAG, "updateAcceptance - url : " + url);
@@ -2373,7 +2385,7 @@ public class ApiManager {
                 , requestListener);
     }
 
-    public <T> void updatePlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+    private <T> void updatePlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
         String url = getUrl(VConstant.END_URL_UPDATE_PLAN);
         Map<String, String> header = new HashMap<>();
         Log.d(TAG, "updateAcceptance - url : " + url);
