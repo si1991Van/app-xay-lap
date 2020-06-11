@@ -75,25 +75,113 @@
             android:layout_marginTop="@dimen/dimen_15"
             android:orientation="horizontal">
 
-            <TextView
-                style="@style/BlackText_small"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Danh sach WO" />
-            <TextView
-                style="@style/BlackText_small"
-                android:layout_width="wrap_content"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày tạo" />
+                <LinearLayout
+                    android:id="@+id/lnFromDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/ed_from_date"
+                        style="@style/BlackText_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="15-5-2020"
+                        android:alpha="0.6"
+                        android:background="@android:color/transparent"/>
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_calendar" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
-                android:text="Chọn tất cả" />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày hoàn thành" />
+
+                <LinearLayout
+                    android:id="@+id/lnToDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/ed_to_date"
+                        style="@style/BlackText_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="15-10-2020"
+                        android:alpha="0.6"
+                        android:background="@android:color/transparent"/>
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_calendar" />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            style="@style/BlackText_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:text="Danh sach WO" />
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvData"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btnAddWO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thêm mới WO"
+            android:layout_margin="@dimen/dimen_15"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:background="@drawable/button_border_selector"/>
+
 
     </LinearLayout>
 
