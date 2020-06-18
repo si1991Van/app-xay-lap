@@ -2,13 +2,15 @@ package com.viettel.construction.model.api.plan;
 
 import com.viettel.construction.model.api.ResultInfo;
 import com.viettel.construction.model.api.SysUserRequest;
+import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
 
 import java.util.List;
 
-public class PlanDTOResponse {
+public class WoDTOResponse {
     private ResultInfo resultInfo;
     private SysUserRequest sysUser;
-    private List<WoPlanDTO> woPlan;
+    private List<WoDTO> lstWos;
+    private List<WoMappingChecklistDTO> lstChecklistsOfWo;
 
     public ResultInfo getResultInfo() {
         return resultInfo;
@@ -26,11 +28,19 @@ public class PlanDTOResponse {
         this.sysUser = sysUser;
     }
 
-    public List<WoPlanDTO> getWoPlan() {
-        return woPlan;
+    public List<WoDTO> getLstWos() {
+        return lstWos;
     }
 
-    public void setWoPlan(List<WoPlanDTO> woPlan) {
-        this.woPlan = woPlan;
+    public void setLstWos(List<WoDTO> lstWos) {
+        this.lstWos = lstWos;
+    }
+
+    public List<WoMappingChecklistDTO> getLstChecklistsOfWo() {
+        return lstChecklistsOfWo;
+    }
+
+    public void setLstChecklistsOfWo(List<WoMappingChecklistDTO> lstChecklistsOfWo) {
+        this.lstChecklistsOfWo = lstChecklistsOfWo;
     }
 }

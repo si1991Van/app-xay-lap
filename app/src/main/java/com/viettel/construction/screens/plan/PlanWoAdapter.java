@@ -2,33 +2,30 @@ package com.viettel.construction.screens.plan;
 
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.viettel.construction.R;
-import com.viettel.construction.model.api.plan.WoMappingPlanDTO;
-import com.viettel.construction.model.api.version.AppParamDTO;
+import com.viettel.construction.model.api.plan.WoDTO;
 
 import java.util.List;
 
 public class PlanWoAdapter extends RecyclerView.Adapter<PlanWoAdapter.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
-    private List<WoMappingPlanDTO> woMappingPlanDTOList;
+    private List<WoDTO> woMappingPlanDTOList;
+    private CallbackInterface callbackInterface;
 
-
-    public PlanWoAdapter(Context context, List<WoMappingPlanDTO> list) {
+    public PlanWoAdapter(Context context, List<WoDTO> list, CallbackInterface callback) {
         this.context = context;
         this.woMappingPlanDTOList = list;
+        this.callbackInterface = callback;
         inflater = LayoutInflater.from(context);
     }
 
@@ -42,6 +39,9 @@ public class PlanWoAdapter extends RecyclerView.Adapter<PlanWoAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindData(woMappingPlanDTOList.get(position));
+        holder.img_delete.setOnClickListener(view ->{
+            callbackInterface.onDeleteWo(woMappingPlanDTOList.get(position));
+        });
     }
 
     @Override
@@ -53,21 +53,26 @@ public class PlanWoAdapter extends RecyclerView.Adapter<PlanWoAdapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvName;
         private TextView tvCode;
-        private CheckBox cbPlan;
+        private ImageView img_delete;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.txtName);
             tvCode = itemView.findViewById(R.id.txtCode);
-            cbPlan = itemView.findViewById(R.id.cbPlan);
+            img_delete = itemView.findViewById(R.id.img_delete);
         }
 
-        public void bindData(WoMappingPlanDTO item){
-            tvName.setText(item.getWoName() == null ? "Ten ke hoach" : item.getWoName());
-            tvCode.setText(item.getWoCode() == null ? "ma ke hoach" : item.getWoCode());
+        public void bindData(WoDTO item){
+            tvName.setText(item.getWoName() == null ? "..." : item.getWoName());
+            tvCode.setText(item.getWoCode() == null ? "..." : item.getWoCode());
         }
     }
 
+
+    public interface CallbackInterface{
+
+        void onDeleteWo(WoDTO woDTO);
+    }
 
 
 }

@@ -6,8 +6,8 @@ import com.viettel.construction.model.api.SysUserRequest;
 import java.util.List;
 
 public class WoPlanDTOResponse {
-    private List<WoPlanDTO> woPlan;
-    private List<WoMappingPlanDTO> woMappingPlanDTO;
+    private List<WoPlanDTO> listWoPlans;
+    private List<WoDTO> lstWosOfPlan;
     private ResultInfo resultInfo;
     private SysUserRequest sysUser;
 
@@ -19,14 +19,6 @@ public class WoPlanDTOResponse {
         this.resultInfo = resultInfo;
     }
 
-    public List<WoPlanDTO> getListWOPlan() {
-        return woPlan;
-    }
-
-    public void setListWOPlan(List<WoPlanDTO> woPlan) {
-        this.woPlan = woPlan;
-    }
-
     public SysUserRequest getSysUser() {
         return sysUser;
     }
@@ -35,19 +27,19 @@ public class WoPlanDTOResponse {
         this.sysUser = sysUser;
     }
 
-    public List<WoMappingPlanDTO> getWoMappingPlanDTO() {
-        return woMappingPlanDTO;
+    public List<WoPlanDTO> getListWoPlans() {
+        return listWoPlans;
     }
 
-    public void setWoMappingPlanDTO(List<WoMappingPlanDTO> woMappingPlanDTO) {
-        this.woMappingPlanDTO = woMappingPlanDTO;
+    public void setListWoPlans(List<WoPlanDTO> listWoPlans) {
+        this.listWoPlans = listWoPlans;
     }
 
-    public List<WoPlanDTO> getWoPlan() {
-        return woPlan;
+    public List<WoDTO> getLstWosOfPlan() {
+        return lstWosOfPlan;
     }
 
-    public void setWoPlan(List<WoPlanDTO> woPlan) {
-        this.woPlan = woPlan;
+    public void setLstWosOfPlan(List<WoDTO> lstWosOfPlan) {
+        this.lstWosOfPlan = lstWosOfPlan;
     }
 }

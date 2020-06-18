@@ -17,24 +17,23 @@ import com.viettel.construction.appbase.FragmentListBase;
 import com.viettel.construction.common.App;
 import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.ResultInfo;
-import com.viettel.construction.model.api.plan.PlanDTOResponse;
+import com.viettel.construction.model.api.plan.WoPlanDTOResponse;
 import com.viettel.construction.model.api.plan.WoPlanDTO;
 import com.viettel.construction.model.api.plan.WoPlanDTORequest;
-import com.viettel.construction.model.api.plan.WoPlanDTOResponse;
 import com.viettel.construction.screens.custom.dialog.DialogDeletePlan;
 import com.viettel.construction.screens.wo.WOItemFragment;
 import com.viettel.construction.server.api.APIType;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
+import com.viettel.construction.server.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, PlanDTOResponse> implements
+public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, WoPlanDTOResponse> implements
         PlanItemAdapter.IItemPlanClick<WoPlanDTO>,
         DialogDeletePlan.OnClickDialogForConfirm {
 
@@ -83,7 +82,7 @@ public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, PlanDTORes
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        dialogDeletePlan = new DialogDeletePlan(getActivity(), this);
+        dialogDeletePlan = new DialogDeletePlan(getActivity(), this, false);
         dialogDeletePlan.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
@@ -102,7 +101,20 @@ public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, PlanDTORes
 
     @Override
     public List<WoPlanDTO> dataSearch(String keyWord) {
-        return null;
+        List<WoPlanDTO> dataSearch = new ArrayList<>();
+        keyWord = StringUtil.removeAccentStr(keyWord.toString().trim()).toLowerCase();
+        for (WoPlanDTO dto : listData) {
+            String code = "", name = "";
+            if (dto.getCode() != null) {
+                code = dto.getCode().toLowerCase();
+            }
+            if (dto.getName() != null) {
+                name = StringUtil.removeAccentStr(dto.getName()).toLowerCase();
+            }
+            if (code.contains(keyWord) || name.contains(keyWord))
+                dataSearch.add(dto);
+        }
+        return dataSearch;
     }
 
     @Override
@@ -138,12 +150,12 @@ public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, PlanDTORes
     }
 
     @Override
-    public List<WoPlanDTO> getResponseData(PlanDTOResponse result) {
+    public List<WoPlanDTO> getResponseData(WoPlanDTOResponse result) {
         List<WoPlanDTO> data = new ArrayList<>();
         ResultInfo resultInfo = result.getResultInfo();
         if (resultInfo.getStatus().equals(VConstant.RESULT_STATUS_OK)) {
-            if (result.getWoPlan() != null) {
-                data = result.getWoPlan();
+            if (result.getListWoPlans() != null) {
+                data = result.getListWoPlans();
             }
         }
         return data;
@@ -161,23 +173,13 @@ public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, PlanDTORes
     }
 
     @Override
-    public Class<PlanDTOResponse> responseEntityClass() {
-        return PlanDTOResponse.class;
+    public Class<WoPlanDTOResponse> responseEntityClass() {
+        return WoPlanDTOResponse.class;
     }
 
     @Override
     public void onItemRecyclerViewclick(WoPlanDTO item) {
-        try {
-            Fragment frag = new WOItemFragment();
-            Bundle bundle = new Bundle();
-//            bundle.putSerializable("CONSTRUCTION_MANAGEMENT_OBJ", item);
-            bundle.putSerializable("SYS_USER_1", sysUser);
-            bundle.putString("type", "1");
-            frag.setArguments(bundle);
-            commitChange(frag, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
@@ -211,6 +213,21 @@ public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, PlanDTORes
 
         woPlanDTO.setId(item.getId());
         woPlanDTORequest.setWoPlanDTO(woPlanDTO);
+    }
+
+    @Override
+    public void onItemClick(WoPlanDTO item) {
+        try {
+            Fragment frag = new WOItemFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("PLAN_WO", item);
+            bundle.putSerializable("SYS_USER_1", sysUser);
+            bundle.putString("type", "1");
+            frag.setArguments(bundle);
+            commitChange(frag, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

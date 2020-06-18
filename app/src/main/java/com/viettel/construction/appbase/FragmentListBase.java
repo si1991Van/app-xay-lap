@@ -285,6 +285,10 @@ public abstract class FragmentListBase<MD, Res> extends Fragment
             txtNoData.setVisibility(View.INVISIBLE);
     }
 
+    public void seTitleHeader(String title){
+        txtHeader.setText(String.format(title));
+    }
+
     public void setHeaderExpandable() {
         int total = 0;
         for (int i = 0; i < adapterExpand.getGroupCount(); i++)

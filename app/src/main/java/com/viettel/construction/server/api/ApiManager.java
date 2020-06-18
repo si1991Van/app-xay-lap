@@ -70,6 +70,7 @@ import com.viettel.construction.model.api.issue.IssueHistoryEntityDTO;
 import com.viettel.construction.model.api.issue.IssueWorkItemDTO;
 import com.viettel.construction.model.api.issue.IssuseRequest;
 import com.viettel.construction.model.api.login.BaseRequest;
+import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoPlanDTORequest;
 import com.viettel.construction.model.api.update.ConstructionTaskDTOUpdateRequest;
 import com.viettel.construction.model.api.version.AppParamDTO;
@@ -327,6 +328,10 @@ public class ApiManager {
 
             case END_URL_GET_PLAN_ALL:
                 getWOPlanAll(responseClass, requestListener);
+                break;
+
+            case END_URL_GET_ALL_WO:
+                getFilterWo(responseClass, requestListener);
                 break;
         }
 
@@ -2355,7 +2360,6 @@ public class ApiManager {
     private String convertModelRequestListPlan() {
         Gson gson = new Gson();
         SysUserRequest sysUserRequest = VConstant.getUser();
-        sysUserRequest.setSysUserId(1234);
         String json = gson.toJson(sysUserRequest);
         Log.e("Tag: ", json);
         return json;
@@ -2396,7 +2400,7 @@ public class ApiManager {
                 , requestListener);
     }
     public <T> void deletePlan(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
-        String url = getUrl(VConstant.END_URL_UPDATE_PLAN);
+        String url = getUrl(VConstant.END_URL_DELETE_PLAN);
         Map<String, String> header = new HashMap<>();
         Log.d(TAG, "updateAcceptance - url : " + url);
         header.put("Content-Type", "application/json");
@@ -2413,4 +2417,133 @@ public class ApiManager {
         return json;
     }
 
+    public <T> void geListWoByPlanId(WoPlanDTORequest woPlanDTORequest, final Class<T> clazz, final IOnRequestListener requestListener){
+        String url = getUrl(VConstant.END_URL_GET_LIST_WO_BY_PLAN_ID);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestPlan(woPlanDTORequest)
+                , requestListener);
+    }
+
+//    public <T> void getListWO(final Class<T> clazz, final IServerResultListener requestListener){
+//        String url = getUrl(VConstant.END_URL_GET_ALL_WO);
+//        Map<String, String> header = new HashMap<>();
+//        header.put("Content-Type", "application/json");
+//        Log.e("Tag: ", url);
+//        ApiClient.getInstance().post1(url
+//                , clazz, header
+//                , convertModelRequestListWo(woDTORequest)
+//                , requestListener);
+//    }
+
+    public <T> void getListWO(WoDTORequest woDTORequest, final Class<T> clazz, final IServerResultListener requestListener){
+        String url = getUrl(VConstant.END_URL_GET_ALL_WO);
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+        Log.e("Tag: ", url);
+        ApiClient.getInstance().post1(url
+                , clazz, header
+                , convertModelRequestListWo(woDTORequest)
+                , requestListener);
+    }
+
+    private String convertModelRequestListWo(WoDTORequest woDTORequest){
+        Gson gson = new Gson();
+        String json = gson.toJson(woDTORequest);
+        Log.d(TAG, "convertModelRequestUpdateAcceptance - json :  " + json);
+        return json;
+    }
+
+    private <T> void getFilterWo(final Class<T> clazz, final IServerResultListener requestListener){
+        String url = getUrl(VConstant.END_URL_GET_ALL_WO);
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+        Log.e("Tag: ", url);
+        ApiClient.getInstance().post1(url
+                , clazz, header
+                , convertModelRequestFilterWo()
+                , requestListener);
+    }
+    private String convertModelRequestFilterWo(){
+        Gson gson = new Gson();
+        WoDTORequest request = new WoDTORequest();
+        SysUserRequest sysUserRequest = VConstant.getUser();
+
+        request.setSysUserRequest(sysUserRequest);
+        String json = gson.toJson(request);
+        Log.d(TAG, "convertModelGetConstructionManagement - json : " + json);
+        return json;
+    }
+
+    public  <T> void updateWo(WoDTORequest woDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_UPDATE_WO);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestWo(woDTORequest)
+                , requestListener);
+    }
+
+    private String convertModelRequestWo(WoDTORequest woDTORequest) {
+        Gson gson = new Gson();
+        String json = gson.toJson(woDTORequest);
+        Log.d(TAG, "convertModelRequestUpdateAcceptance - json :  " + json);
+        return json;
+    }
+
+    public  <T> void checkListWo(WoDTORequest woDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_CHECKLIST_WO);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestWo(woDTORequest)
+                , requestListener);
+    }
+
+    public  <T> void updateCheckListWo(WoDTORequest woDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_UPDATE_CHECKLIST_WO);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestWo(woDTORequest)
+                , requestListener);
+    }
+
+    public  <T> void getListConstructionWo(final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_GET_LIST_CONSTRUCTION_WO);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestListPlan()
+                , requestListener);
+    }
+
+    public  <T> void getListTypeWo(final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_GET_LIST_TYPE_WO);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestListPlan()
+                , requestListener);
+    }
+
+//    private String convertModelRequestWo(WoDTORequest woDTORequest) {
+//        Gson gson = new Gson();
+//        String json = gson.toJson(woDTORequest);
+//        Log.d(TAG, "convertModelRequestUpdateAcceptance - json :  " + json);
+//        return json;
+//    }
 }

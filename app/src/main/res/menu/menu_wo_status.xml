@@ -28,8 +28,16 @@
         android:title="@string/processing" />
 
     <item
+        android:id="@+id/Opinion_rq"
+        android:title="@string/opinion_rq" />
+
+    <item
         android:id="@+id/ok"
         android:title="@string/ok" />
+
+    <item
+        android:id="@+id/done"
+        android:title="@string/done" />
 
     <item
         android:id="@+id/ng"

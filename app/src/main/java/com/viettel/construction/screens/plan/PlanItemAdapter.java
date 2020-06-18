@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,9 +41,9 @@ public class PlanItemAdapter
         holder.tvCodeWo.setText(item.getCode()!= null ? item.getCode() : "COGTRIH_SL");
         holder.tvName.setText(item.getName()!= null ? item.getName() :"XD mong cot duoi dat");
         holder.tvStatus.setText("3/10");
-        holder.itemView.setOnClickListener((v) -> {
+        holder.rlItem.setOnClickListener((v) -> {
             try {
-                itemRecyclerviewClick.onItemRecyclerViewclick((WoPlanDTO) v.getTag());
+                itemPlanClick.onItemClick(getListData().get(position));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -84,6 +85,8 @@ public class PlanItemAdapter
         TextView txtEdit;
         @BindView(R.id.txtDelete)
         TextView txtDelete;
+        @BindView(R.id.rlItem)
+        RelativeLayout rlItem;
 
         @BindView(R.id.swipe)
         SwipeLayout swipeLayout;
@@ -98,5 +101,7 @@ public class PlanItemAdapter
     public interface IItemPlanClick<T> {
         void onItemEditClick(T item);
         void onItemDeleteClick(T item);
+
+        void onItemClick(T item);
     }
 }

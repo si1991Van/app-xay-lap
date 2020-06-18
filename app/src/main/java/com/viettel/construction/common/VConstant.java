@@ -26,15 +26,19 @@ public class VConstant {
             R.drawable.photo_6,
     };
 
-    public static class TypeFilerPxk {
-        public static final int TYPE_ALL = 1;
-        public static final int TYPE_DA_TIEP_NHAN = 2;
-        public static final int TYPE_CHO_TIEP_NHAN = 3;
-        public static final int TYPE_DA_TU_CHOI = 4;
-        public static final int TYPE_CHO_XAC_NHAN = 5;
-        public static final int TYPE_DA_XAC_NHAN = 6;
-        public static final int TYPE_TU_CHOI_XAC_NHAN = 7;
-        public static final int TYPE_QUA_HAN = 8;
+    public static class StateWO {
+        public static final String Assign_cd = "ASSIGN_CD";
+        public static final String Accept_cd = "ACCEPT_CD";
+        public static final String Reject_cd = "REJECT_CD";
+        public static final String Assign_ft = "ASSIGN_FT";
+        public static final String Accept_ft = "ACCEPT_FT";
+        public static final String Reject_ft = "REJECT_FT";
+        public static final String Processing = "PROCESSING";
+        public static final String Done = "DONE";
+        public static final String Ng = "NG";
+        public static final String Ok = "OK";
+        public static final String Opinion_rq = "OPINION_RQ";
+
 
     }
 
@@ -74,9 +78,8 @@ public class VConstant {
     // Request code camera
     public static final int REQUEST_CODE_CAMERA = 101;
     //URL API
-    public static final String BASE_URL = "http://10.61.19.230:9702/coms-service/service/";
-//    public static final String BASE_URL = "http://10.61.18.229:8084/coms-service/service/";
-
+//    public static final String BASE_URL = "http://10.61.19.230:9702/coms-service/service/";
+    public static final String BASE_URL = "http://10.61.18.161:8084/coms-service/service/";
 
     //real
 //    public static final String BASE_URL = "http://10.30.145.74:8752/coms-service/service/";
@@ -178,22 +181,19 @@ public class VConstant {
     public static final String END_URL_INSERT_CONTRUCTION_TASK_DAILY = "ConstructionRestService/service/insertConstructionTaskDaily/";
 
     //method plan
-    public static final String END_URL_GET_PLAN_ALL = "woPlanService/woPlanService";
-    public static final String END_URL_INSERT_PLAN = "woPlanService/woPlanService/insertWoPlan";
-    public static final String END_URL_UPDATE_PLAN = "woPlanService/woPlanService/updateWoPlan";
-    public static final String END_URL_DELETE_PLAN = "woPlanService/woPlanService/deleteWoPlan";
-    public static final String END_URL_GET_ALL_WO = "";
+    public static final String END_URL_GET_PLAN_ALL = "woPlanService/list";
+    public static final String END_URL_INSERT_PLAN = "woPlanService/insert";
+    public static final String END_URL_UPDATE_PLAN = "woPlanService/update";
+    public static final String END_URL_DELETE_PLAN = "woPlanService/delete";
+    public static final String END_URL_GET_ALL_WO = "woService/list";
+    public static final String END_URL_GET_LIST_WO_BY_PLAN_ID = "woPlanService/getListWoByPlanId";
     //method WO
     public static final String END_URL_SEARCH_WO = "";
-    public static final String END_URL_GET_LIST_CONSTRUCTION_WO = "";
-    public static final String END_URL_GET_LIST_TYPE_WO = "";
-    public static final String END_URL_GET_DETAIL_WO = "";
-    public static final String END_URL_ACCEPT_WO = "";
-    public static final String END_URL_REJECT_WO = "";
-    public static final String END_URL_PROCESSING_WO = "";
-    public static final String END_URL_REPORT_WO = "";
-    public static final String END_URL_FINISH_WO = "";
-
+    public static final String END_URL_GET_LIST_CONSTRUCTION_WO = "woService/";
+    public static final String END_URL_GET_LIST_TYPE_WO = "woService/";
+    public static final String END_URL_UPDATE_WO = "woService/update";
+    public static final String END_URL_CHECKLIST_WO = "woService/listChecklists";
+    public static final String END_URL_UPDATE_CHECKLIST_WO = "woService/updateChecklist";
 
 
     public static final String FORMAT_TIME_CURRENT = "yyyy-mm-dd'T'HH:mm:ss.SSS";

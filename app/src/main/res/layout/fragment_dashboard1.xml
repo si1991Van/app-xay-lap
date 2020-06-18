@@ -502,7 +502,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="HSHC, Doanh thu"
+                    android:text="Kế hoạch"
                     android:textColor="@color/black_base"
                     android:textStyle="bold" />
 

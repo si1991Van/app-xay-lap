@@ -13,6 +13,10 @@
 
         <include layout="@layout/header_back_filter_layout"/>
 
+        <include layout="@layout/searchbox"
+            android:visibility="gone"
+            />
+
         <LinearLayout
             android:id="@+id/ln_file"
             android:layout_width="match_parent"

@@ -23,7 +23,7 @@ public class DialogPleaseComment extends BaseDialog {
         this.dialogCancel = dialogCancel;
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
-
+        edtEnter = findViewById(R.id.edtContent);
         txtCancleOfCancle = (TextView) findViewById(R.id.txt_cancle_dialog_of_cancle);
         txtConfirmOfCancle = (TextView) findViewById(R.id.txt_dialog_confirm_of_cancle);
 
@@ -35,13 +35,13 @@ public class DialogPleaseComment extends BaseDialog {
     public void onClick(View v) {
         super.onClick(v);
         if (v.getId() == R.id.txt_dialog_confirm_of_cancle) {
-            dialogCancel.OnClickDialogPleaseComment(edtEnter.getText().toString().trim());
+            dialogCancel.OnClickDialogPleaseComment("" , edtEnter.getText().toString().trim(), "");
         } else
             dismiss();
     }
 
     public interface OnClickDialogPleaseComment {
-        void OnClickDialogPleaseComment(String s);
+        void OnClickDialogPleaseComment(String type, String content, String userId);
     }
 
 }

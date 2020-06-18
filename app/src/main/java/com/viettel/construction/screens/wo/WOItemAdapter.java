@@ -11,45 +11,88 @@ import androidx.core.content.ContextCompat;
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.AdapterFragmentListBase;
 import com.viettel.construction.appbase.ViewModelFragmentListBase;
+import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
+import com.viettel.construction.model.api.plan.WoDTO;
 
 import java.util.List;
 
 import butterknife.BindView;
 
 public class WOItemAdapter
-        extends AdapterFragmentListBase<ConstructionAcceptanceCertDetailDTO,
+        extends AdapterFragmentListBase<WoDTO,
         WOItemAdapter.WOViewHolder> {
 
-    public WOItemAdapter(Context context, List<ConstructionAcceptanceCertDetailDTO> listData) {
+    public WOItemAdapter(Context context, List<WoDTO> listData) {
         super(context, listData);
     }
 
     @Override
     public void onBindViewHolder(WOViewHolder holder, int position) {
 
-        holder.tvCodeWo.setText("COGTRIH_SL");
-        holder.tvName.setText("XD mong cot duoi dat");
+        WoDTO woDTO = getListData().get(position);
+
+        holder.tvCodeWo.setText(woDTO.getWoCode());
+        holder.tvName.setText(woDTO.getWoName());
         holder.tvProgress.setText("3/10");
-        holder.tvPerformer.setText("pham thi kim heu");
-        switch (position){
-            case 1:
-                holder.tvStatus.setText("Dang thuc hien");
+        holder.tvPerformer.setText(VConstant.getDTO().getFullName());
+
+        switch (woDTO.getState()){
+            case VConstant.StateWO.Assign_cd:
+                holder.tvStatus.setText(context.getString(R.string.assign_cd));
                 holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
                 break;
-            case 2:
-                holder.tvStatus.setText("Tu choi");
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c14));
+            case VConstant.StateWO.Accept_cd:
+                holder.tvStatus.setText(context.getString(R.string.accept_cd));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
                 break;
-                default:
-                    holder.tvStatus.setText("Cho FT tiep nhan");
-                    holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.gray));
-                    break;
+            case VConstant.StateWO.Reject_cd:
+                holder.tvStatus.setText(context.getString(R.string.reject_cd));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+
+            case VConstant.StateWO.Assign_ft:
+                holder.tvStatus.setText(context.getString(R.string.assign_ft));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+            case VConstant.StateWO.Accept_ft:
+                holder.tvStatus.setText(context.getString(R.string.accept_ft));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+            case VConstant.StateWO.Reject_ft:
+                holder.tvStatus.setText(context.getString(R.string.reject_ft));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+
+            case VConstant.StateWO.Processing:
+                holder.tvStatus.setText(context.getString(R.string.processing));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+            case VConstant.StateWO.Opinion_rq:
+                holder.tvStatus.setText(context.getString(R.string.opinion_rq));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+            case VConstant.StateWO.Ok:
+                holder.tvStatus.setText(context.getString(R.string.ok));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+            case VConstant.StateWO.Ng:
+                holder.tvStatus.setText(context.getString(R.string.ng));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+            case VConstant.StateWO.Done:
+                holder.tvStatus.setText(context.getString(R.string.done));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                break;
+            default:
+                break;
         }
+
+
 
         holder.itemView.setOnClickListener((v) -> {
             try {
-                itemRecyclerviewClick.onItemRecyclerViewclick((ConstructionAcceptanceCertDetailDTO) v.getTag());
+                itemRecyclerviewClick.onItemRecyclerViewclick(getListData().get(position));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -77,6 +120,10 @@ public class WOItemAdapter
 
         public WOViewHolder(View itemView) {
             super(itemView);
+            tvCodeWo = itemView.findViewById(R.id.tv_code_wo);
+            tvName = itemView.findViewById(R.id.tv_name_wo);
+            tvProgress = itemView.findViewById(R.id.tv_performer);
+            tvStatus = itemView.findViewById(R.id.tv_status);
         }
 
 

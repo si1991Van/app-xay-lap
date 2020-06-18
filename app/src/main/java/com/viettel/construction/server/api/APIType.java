@@ -19,6 +19,7 @@ public enum APIType {
     END_VOL_TIO,//Lich su ban giao
     END_URL_GET_CONSTRUCTION_BGMB_LIST_BY_STATUS, //list Cong trinh theo trang thai BGMB
     END_URL_GET_PLAN_ALL, //list ke hoach.
+    END_URL_GET_ALL_WO, //list wo.
     END_URL_UPDATE_PLAN, //list ke hoach.
     END_URL_INSERT_PLAN//list ke hoach.
 

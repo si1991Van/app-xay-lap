@@ -421,6 +421,7 @@
     <string name="accept_ft">FT tiếp nhận</string>
     <string name="reject_ft">FT từ chối</string>
     <string name="processing">Đang thực hiện</string>
+    <string name="opinion_rq">Xin ý kiến</string>
     <string name="ok">Kết thúc</string>
     <string name="done">Hoàn thành</string>
     <string name="ng">Chưa hoàn thành</string>
@@ -431,7 +432,11 @@
     <string name="update_fail_plan">Cập nhật kế hoạch thất bại</string>
     <string name="insert_plan">Thêm kế hoạch thành công</string>
     <string name="insert_fail_plan">Thêm kế hoạch thất bại</string>
-
+    //
+    <string name="txt_title_lstchecklists">Danh sách check list</string>
+    <string name="update_checklist_success">Cập nhật Checklist thành công</string>
+    <string name="update_checklist_fail">Cập nhật checklist thất bại</string>
+    <string name="updating_date">Đang cập nhật</string>
 
 
 </resources>

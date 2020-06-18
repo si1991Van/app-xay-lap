@@ -16,7 +16,7 @@ public class DialogDeletePlan extends BaseDialog {
 
     private OnClickDialogForConfirm onClickDialog;
 
-    public DialogDeletePlan(@NonNull Context context, OnClickDialogForConfirm onClickDialog) {
+    public DialogDeletePlan(@NonNull Context context, OnClickDialogForConfirm onClickDialog, boolean type) {
         super(context);
         setContentView(R.layout.dialog_delete_plan);
         this.onClickDialog = onClickDialog;
@@ -25,6 +25,9 @@ public class DialogDeletePlan extends BaseDialog {
         txtTitle = findViewById(R.id.tv_title_dialog);
         txtCancle = (TextView) findViewById(R.id.txt_cancle_dialog);
         txtConfirm = (TextView) findViewById(R.id.txt_dialog_confirm);
+        if (type){
+            txtTitle.setText("Bạn có thực sự muốn xóa WO không?");
+        }
         txtConfirm.setOnClickListener(this);
         txtCancle.setOnClickListener(this);
     }
@@ -34,6 +37,7 @@ public class DialogDeletePlan extends BaseDialog {
         super.onClick(v);
         if (v.getId() == R.id.txt_dialog_confirm) {
             onClickDialog.onClickConfirmOfConfirm();
+            dismiss();
         }else
             dismiss();
     }
