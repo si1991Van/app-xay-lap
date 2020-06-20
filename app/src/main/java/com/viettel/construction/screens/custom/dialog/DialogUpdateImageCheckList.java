@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.viettel.construction.R;
-import com.viettel.construction.model.api.plan.WoDTO;
-import com.viettel.construction.screens.plan.SelectWoAdapter;
-import com.viettel.construction.screens.wo.ImageCheckListWoAdapter;
+import com.viettel.construction.screens.wo.adapter.ImageCheckListWoAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

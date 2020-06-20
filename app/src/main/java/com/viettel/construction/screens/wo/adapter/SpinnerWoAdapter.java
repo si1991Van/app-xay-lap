@@ -1,4 +1,4 @@
-package com.viettel.construction.screens.wo;
+package com.viettel.construction.screens.wo.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;

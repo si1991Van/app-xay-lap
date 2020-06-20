@@ -39,6 +39,9 @@ public class WoDTO implements Serializable {
     private long moneyFlowValue;
     private long apConstructionType;
     private long apWorkSrc;
+    private String opinionType;
+    private String opinionContent;
+    private String opinionObject;
 
     public long getWoId() {
         return woId;
@@ -326,5 +329,29 @@ public class WoDTO implements Serializable {
 
     public void setWoTypeName(String woTypeName) {
         this.woTypeName = woTypeName;
+    }
+
+    public String getOpinionType() {
+        return opinionType;
+    }
+
+    public void setOpinionType(String opinionType) {
+        this.opinionType = opinionType;
+    }
+
+    public String getOpinionContent() {
+        return opinionContent;
+    }
+
+    public void setOpinionContent(String opinionContent) {
+        this.opinionContent = opinionContent;
+    }
+
+    public String getOpinionObject() {
+        return opinionObject;
+    }
+
+    public void setOpinionObject(String opinionObject) {
+        this.opinionObject = opinionObject;
     }
 }

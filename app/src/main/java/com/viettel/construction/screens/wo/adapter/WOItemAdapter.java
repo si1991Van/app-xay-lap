@@ -1,4 +1,4 @@
-package com.viettel.construction.screens.wo;
+package com.viettel.construction.screens.wo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import com.viettel.construction.R;
 import com.viettel.construction.appbase.AdapterFragmentListBase;
 import com.viettel.construction.appbase.ViewModelFragmentListBase;
 import com.viettel.construction.common.VConstant;
-import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
 import com.viettel.construction.model.api.plan.WoDTO;
 
 import java.util.List;

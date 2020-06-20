@@ -36,6 +36,7 @@ public class DialogCancel extends BaseDialog {
         super.onClick(v);
         if (v.getId() == R.id.txt_dialog_confirm_of_cancle) {
             dialogCancel.onClickConfirmOfCancel(edtEnter.getText().toString().trim());
+            dismiss();
         } else
             dismiss();
     }

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:layout_above="@+id/lnBottom"
+        android:layout_marginBottom="@dimen/dimen_12"
+        android:layout_marginLeft="@dimen/dimen_24"
+        android:layout_marginRight="@dimen/dimen_24">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textStyle="bold"
+                    android:text="Mã WO" />
+
+                <TextView
+                    android:id="@+id/tv_code_wo"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tên WO"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_name_wo"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/schedule" />
+
+                <TextView
+                    android:id="@+id/tv_progress"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_per_in_charge"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/person_in_charge" />
+
+                <TextView
+                    android:id="@+id/tv_performer"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/status" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Loại wo" />
+
+                <TextView
+                    android:id="@+id/tv_type_wo"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Loại công trình" />
+
+                <TextView
+                    android:id="@+id/tv_type_construction_wo"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Hạng mục" />
+
+                <TextView
+                    android:id="@+id/tv_catWork_wo"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Ngày tạo ra" />
+                <TextView
+                    android:id="@+id/tv_createdDate"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Ngày kết thúc" />
+                <TextView
+                    android:id="@+id/tv_finishDate"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Thời hạn" />
+                <TextView
+                    android:id="@+id/tv_qoutaTime"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Tên kế hoạch theo tháng" />
+
+                <TextView
+                    android:id="@+id/tv_totalMonthPlanName"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+    <LinearLayout
+        android:id="@+id/lnBottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginLeft="@dimen/dimen_24"
+        android:layout_marginRight="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_handover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="giao viec"
+            android:textColor="@color/black_base"
+            android:visibility="gone"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_Accept"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_weight="1"
+            android:text="@string/TiepNhan"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_accept"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_Reject"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:text="Từ chối"
+            android:background="@drawable/btn_reject"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_Process"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="Thực hiện"
+            android:textColor="@color/black_base"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_process"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_Report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Xin ý kiến"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:background="@drawable/btn_report"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_Finish"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Hoàn thành"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_finish"
+            android:visibility="gone"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

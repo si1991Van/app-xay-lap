@@ -2517,4 +2517,26 @@ public class ApiManager {
                 , convertModelRequestWo(woDTORequest)
                 , requestListener);
     }
+
+    public  <T> void updateOpinion(WoDTORequest woDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_UPDATE_OPINION_WO);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestWo(woDTORequest)
+                , requestListener);
+    }
+
+    public  <T> void listWorklogs(WoDTORequest woDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_LIST_WORKLOGS_WO);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestWo(woDTORequest)
+                , requestListener);
+    }
 }

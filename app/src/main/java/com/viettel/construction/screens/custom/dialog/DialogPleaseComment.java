@@ -3,15 +3,13 @@ package com.viettel.construction.screens.custom.dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.viettel.construction.R;
 import com.viettel.construction.model.api.version.AppParamDTO;
-import com.viettel.construction.screens.wo.SpinnerWoAdapter;
+import com.viettel.construction.screens.wo.adapter.SpinnerWoAdapter;
 
 import java.util.List;
 

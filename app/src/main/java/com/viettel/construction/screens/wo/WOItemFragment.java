@@ -1,15 +1,12 @@
 package com.viettel.construction.screens.wo;
 
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.viettel.construction.R;
@@ -25,7 +22,9 @@ import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.plan.WoPlanDTO;
 import com.viettel.construction.model.api.version.AppParamDTO;
-import com.viettel.construction.screens.plan.CreatePlanActivity;
+import com.viettel.construction.screens.wo.activity.DetailItemWoActivity;
+import com.viettel.construction.screens.wo.adapter.SpinnerWoAdapter;
+import com.viettel.construction.screens.wo.adapter.WOItemAdapter;
 import com.viettel.construction.server.api.APIType;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
@@ -258,7 +257,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
 
     @Override
     public void onItemRecyclerViewclick(WoDTO item) {
-        Intent intent = new Intent(getContext(), DetailWOActivity.class);
+        Intent intent = new Intent(getContext(), DetailItemWoActivity.class);
         intent.putExtra("Item_WO", item);
         intent.putExtra("Type", scheduleType);
 

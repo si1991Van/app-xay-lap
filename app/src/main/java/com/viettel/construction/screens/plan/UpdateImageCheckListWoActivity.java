@@ -14,7 +14,7 @@ import com.viettel.construction.R;
 import com.viettel.construction.appbase.BaseCameraActivity;
 import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
-import com.viettel.construction.screens.wo.ImageCheckListWoAdapter;
+import com.viettel.construction.screens.wo.adapter.ImageCheckListWoAdapter;
 import com.viettel.construction.server.util.StringUtil;
 import com.viettel.construction.util.ImageUtils;
 
@@ -28,7 +28,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
 
     @BindView(R.id.rvWO)
     RecyclerView recyclerView;
-    @BindView(R.id.imgBack)
+    @BindView(R.id.imgClose)
     ImageView imgBack;
     @BindView(R.id.txtHeader)
     TextView txtHeader;

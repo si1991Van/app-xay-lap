@@ -1,49 +1,22 @@
-package com.viettel.construction.screens.wo;
+package com.viettel.construction.screens.wo.adapter;
 
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.viettel.construction.R;
-import com.viettel.construction.common.GPSTracker;
-import com.viettel.construction.common.VConstant;
-import com.viettel.construction.model.api.ConstructionImageInfo;
-import com.viettel.construction.model.api.plan.WoDTO;
-import com.viettel.construction.model.api.plan.WoDTOResponse;
-import com.viettel.construction.model.api.wo.ImgeChecklistDTO;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
-import com.viettel.construction.screens.atemp.adapter.ImageAppParamAdapter;
-import com.viettel.construction.util.FileUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.viettel.construction.appbase.BaseCameraActivity.PERMISSION_REQUEST_CODE;
 
 public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapter.ViewHolder> {
     private Context context;

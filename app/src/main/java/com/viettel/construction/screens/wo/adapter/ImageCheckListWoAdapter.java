@@ -1,7 +1,6 @@
-package com.viettel.construction.screens.wo;
+package com.viettel.construction.screens.wo.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.viettel.construction.R;
-import com.viettel.construction.model.api.ConstructionImageInfo;
-import com.viettel.construction.screens.atemp.other.FullScreenAppParamActivity;
 import com.viettel.construction.server.util.StringUtil;
 
 import java.util.List;
