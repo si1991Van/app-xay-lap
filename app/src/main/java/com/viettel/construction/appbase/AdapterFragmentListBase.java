@@ -55,7 +55,7 @@ public abstract class AdapterFragmentListBase<T,VM extends ViewModelFragmentList
 
     @Override
     public int getItemCount() {
-        return listData.size();
+        return listData == null || listData.size() == 0 ? 0 : listData.size();
     }
 
     public interface IItemRecyclerviewClick<T> {

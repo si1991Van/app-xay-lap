@@ -1,8 +1,10 @@
 package com.viettel.construction.model.api.wo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class WoMappingChecklistDTO {
+public class WoMappingChecklistDTO implements Serializable {
     private long id;
     private long woId;
     private String woName;
@@ -75,4 +77,10 @@ public class WoMappingChecklistDTO {
     public void setLstImgs(List<String> lstImgs) {
         this.lstImgs = lstImgs;
     }
+
+//    public List<String> addImge(String path){
+//        List<String> lst = new ArrayList<>();
+//        lst.add(path);
+//        return lst;
+//    }
 }

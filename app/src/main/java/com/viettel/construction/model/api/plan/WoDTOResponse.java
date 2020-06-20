@@ -2,6 +2,7 @@ package com.viettel.construction.model.api.plan;
 
 import com.viettel.construction.model.api.ResultInfo;
 import com.viettel.construction.model.api.SysUserRequest;
+import com.viettel.construction.model.api.version.AppParamDTO;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
 
 import java.util.List;
@@ -11,6 +12,7 @@ public class WoDTOResponse {
     private SysUserRequest sysUser;
     private List<WoDTO> lstWos;
     private List<WoMappingChecklistDTO> lstChecklistsOfWo;
+    private List<AppParamDTO> lstDataForComboBox;
 
     public ResultInfo getResultInfo() {
         return resultInfo;
@@ -42,5 +44,13 @@ public class WoDTOResponse {
 
     public void setLstChecklistsOfWo(List<WoMappingChecklistDTO> lstChecklistsOfWo) {
         this.lstChecklistsOfWo = lstChecklistsOfWo;
+    }
+
+    public List<AppParamDTO> getLstDataForComboBox() {
+        return lstDataForComboBox;
+    }
+
+    public void setLstDataForComboBox(List<AppParamDTO> lstDataForComboBox) {
+        this.lstDataForComboBox = lstDataForComboBox;
     }
 }

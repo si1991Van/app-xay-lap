@@ -3,6 +3,7 @@ package com.viettel.construction.screens.plan;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -70,7 +71,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
     private DialogShowListWO dialogShowListWO;
     protected List<WoDTO> listWo = new ArrayList<>();
     protected List<WoDTO> lisAllWo = new ArrayList<>();
-    String[] itemPlanType = {"Chọn","Tuần", "Tháng", "Quý"};
+    String[] itemPlanType = {"Tuần", "Tháng", "Quý"};
     private String type ;
     PlanWoAdapter planWoAdapter;
 
@@ -93,7 +94,8 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         getListWo();
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
-            spPlanType("Chọn");
+            spPlanType("Tuần");
+            edToDate.setText(setDataToday());
             return;
         }
         if (bundle.getSerializable("EDIT_PLAN") != null) {
@@ -101,13 +103,11 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
             edCodeWo.setText(item.getCode());
             edNameWo.setText(item.getName());
             spPlanType(item.getPlanType());
-            edToDate.setText(item.getFromDate() == null ? "Chọn ngày" : item.getFromDate());
+            edToDate.setText(item.getFromDate() == null ? setDataToday() : item.getFromDate());
             getListWoByPlanId();
 
 
         }
-
-
     }
 
     private void setUpView(List<WoDTO> list) {
@@ -129,7 +129,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         woPlanDTO.setName(edNameWo.getText().toString());
         woPlanDTO.setCode(edCodeWo.getText().toString());
         woPlanDTO.setPlanType(type);
-        woPlanDTO.setToDate(edToDate.getText().toString());
+        woPlanDTO.setFromDate(edToDate.getText().toString());
     }
 
     private void updateAndInsertPlan(){
@@ -226,21 +226,20 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(CreatePlanActivity.this, R.layout.spinner_item, itemPlanType );
         langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spPlanType.setAdapter(langAdapter);
-        spPlanType.setSelection(langAdapter.getPosition(name));
+        int position = Integer.parseInt(item.getPlanType()) - 1 ;
+        spPlanType.setSelection(position);
+//        spPlanType.setSelection(langAdapter.getPosition(name));
         spPlanType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 switch (position){
                     case 0:
-                        type = "0";
-                        break;
-                    case 1:
                         type = "1";
                         break;
-                    case 2:
+                    case 1:
                         type = "2";
                         break;
-                    case 3:
+                    case 2:
                         type = "3";
                         break;
                 }
@@ -274,8 +273,11 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
 
     @OnClick(R.id.txtSave)
     public void onClickSave() {
-
-        updateAndInsertPlan();
+        if (TextUtils.isEmpty(edNameWo.getText().toString())){
+            Toast.makeText(CreatePlanActivity.this, "Tên kế hoạch không được để trống!", Toast.LENGTH_LONG).show();
+        }else {
+            updateAndInsertPlan();
+        }
     }
 
 

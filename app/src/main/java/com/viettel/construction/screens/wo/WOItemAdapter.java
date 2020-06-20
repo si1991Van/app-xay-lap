@@ -40,49 +40,49 @@ public class WOItemAdapter
         switch (woDTO.getState()){
             case VConstant.StateWO.Assign_cd:
                 holder.tvStatus.setText(context.getString(R.string.assign_cd));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Accept_cd:
                 holder.tvStatus.setText(context.getString(R.string.accept_cd));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Reject_cd:
                 holder.tvStatus.setText(context.getString(R.string.reject_cd));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
 
             case VConstant.StateWO.Assign_ft:
                 holder.tvStatus.setText(context.getString(R.string.assign_ft));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Accept_ft:
                 holder.tvStatus.setText(context.getString(R.string.accept_ft));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Reject_ft:
                 holder.tvStatus.setText(context.getString(R.string.reject_ft));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
 
             case VConstant.StateWO.Processing:
                 holder.tvStatus.setText(context.getString(R.string.processing));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Opinion_rq:
                 holder.tvStatus.setText(context.getString(R.string.opinion_rq));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Ok:
                 holder.tvStatus.setText(context.getString(R.string.ok));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Ng:
                 holder.tvStatus.setText(context.getString(R.string.ng));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Done:
                 holder.tvStatus.setText(context.getString(R.string.done));
-                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.c23));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             default:
                 break;

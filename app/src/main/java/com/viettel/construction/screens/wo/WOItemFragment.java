@@ -1,6 +1,7 @@
 package com.viettel.construction.screens.wo;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.AdapterExpandableListBase;
@@ -16,10 +19,16 @@ import com.viettel.construction.appbase.ExpandableListModel;
 import com.viettel.construction.appbase.FragmentListBase;
 import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.ResultInfo;
+import com.viettel.construction.model.api.plan.FilterDTORequest;
 import com.viettel.construction.model.api.plan.WoDTO;
+import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.plan.WoPlanDTO;
+import com.viettel.construction.model.api.version.AppParamDTO;
+import com.viettel.construction.screens.plan.CreatePlanActivity;
 import com.viettel.construction.server.api.APIType;
+import com.viettel.construction.server.api.ApiManager;
+import com.viettel.construction.server.service.IOnRequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +47,13 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
     @BindView(R.id.imgFilter)
     ImageView imgFilter;
 
-    String[] itemConstruction = {"HNM", "SL2", "TEST206", "COGTRIH3005"};
-    String[] itemType = {"dong", "mo", "noi bo"};
     private String scheduleType = "0";
 
     private WoPlanDTO item;
+    private List<AppParamDTO> lstApContructionType = new ArrayList<>();
+    private List<AppParamDTO> lstApWorkSrc = new ArrayList<>();
+    private SpinnerWoAdapter adapterApWorkSrc;
+    private SpinnerWoAdapter adapterApContructionType;
 
     @Override
     public void initData() {
@@ -53,6 +64,10 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
             lnFile.setVisibility(scheduleType.equals("1") ? View.GONE : View.VISIBLE);
             imgFilter.setVisibility(scheduleType.equals("1") ? View.INVISIBLE : View.VISIBLE);
         }
+        getForComboBox(VConstant.ParTypeWo.AP_CONSTRUCTION_TYPE);
+        getForComboBox(VConstant.ParTypeWo.AP_WORK_SRC);
+        spApWorkSrc();
+        spApConstructionType();
     }
 
     @Override
@@ -60,8 +75,6 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         try {
             super.onResume();
             loadData();
-            codeSpinner(itemConstruction, spConstruction);
-            codeSpinner(itemType, spTypeWo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,9 +158,14 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         return R.menu.menu_wo_status;
     }
     List<WoDTO> data;
+//    private String filterState;
+//    String apWorkSrc,
+//    String apConstructionType
+//    private String filterState;
+//    private String filterState;
+
     @Override
     public List<WoDTO> menuItemClick(int menuItem) {
-        //
 
         switch (menuItem) {
             default://case R.id.all:
@@ -202,15 +220,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         return data;
     }
 
-    private List<WoDTO> filterByStatus(String state, boolean isByMonth) {
-        List<WoDTO> dataSearch = new ArrayList<>();
-        for (WoDTO woDTO : listData) {
-            if (state.equals(woDTO.getState())){
-                dataSearch.add(woDTO);
-            }
-        }
-        return dataSearch;
-    }
+
 
     @Override
     public List<ExpandableListModel<String, WoDTO>> menuItemClickExpandableList(int menuItem) {
@@ -260,15 +270,43 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
 
     }
 
-    private void codeSpinner(String[] item, Spinner spinner){
-        ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, item );
-        langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(langAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void spApConstructionType(){
+
+        adapterApContructionType = new SpinnerWoAdapter(lstApContructionType, getContext());
+        spConstruction.setAdapter(adapterApContructionType);
+
+        spConstruction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-//
-                listData = filterByConstruction(adapterView.getItemAtPosition(position).toString());
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if (position == 0){
+                    data = listData;
+                }else {
+                    data = filterByApContructionType(lstApContructionType.get(position).getCode());
+                }
+                adapter.setListData(data);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }});
+    }
+
+    private void spApWorkSrc(){
+        adapterApWorkSrc = new SpinnerWoAdapter(lstApWorkSrc, getContext());
+        spTypeWo.setAdapter(adapterApWorkSrc);
+        spTypeWo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0){
+                    data = listData;
+                }else {
+                    data = filterByApWorkSrc(lstApContructionType.get(i).getCode());
+                }
+                adapter.setListData(data);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -278,15 +316,73 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         });
     }
 
-    private List<WoDTO> filterByConstruction(String name){
+    private List<WoDTO> filterByStatus(String state, boolean isByMonth) {
         List<WoDTO> dataSearch = new ArrayList<>();
         for (WoDTO woDTO : listData) {
-            if (name.equals(woDTO.getWoName())){
+            if (state.equals(woDTO.getState())){
                 dataSearch.add(woDTO);
             }
         }
         return dataSearch;
     }
 
+    private List<WoDTO> filterByApWorkSrc(String name){
+        List<WoDTO> dataSearch = new ArrayList<>();
+        for (WoDTO woDTO : listData) {
+            if (name.equals(String.valueOf(woDTO.getApWorkSrc()))){
+                dataSearch.add(woDTO);
+            }
+        }
+        return dataSearch;
+    }
+
+    private List<WoDTO> filterByApContructionType(String name){
+        List<WoDTO> dataSearch = new ArrayList<>();
+        for (WoDTO woDTO : listData) {
+            if (name.equals(String.valueOf(woDTO.getApConstructionType()))) {
+                dataSearch.add(woDTO);
+            }
+        }
+        return dataSearch;
+    }
+
+    private void getForComboBox(String parType){
+
+        WoDTORequest woDTORequest = new WoDTORequest();
+        woDTORequest.setSysUserRequest(VConstant.getUser());
+        FilterDTORequest filterDTORequest = new FilterDTORequest();
+        filterDTORequest.setParType(parType);
+        woDTORequest.setFilter(filterDTORequest);
+        ApiManager.getInstance().getForComboBox(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                WoDTOResponse response = WoDTOResponse.class.cast(result);
+                if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                    if (response.getLstDataForComboBox() != null){
+                        AppParamDTO paramDTO = new AppParamDTO();
+                        if (parType == VConstant.ParTypeWo.AP_WORK_SRC){
+                            lstApWorkSrc = response.getLstDataForComboBox();
+                            paramDTO.setName("Nguồn việc");
+                            lstApWorkSrc.add(0, paramDTO);
+                            adapterApWorkSrc.setData(response.getLstDataForComboBox());
+                        }else if (parType == VConstant.ParTypeWo.AP_CONSTRUCTION_TYPE){
+                            lstApContructionType = response.getLstDataForComboBox();
+                            paramDTO.setName("Loại công trình");
+                            lstApContructionType.add(0, paramDTO);
+
+                            adapterApContructionType.setData(response.getLstDataForComboBox());
+                        }
+                    }
+                }else {
+                    Toast.makeText(getContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                Toast.makeText(getContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

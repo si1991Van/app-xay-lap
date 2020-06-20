@@ -54,6 +54,11 @@ public class VConstant {
         public static final int TYPE_SEARCH = 9;
     }
 
+    public static class ParTypeWo {
+        public static final String AP_WORK_SRC = "AP_WORK_SRC";
+        public static final String AP_CONSTRUCTION_TYPE = "AP_CONSTRUCTION_TYPE";
+    }
+
     //TODO: Khi phát hành phải sửa thành false
     public static final boolean Debug = false;
 
@@ -79,7 +84,7 @@ public class VConstant {
     public static final int REQUEST_CODE_CAMERA = 101;
     //URL API
 //    public static final String BASE_URL = "http://10.61.19.230:9702/coms-service/service/";
-    public static final String BASE_URL = "http://10.61.18.161:8084/coms-service/service/";
+    public static final String BASE_URL = "http://10.61.18.229:8084/coms-service/service/";
 
     //real
 //    public static final String BASE_URL = "http://10.30.145.74:8752/coms-service/service/";
@@ -188,12 +193,11 @@ public class VConstant {
     public static final String END_URL_GET_ALL_WO = "woService/list";
     public static final String END_URL_GET_LIST_WO_BY_PLAN_ID = "woPlanService/getListWoByPlanId";
     //method WO
-    public static final String END_URL_SEARCH_WO = "";
-    public static final String END_URL_GET_LIST_CONSTRUCTION_WO = "woService/";
-    public static final String END_URL_GET_LIST_TYPE_WO = "woService/";
+    public static final String END_URL_GET_FOR_COMBOBOX = "woService/getForComboBox";
     public static final String END_URL_UPDATE_WO = "woService/update";
     public static final String END_URL_CHECKLIST_WO = "woService/listChecklists";
     public static final String END_URL_UPDATE_CHECKLIST_WO = "woService/updateChecklist";
+    //
 
 
     public static final String FORMAT_TIME_CURRENT = "yyyy-mm-dd'T'HH:mm:ss.SSS";

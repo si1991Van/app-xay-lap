@@ -524,4 +524,11 @@ public class BaseCameraActivity extends AppCompatActivity
         String currentDateandTime = sdf.format(currentTime);
         return currentDateandTime;
     }
+
+    public String setDataToday(){
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String currentDateandTime = sdf.format(currentTime);
+        return currentDateandTime;
+    }
 }

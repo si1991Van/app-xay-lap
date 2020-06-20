@@ -49,12 +49,8 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
     private Context context;
     private LayoutInflater inflater;
     private List<WoMappingChecklistDTO> list;
-    private List<String> lstImg = new ArrayList<>();
     private String state;
     private CallbackInterface callbackInterface;
-    private int post;
-    private String path;
-//    private ViewHolder viewHolder;
 
 
     public ChecklistsWoAdapter(Context context, List<WoMappingChecklistDTO> list, String state, CallbackInterface callback) {
@@ -74,22 +70,11 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        viewHolder = holder;
         holder.bindData(list.get(position), state);
-        holder.btnCamera.setOnClickListener(view -> {
-            callbackInterface.onHandleSelection(position);
+        holder.itemView.setOnClickListener(view -> {
+            callbackInterface.onHandleSelection(list.get(position));
         });
-        if (path == null) return;
-        if (post == position) {
-            lstImg.clear();
-            for (ImgeChecklistDTO dto: lstImgChecklist) {
-                if (dto.getPostion() == position ){
-                    lstImg.add(dto.getStringBase64());
-                    list.get(position).setLstImgs(lstImg);
-                }
-            }
-            holder.mAdapter.setData(list.get(position).getLstImgs());
-        }
+//        holder.mAdapter.setData(lstImgChecklist);
     }
 
     @Override
@@ -102,25 +87,22 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
         notifyDataSetChanged();
     }
 
-    private ImgeChecklistDTO imgeChecklistDTO = new ImgeChecklistDTO();
-    private List<ImgeChecklistDTO> lstImgChecklist = new ArrayList<>();
 
-    public void setListDataImgs(String path, int pos){
-        this.post = pos;
-        this.path = path;
-        imgeChecklistDTO.setPostion(pos);
-        imgeChecklistDTO.setStringBase64(path);
-        lstImgChecklist.add(imgeChecklistDTO);
-        notifyDataSetChanged();
+//    private List<String> lstImgChecklist = new ArrayList<>();
 
-    }
+//    public void setListDataImgs(List<String> lstString, int post){
+//        lstImgChecklist = lstString;
+////        notifyItemChanged(post);
+//        notifyItemInserted(post);
+//
+//    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView txtCode;
-        private ImageView btnCamera;
+//        private ImageView btnCamera;
         private Spinner spStatus;
-        private RecyclerView rvData;
+//        private RecyclerView rvData;
         private String[] itemStatus = {"Mới", "Hoàn thành"};
 
         private List<String> mList = new ArrayList<>();
@@ -129,33 +111,33 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             txtCode = itemView.findViewById(R.id.txtCode);
-            btnCamera = itemView.findViewById(R.id.btn_camera);
+//            btnCamera = itemView.findViewById(R.id.btn_camera);
             spStatus = itemView.findViewById(R.id.spStatus);
-            rvData = itemView.findViewById(R.id.rv_data);
-            btnCamera.setOnClickListener(view -> {
-//                if (checkRuntimePermission()) {
-//                    onLaunchCamera();
-//                }
-            });
+//            rvData = itemView.findViewById(R.id.rv_data);
+//            btnCamera.setOnClickListener(view -> {
+////                if (checkRuntimePermission()) {
+////                    onLaunchCamera();
+////                }
+//            });
         }
 
         public void bindData(WoMappingChecklistDTO item, String state){
             if (item != null){
-                btnCamera.setEnabled(state == VConstant.StateWO.Processing ? false : true);
+//                btnCamera.setEnabled(state == VConstant.StateWO.Processing ? false : true);
                 txtCode.setText(item.getChecklistName());
                 spStatus.setSelection(item.getState() == "NEW" ? 0 : 1);
                 codeSpinner(itemStatus, spStatus, item);
-                initAdapterImage();
+//                initAdapterImage();
             }
         }
 
-        private void initAdapterImage(){
-            mAdapter = new ImageCheckListWoAdapter(mList, context);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            rvData.setLayoutManager(linearLayoutManager);
-            rvData.setAdapter(mAdapter);
-        }
+//        private void initAdapterImage(){
+//            mAdapter = new ImageCheckListWoAdapter(mList, context);
+//            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+//            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//            rvData.setLayoutManager(linearLayoutManager);
+//            rvData.setAdapter(mAdapter);
+//        }
 
         private void codeSpinner(String[] item, Spinner spinner, WoMappingChecklistDTO dto){
             ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(context, R.layout.spinner_item, item );
@@ -182,7 +164,7 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
 
     public interface CallbackInterface{
 
-        void onHandleSelection(int pos);
+        void onHandleSelection(WoMappingChecklistDTO dto);
     }
 
 }

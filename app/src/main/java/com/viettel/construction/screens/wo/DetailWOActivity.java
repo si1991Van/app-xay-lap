@@ -20,16 +20,19 @@ import com.viettel.construction.appbase.BaseCameraActivity;
 import com.viettel.construction.common.App;
 import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.ConstructionAcceptanceCertDetailDTO;
+import com.viettel.construction.model.api.plan.FilterDTORequest;
 import com.viettel.construction.model.api.plan.WoDTO;
 import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.plan.WoPlanDTOResponse;
+import com.viettel.construction.model.api.version.AppParamDTO;
 import com.viettel.construction.screens.custom.dialog.DialogCancel;
 import com.viettel.construction.screens.custom.dialog.DialogPleaseComment;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,6 +98,9 @@ public class DetailWOActivity extends BaseCameraActivity implements DialogCancel
     private WoDTORequest woDTORequest = new WoDTORequest();
     private String type = "";
 
+    private List<AppParamDTO> lstParamDTOS;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,11 +112,13 @@ public class DetailWOActivity extends BaseCameraActivity implements DialogCancel
             lnBottom.setVisibility(type.equals("1") ? View.GONE : View.VISIBLE);
             txtCheckList.setVisibility(type.equals("1") ? View.GONE : View.VISIBLE);
             txtCheckList.setPaintFlags(txtCheckList.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            if (itemWoDTO.getState().equals(VConstant.StateWO.Processing)) {
+                getForComboBox();
+            }
         }
         dialogCancel = new DialogCancel(this, this);
         dialogCancel.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialogPleaseComment = new DialogPleaseComment(this, this);
-        dialogPleaseComment.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         setDataView();
     }
 
@@ -192,6 +200,13 @@ public class DetailWOActivity extends BaseCameraActivity implements DialogCancel
                     tvAccept.setVisibility(View.GONE);
                     tvReject.setVisibility(View.GONE);
                     break;
+                    default:
+                        tvFinish.setVisibility(View.GONE);
+                        tvReport.setVisibility(View.GONE);
+                        tvProcess.setVisibility(View.GONE);
+                        tvAccept.setVisibility(View.GONE);
+                        tvReject.setVisibility(View.GONE);
+                        break;
             }
         }else if (itemWoDTO.getFtId() != VConstant.getUser().getSysUserId()){
             // check CD
@@ -202,7 +217,7 @@ public class DetailWOActivity extends BaseCameraActivity implements DialogCancel
     private void updateWo(String state, String content, String type, String userId){
         itemWoDTO.setState(state);
         itemWoDTO.setAcceptTime(getDataToday());
-//        itemWoDTO.seton(content);
+//        itemWoDTO.set(content);
 //        itemWoDTO.setAcceptTime(type);
 //        itemWoDTO.setAcceptTime(userId);
         woDTORequest.setWoDTO(itemWoDTO);
@@ -212,7 +227,6 @@ public class DetailWOActivity extends BaseCameraActivity implements DialogCancel
                 try {
                     WoPlanDTOResponse response = WoPlanDTOResponse.class.cast(result);
                     if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
-                        App.getInstance().setNeedUpdateRefund(true);
                         Toast.makeText(DetailWOActivity.this, getString(R.string.update_plan), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
@@ -259,6 +273,8 @@ public class DetailWOActivity extends BaseCameraActivity implements DialogCancel
 
     @OnClick(R.id.tv_Report)
     public void onReport(){
+        dialogPleaseComment = new DialogPleaseComment(this, lstParamDTOS,this);
+        dialogPleaseComment.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogPleaseComment.show();
     }
 
@@ -288,11 +304,44 @@ public class DetailWOActivity extends BaseCameraActivity implements DialogCancel
 
     @OnClick(R.id.txtCheckList)
     public void onClickCheckList(){
-        //
         Intent intent = new Intent(DetailWOActivity.this, CheckListWOActivity.class);
         intent.putExtra("ITEM_WO", itemWoDTO);
         startActivity(intent);
     }
 
+
+    private void getForComboBox(){
+        woDTORequest.setSysUserRequest(VConstant.getUser());
+        FilterDTORequest filterDTORequest = new FilterDTORequest();
+        filterDTORequest.setParType("AP_OPINION_TYPE");
+        woDTORequest.setFilter(filterDTORequest);
+
+        ApiManager.getInstance().getForComboBox(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                try {
+                    WoDTOResponse response = WoDTOResponse.class.cast(result);
+                    if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                        if (response.getLstDataForComboBox() != null){
+                            AppParamDTO dto = new AppParamDTO();
+                            lstParamDTOS = response.getLstDataForComboBox();
+                            dto.setName("Loại ý kiến");
+                            lstParamDTOS.add(0, dto);
+                        }
+                    } else {
+                        Toast.makeText(DetailWOActivity.this, getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(DetailWOActivity.this, getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                Toast.makeText(DetailWOActivity.this, getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

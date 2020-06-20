@@ -52,22 +52,7 @@ public class PlanningItemFragment extends FragmentListBase<WoPlanDTO, WoPlanDTOR
     public void onResume() {
         try {
             super.onResume();
-            // load lại nếu như có công việc đang thực hiện chuyển sang tạm dừng
-            if (App.getInstance().isNeedUpdate()) {
-                loadData();
-            }
-            // load lại nếu có công việc tạo mới
-            if (App.getInstance().isNeedUpdateAfterCreateNewWork()) {
-                loadData();
-            }
-            // load lại nếu có công việc thay đổi sau khi xem detail
-            if (App.getInstance().isNeedUpdateAfterSaveDetail()) {
-                loadData();
-            }
-            // load lại nếu có công việc đang tạm dừng chuyển sang tiếp tục thực hiện
-            if (App.getInstance().isNeedUpdateAfterContinue()) {
-                loadData();
-            }
+            loadData();
 
         } catch (Exception e) {
             e.printStackTrace();

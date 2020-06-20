@@ -2428,17 +2428,6 @@ public class ApiManager {
                 , requestListener);
     }
 
-//    public <T> void getListWO(final Class<T> clazz, final IServerResultListener requestListener){
-//        String url = getUrl(VConstant.END_URL_GET_ALL_WO);
-//        Map<String, String> header = new HashMap<>();
-//        header.put("Content-Type", "application/json");
-//        Log.e("Tag: ", url);
-//        ApiClient.getInstance().post1(url
-//                , clazz, header
-//                , convertModelRequestListWo(woDTORequest)
-//                , requestListener);
-//    }
-
     public <T> void getListWO(WoDTORequest woDTORequest, final Class<T> clazz, final IServerResultListener requestListener){
         String url = getUrl(VConstant.END_URL_GET_ALL_WO);
         Map<String, String> header = new HashMap<>();
@@ -2518,32 +2507,14 @@ public class ApiManager {
                 , requestListener);
     }
 
-    public  <T> void getListConstructionWo(final Class<T> clazz, final IOnRequestListener requestListener) {
-        String url = getUrl(VConstant.END_URL_GET_LIST_CONSTRUCTION_WO);
+    public  <T> void getForComboBox(WoDTORequest woDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_GET_FOR_COMBOBOX);
         Map<String, String> header = new HashMap<>();
         Log.d(TAG, "updateAcceptance - url : " + url);
         header.put("Content-Type", "application/json");
         ApiClient.getInstance().post(url
                 , clazz, header
-                , convertModelRequestListPlan()
+                , convertModelRequestWo(woDTORequest)
                 , requestListener);
     }
-
-    public  <T> void getListTypeWo(final Class<T> clazz, final IOnRequestListener requestListener) {
-        String url = getUrl(VConstant.END_URL_GET_LIST_TYPE_WO);
-        Map<String, String> header = new HashMap<>();
-        Log.d(TAG, "updateAcceptance - url : " + url);
-        header.put("Content-Type", "application/json");
-        ApiClient.getInstance().post(url
-                , clazz, header
-                , convertModelRequestListPlan()
-                , requestListener);
-    }
-
-//    private String convertModelRequestWo(WoDTORequest woDTORequest) {
-//        Gson gson = new Gson();
-//        String json = gson.toJson(woDTORequest);
-//        Log.d(TAG, "convertModelRequestUpdateAcceptance - json :  " + json);
-//        return json;
-//    }
 }
