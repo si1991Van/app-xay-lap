@@ -80,6 +80,7 @@ android:paddingRight="4dp">
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ellipsize="end"
+            android:text="3/10"
             android:maxLines="2" />
 
     </LinearLayout>

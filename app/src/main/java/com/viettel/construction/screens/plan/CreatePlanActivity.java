@@ -226,9 +226,10 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(CreatePlanActivity.this, R.layout.spinner_item, itemPlanType );
         langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spPlanType.setAdapter(langAdapter);
-        int position = Integer.parseInt(item.getPlanType()) - 1 ;
-        spPlanType.setSelection(position);
-//        spPlanType.setSelection(langAdapter.getPosition(name));
+        if (!name.equals("Tuần")) {
+            int position = Integer.parseInt(item.getPlanType()) - 1;
+            spPlanType.setSelection(position);
+        }
         spPlanType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {

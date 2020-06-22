@@ -16,20 +16,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.viettel.construction.R;
-import com.viettel.construction.appbase.BaseCameraActivity;
 import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.plan.WoDTO;
 import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
-import com.viettel.construction.model.api.plan.WoPlanDTOResponse;
+import com.viettel.construction.model.api.version.AppParamDTO;
 import com.viettel.construction.screens.custom.dialog.DialogCancel;
-import com.viettel.construction.screens.wo.DetailWOActivity;
+import com.viettel.construction.screens.custom.dialog.DialogPleaseComment;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -85,11 +85,12 @@ public class InfoItemWoFragment extends Fragment {
 
     private WoDTO itemWoDTO;
     private WoDTORequest woDTORequest = new WoDTORequest();
+    private List<AppParamDTO> lstParamDTOS;
 
-
-    public  InfoItemWoFragment(WoDTO dto)  {
+    public  InfoItemWoFragment(WoDTO dto, List<AppParamDTO> lst)  {
         super();
         this.itemWoDTO = dto;
+        this.lstParamDTOS = lst;
     }
 
     @Nullable
@@ -193,7 +194,7 @@ public class InfoItemWoFragment extends Fragment {
     private void updateWo(String state, String content){
         itemWoDTO.setState(state);
         itemWoDTO.setAcceptTime(getDataToday());
-        itemWoDTO.setOpinionContent(content);
+        woDTORequest.setOpinionContent(content);
         woDTORequest.setWoDTO(itemWoDTO);
         ApiManager.getInstance().updateWo(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
             @Override
@@ -201,14 +202,14 @@ public class InfoItemWoFragment extends Fragment {
                 try {
                     WoDTOResponse response = WoDTOResponse.class.cast(result);
                     if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
-                        Toast.makeText(getContext(), getString(R.string.update_plan), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.updated), Toast.LENGTH_SHORT).show();
                         getActivity().finish();
                     } else {
-                        Toast.makeText(getContext(), getString(R.string.update_fail_plan), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.update_fail), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(), getString(R.string.update_fail_plan), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.update_fail), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -218,6 +219,39 @@ public class InfoItemWoFragment extends Fragment {
             }
         });
 
+    }
+
+    private void updateProcessing(String state, String content, String type, String userId){
+        itemWoDTO.setState(state);
+        itemWoDTO.setAcceptTime(getDataToday());
+        woDTORequest.setOpinionContent(content);
+        woDTORequest.setOpinionType(type);
+        woDTORequest.setOpinionObject(userId);
+        woDTORequest.setWoDTO(itemWoDTO);
+
+
+        ApiManager.getInstance().updateOpinion(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                try {
+                    WoDTOResponse response = WoDTOResponse.class.cast(result);
+                    if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                        Toast.makeText(getContext(), getString(R.string.updated), Toast.LENGTH_SHORT).show();
+                        getActivity().finish();
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.update_fail), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), getString(R.string.update_fail), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+
+            }
+        });
     }
 
     @OnClick(R.id.tv_Accept)
@@ -247,6 +281,18 @@ public class InfoItemWoFragment extends Fragment {
         });
         dialogCancel.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogCancel.show();
+    }
+
+    @OnClick(R.id.tv_Report)
+    public void onReport(){
+        DialogPleaseComment dialogPleaseComment = new DialogPleaseComment(getContext(), lstParamDTOS, new DialogPleaseComment.OnClickDialogPleaseComment() {
+            @Override
+            public void OnClickDialogPleaseComment(String type, String content, String userId) {
+                updateProcessing(VConstant.StateWO.Opinion_rq, content, type, String.valueOf(VConstant.getUser().getSysUserId()));
+            }
+        });
+        dialogPleaseComment.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogPleaseComment.show();
     }
 
 

@@ -17,6 +17,7 @@ import com.viettel.construction.model.api.plan.WoDTO;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class WOItemAdapter
         extends AdapterFragmentListBase<WoDTO,
@@ -119,10 +120,11 @@ public class WOItemAdapter
 
         public WOViewHolder(View itemView) {
             super(itemView);
-            tvCodeWo = itemView.findViewById(R.id.tv_code_wo);
-            tvName = itemView.findViewById(R.id.tv_name_wo);
-            tvProgress = itemView.findViewById(R.id.tv_performer);
-            tvStatus = itemView.findViewById(R.id.tv_status);
+            ButterKnife.bind(itemView);
+//            tvCodeWo = itemView.findViewById(R.id.tv_code_wo);
+//            tvName = itemView.findViewById(R.id.tv_name_wo);
+//            tvProgress = itemView.findViewById(R.id.tv_performer);
+//            tvStatus = itemView.findViewById(R.id.tv_status);
         }
 
 

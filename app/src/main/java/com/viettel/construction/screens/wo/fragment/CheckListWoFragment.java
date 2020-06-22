@@ -6,9 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +22,6 @@ import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
 import com.viettel.construction.screens.custom.dialog.CustomProgress;
 import com.viettel.construction.screens.plan.UpdateImageCheckListWoActivity;
-import com.viettel.construction.screens.wo.CheckListWOActivity;
 import com.viettel.construction.screens.wo.adapter.ChecklistsWoAdapter;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
@@ -70,7 +66,7 @@ public class CheckListWoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_checklist_wo, container, false);
         ButterKnife.bind(this, view);
 
-        btnSave.setVisibility(woDTO.getState().equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.INVISIBLE);
+        btnSave.setVisibility(woDTO.getState().equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.GONE);
         initAdapterCheckLists();
         getCheckListWo();
         return view;
@@ -79,10 +75,12 @@ public class CheckListWoFragment extends Fragment {
 
 
     private void initAdapterCheckLists(){
-        adapter = new ChecklistsWoAdapter(getContext(), lstChecklistsOfWo, woDTO.getState(), (object) -> {
+        adapter = new ChecklistsWoAdapter(getContext(), lstChecklistsOfWo, woDTO.getState(), (object, position) -> {
             woMappingChecklistDTO = object;
             Intent intent = new Intent(getContext(), UpdateImageCheckListWoActivity.class);
             intent.putExtra("WoMappingChecklistDTO", woMappingChecklistDTO);
+            intent.putExtra("State", woDTO.getState());
+//            intent.putExtra("Position", position);
             startActivityForResult(intent, 123);
 
         });

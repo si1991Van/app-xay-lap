@@ -6,17 +6,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.viettel.construction.model.api.plan.WoDTO;
+import com.viettel.construction.model.api.version.AppParamDTO;
 import com.viettel.construction.screens.wo.fragment.CheckListWoFragment;
 import com.viettel.construction.screens.wo.fragment.InfoItemWoFragment;
 import com.viettel.construction.screens.wo.fragment.LogWorkWoFragment;
 
+import java.util.List;
+
 public class DetailItemWoPagerAdapter extends FragmentStatePagerAdapter {
 
     private WoDTO dto;
+    private List<AppParamDTO> lstParamDTOS;
 
-    public DetailItemWoPagerAdapter(FragmentManager fm, WoDTO dto) {
+    public DetailItemWoPagerAdapter(FragmentManager fm, WoDTO dto, List<AppParamDTO> list) {
         super(fm);
         this.dto = dto;
+        this.lstParamDTOS = list;
     }
 
     @Override
@@ -24,7 +29,7 @@ public class DetailItemWoPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment ;
         switch (position){
             case 0:
-                fragment = new InfoItemWoFragment(dto);
+                fragment = new InfoItemWoFragment(dto, lstParamDTOS);
                 return fragment;
             case 1:
                 fragment = new CheckListWoFragment(dto);

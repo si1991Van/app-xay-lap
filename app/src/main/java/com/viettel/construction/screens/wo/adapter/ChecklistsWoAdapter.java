@@ -45,7 +45,7 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindData(list.get(position), state);
         holder.itemView.setOnClickListener(view -> {
-            callbackInterface.onHandleSelection(list.get(position));
+            callbackInterface.onHandleSelection(list.get(position), position);
         });
 //        holder.mAdapter.setData(lstImgChecklist);
     }
@@ -74,18 +74,20 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
 
         private TextView txtCode;
 //        private ImageView btnCamera;
-        private Spinner spStatus;
+//        private Spinner spStatus;
 //        private RecyclerView rvData;
-        private String[] itemStatus = {"Mới", "Hoàn thành"};
-
-        private List<String> mList = new ArrayList<>();
-        private ImageCheckListWoAdapter mAdapter;
+        private TextView txtStatus;
+//        private String[] itemStatus = {"Mới", "Hoàn thành"};
+//
+//        private List<String> mList = new ArrayList<>();
+//        private ImageCheckListWoAdapter mAdapter;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtCode = itemView.findViewById(R.id.txtCode);
+            txtStatus = itemView.findViewById(R.id.txtStatus);
 //            btnCamera = itemView.findViewById(R.id.btn_camera);
-            spStatus = itemView.findViewById(R.id.spStatus);
+//            spStatus = itemView.findViewById(R.id.spStatus);
 //            rvData = itemView.findViewById(R.id.rv_data);
 //            btnCamera.setOnClickListener(view -> {
 ////                if (checkRuntimePermission()) {
@@ -98,8 +100,19 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
             if (item != null){
 //                btnCamera.setEnabled(state == VConstant.StateWO.Processing ? false : true);
                 txtCode.setText(item.getChecklistName());
-                spStatus.setSelection(item.getState() == "NEW" ? 0 : 1);
-                codeSpinner(itemStatus, spStatus, item);
+                switch (item.getState()){
+                    case "NEW":
+                        txtStatus.setText("Mới");
+                        break;
+                    case "DONE":
+                        txtStatus.setText("Hoàn thành");
+                        break;
+                        default:
+                            txtStatus.setText("Mới");
+                            break;
+                }
+//                spStatus.setSelection(item.getState() == "NEW" ? 0 : 1);
+//                codeSpinner(itemStatus, spStatus, item);
 //                initAdapterImage();
             }
         }
@@ -112,32 +125,32 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
 //            rvData.setAdapter(mAdapter);
 //        }
 
-        private void codeSpinner(String[] item, Spinner spinner, WoMappingChecklistDTO dto){
-            ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(context, R.layout.spinner_item, item );
-            langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-            spinner.setAdapter(langAdapter);
-
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                    if (adapterView.getItemAtPosition(position).toString().equals("Mới")){
-                        dto.setState("NEW");
-                    }else {
-                        dto.setState("DONE");
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-        }
+//        private void codeSpinner(String[] item, Spinner spinner, WoMappingChecklistDTO dto){
+//            ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(context, R.layout.spinner_item, item );
+//            langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+//            spinner.setAdapter(langAdapter);
+//
+//            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//                    if (adapterView.getItemAtPosition(position).toString().equals("Mới")){
+//                        dto.setState("NEW");
+//                    }else {
+//                        dto.setState("DONE");
+//                    }
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                }
+//            });
+//        }
     }
 
     public interface CallbackInterface{
 
-        void onHandleSelection(WoMappingChecklistDTO dto);
+        void onHandleSelection(WoMappingChecklistDTO dto, int position);
     }
 
 }

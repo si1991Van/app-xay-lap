@@ -7,15 +7,14 @@
 
     <TextView
         android:id="@+id/txtName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:text="Tên check list"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/cbPlan"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +32,9 @@
         android:id="@+id/lnStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_16"
+        android:layout_marginLeft="@dimen/dimen_16"
+        android:layout_marginRight="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_16"
         app:layout_constraintEnd_toEndOf="@+id/txtCode"
         app:layout_constraintStart_toStartOf="@+id/txtCode"
         app:layout_constraintTop_toBottomOf="@+id/txtCode"
@@ -51,31 +52,22 @@
             android:layout_height="@dimen/dimen_50"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/dimen_16"
-            android:layout_marginRight="@dimen/dimen_16"
-            android:background="@drawable/searchbox_border">
-            <Spinner
-                android:id="@+id/spStatus"
+            android:layout_marginRight="@dimen/dimen_16">
+<!--            <Spinner-->
+<!--                android:id="@+id/spStatus"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                />-->
+            <TextView
+                android:id="@+id/txtStatus"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="moi"
+                android:textColor="@color/colorPrimary"
                 />
         </LinearLayout>
-<!--        <ImageView-->
-<!--            android:id="@+id/btn_camera"-->
-<!--            android:layout_width="@dimen/dimen_32"-->
-<!--            android:layout_height="@dimen/dimen_32"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:background="?android:attr/selectableItemBackground"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:src="@drawable/ic_camera" />-->
     </LinearLayout>
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rv_data"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/lnStatus"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/lnStatus"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/lnStatus"/>-->
 
     <View
         android:id="@+id/view"
@@ -87,4 +79,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_data" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_greater" />
 </androidx.constraintlayout.widget.ConstraintLayout>
