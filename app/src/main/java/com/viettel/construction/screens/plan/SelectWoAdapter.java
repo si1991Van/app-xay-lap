@@ -39,11 +39,14 @@ public class SelectWoAdapter extends RecyclerView.Adapter<SelectWoAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindData(woMappingPlanDTOList.get(position));
-//        holder.cbPlan.setChecked();
         holder.cbPlan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                listAdd.add(woMappingPlanDTOList.get(position));
+                if (b){
+                    listAdd.add(woMappingPlanDTOList.get(position));
+                }else {
+                    listAdd.remove(woMappingPlanDTOList.get(position));
+                }
             }
         });
     }

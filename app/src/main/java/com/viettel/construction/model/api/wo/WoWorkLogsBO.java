@@ -8,6 +8,7 @@ public class WoWorkLogsBO {
     private String userCreated;
     private String content;
     private int status;
+    private String logTimeStr;
 
 
     public long getId() {
@@ -64,5 +65,13 @@ public class WoWorkLogsBO {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getLogTimeStr() {
+        return logTimeStr;
+    }
+
+    public void setLogTimeStr(String logTimeStr) {
+        this.logTimeStr = logTimeStr;
     }
 }
