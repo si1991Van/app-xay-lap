@@ -86,11 +86,15 @@ public class InfoItemWoFragment extends Fragment {
     private WoDTO itemWoDTO;
     private WoDTORequest woDTORequest = new WoDTORequest();
     private List<AppParamDTO> lstParamDTOS;
+    private String type;
+    private DialogCancel dialogCancel;
+    private DialogPleaseComment dialogPleaseComment;
 
-    public  InfoItemWoFragment(WoDTO dto, List<AppParamDTO> lst)  {
+    public  InfoItemWoFragment(WoDTO dto, List<AppParamDTO> lst, String type)  {
         super();
         this.itemWoDTO = dto;
         this.lstParamDTOS = lst;
+        this.type = type;
     }
 
     @Nullable
@@ -98,7 +102,7 @@ public class InfoItemWoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_info_item_wo, container, false);
         ButterKnife.bind(this, view);
-
+        lnBottom.setVisibility(type.equals("1") ? View.GONE : View.VISIBLE);
         setDataView(itemWoDTO);
         return view;
     }
@@ -271,11 +275,12 @@ public class InfoItemWoFragment extends Fragment {
 
     @OnClick(R.id.tv_Reject)
     public void onReject(){
-        DialogCancel dialogCancel = new DialogCancel(getContext(), s -> {
+        dialogCancel = new DialogCancel(getContext(), s -> {
             if (TextUtils.isEmpty(s)){
                 Toast.makeText(getContext(), "Nội dung không được để trống", Toast.LENGTH_LONG).show();
             }else {
                 updateWo(VConstant.StateWO.Reject_ft, s);
+                dialogCancel.dismiss();
             }
 
         });
@@ -285,10 +290,17 @@ public class InfoItemWoFragment extends Fragment {
 
     @OnClick(R.id.tv_Report)
     public void onReport(){
-        DialogPleaseComment dialogPleaseComment = new DialogPleaseComment(getContext(), lstParamDTOS, new DialogPleaseComment.OnClickDialogPleaseComment() {
+        dialogPleaseComment = new DialogPleaseComment(getContext(), lstParamDTOS, new DialogPleaseComment.OnClickDialogPleaseComment() {
             @Override
             public void OnClickDialogPleaseComment(String type, String content, String userId) {
-                updateProcessing(VConstant.StateWO.Opinion_rq, content, type, String.valueOf(VConstant.getUser().getSysUserId()));
+                if (TextUtils.isEmpty(content)){
+                    Toast.makeText(getContext(), "Nội dung không được để trống", Toast.LENGTH_LONG).show();
+                }else if (type.equals("Loại ý kiến")){
+                    Toast.makeText(getContext(), "Phải chọn loại ý kiến!", Toast.LENGTH_LONG).show();
+                }else {
+                    updateProcessing(VConstant.StateWO.Opinion_rq, content, type, String.valueOf(VConstant.getUser().getSysUserId()));
+                    dialogPleaseComment.dismiss();
+                }
             }
         });
         dialogPleaseComment.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -42,6 +42,7 @@
         android:layout_centerHorizontal="true"
         android:paddingLeft="@dimen/dimen_100"
         android:paddingRight="@dimen/dimen_100"
+        android:visibility="gone"
         android:layout_margin="@dimen/dimen_15"
         android:textColor="@color/colorWhite"
         android:text="Lưu lại" />

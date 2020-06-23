@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.BaseCameraActivity;
 import com.viettel.construction.common.VConstant;
+import com.viettel.construction.model.api.plan.WoDTO;
 import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
@@ -56,6 +57,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     private String filePath = "";
     private List<String> lstImg = new ArrayList<>();
     private WoMappingChecklistDTO dto;
+    private WoDTO woDTO;
     private ImageCheckListWoAdapter mAdapter;
     private String state;
     private int position;
@@ -70,7 +72,8 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             dto = (WoMappingChecklistDTO) bundle.getSerializable("WoMappingChecklistDTO");
-            state = bundle.getString("State");
+            woDTO = (WoDTO) bundle.getSerializable("WoDTO");
+            state = woDTO.getState();
 //            position = bundle.getInt("Position");
             if (dto.getLstImgs() != null && dto.getLstImgs().size() > 0) {
                 lstImg = dto.getLstImgs();
@@ -106,6 +109,8 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(langAdapter);
 
+        spinner.setEnabled(state.equals(VConstant.StateWO.Processing) ? true : false);
+        spinner.setClickable(state.equals(VConstant.StateWO.Processing) ? true : false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -162,6 +167,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         List<WoMappingChecklistDTO> woMappingChecklistDTOS = new ArrayList<>();
         woMappingChecklistDTOS.add(dto);
         woDTORequest.setLstChecklistsOfWo(woMappingChecklistDTOS);
+        woDTORequest.setWoDTO(woDTO);
         ApiManager.getInstance().updateCheckListWo(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
             @Override
             public <T> void onResponse(T result) {

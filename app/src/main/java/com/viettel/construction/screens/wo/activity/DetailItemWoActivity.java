@@ -69,7 +69,7 @@ public class DetailItemWoActivity extends BaseCameraActivity {
     }
 
     private void initView(){
-        viewPagerAdapter = new DetailItemWoPagerAdapter(getSupportFragmentManager(), itemWoDTO, lstParamDTOS);
+        viewPagerAdapter = new DetailItemWoPagerAdapter(getSupportFragmentManager(), itemWoDTO, lstParamDTOS, type);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
