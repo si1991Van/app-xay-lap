@@ -38,6 +38,12 @@ public class TabPageExWarehouse_ItemFragment extends FragmentListBase<SynStockTr
                     new IntentFilter(ParramConstant.ExWarehouseReload));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
     private BroadcastReceiver receiverReLoading = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

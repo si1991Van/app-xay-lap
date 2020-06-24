@@ -44,6 +44,12 @@ public class DashboardListSuperviserFragment
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    @Override
     protected boolean allowExpandableList() {
         return true;
     }

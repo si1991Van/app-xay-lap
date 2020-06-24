@@ -1,13 +1,18 @@
 package com.viettel.construction.screens.wo;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.AdapterExpandableListBase;
@@ -21,7 +26,10 @@ import com.viettel.construction.model.api.plan.WoDTO;
 import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.plan.WoPlanDTO;
+import com.viettel.construction.model.api.plan.WoPlanDTORequest;
+import com.viettel.construction.model.api.plan.WoPlanDTOResponse;
 import com.viettel.construction.model.api.version.AppParamDTO;
+import com.viettel.construction.screens.plan.CreatePlanActivity;
 import com.viettel.construction.screens.wo.activity.DetailItemWoActivity;
 import com.viettel.construction.screens.wo.adapter.SpinnerWoAdapter;
 import com.viettel.construction.screens.wo.adapter.WOItemAdapter;
@@ -36,6 +44,10 @@ import butterknife.BindView;
 
 public class WOItemFragment extends FragmentListBase<WoDTO,
         WoDTOResponse> {
+
+    @Nullable
+    @BindView(R.id.txtHeader)
+    TextView txtHeader;
 
     @BindView(R.id.sp_construction)
     Spinner spConstruction;
@@ -62,18 +74,25 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
             item = (WoPlanDTO) getArguments().getSerializable("PLAN_WO");
             lnFile.setVisibility(scheduleType.equals("1") ? View.GONE : View.VISIBLE);
             imgFilter.setVisibility(scheduleType.equals("1") ? View.INVISIBLE : View.VISIBLE);
+
+        }else {
+            getForComboBox(VConstant.ParTypeWo.AP_CONSTRUCTION_TYPE);
+            getForComboBox(VConstant.ParTypeWo.AP_WORK_SRC);
+            spApWorkSrc();
+            spApConstructionType();
         }
-        getForComboBox(VConstant.ParTypeWo.AP_CONSTRUCTION_TYPE);
-        getForComboBox(VConstant.ParTypeWo.AP_WORK_SRC);
-        spApWorkSrc();
-        spApConstructionType();
     }
+
 
     @Override
     public void onResume() {
         try {
             super.onResume();
-            loadData();
+            if (scheduleType.equals("1")) {
+                getListWoByPlanId();
+            }else {
+                loadData();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,11 +176,6 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         return R.menu.menu_wo_status;
     }
     List<WoDTO> data;
-//    private String filterState;
-//    String apWorkSrc,
-//    String apConstructionType
-//    private String filterState;
-//    private String filterState;
 
     @Override
     public List<WoDTO> menuItemClick(int menuItem) {
@@ -371,6 +385,37 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
 
                             adapterApContructionType.setData(response.getLstDataForComboBox());
                         }
+                    }
+                }else {
+                    Toast.makeText(getContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                Toast.makeText(getContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void getListWoByPlanId(){
+
+        WoPlanDTORequest woPlanDTORequest = new WoPlanDTORequest();
+        woPlanDTORequest.setSysUserRequest(VConstant.getUser());
+        woPlanDTORequest.setWoPlanId(item.getId());
+        woPlanDTORequest.setWoPlanDTO(item);
+        ApiManager.getInstance().geListWoByPlanId(woPlanDTORequest, WoPlanDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                WoPlanDTOResponse response = WoPlanDTOResponse.class.cast(result);
+                if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                    if (response.getLstWosOfPlan() != null){
+                        listData = response.getLstWosOfPlan();
+                        adapter.setListData(listData);
+                        adapter.notifyDataSetChanged();
+                        title = "Tất cả (" + listData.size() + ")";
+                        txtHeader.setText(title);
                     }
                 }else {
                     Toast.makeText(getContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show();

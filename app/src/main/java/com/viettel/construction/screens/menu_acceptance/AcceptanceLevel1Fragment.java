@@ -35,6 +35,12 @@ public class AcceptanceLevel1Fragment extends
                     new IntentFilter(ParramConstant.AcceptanceLevelReload1));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
     private BroadcastReceiver receiverReLoading = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

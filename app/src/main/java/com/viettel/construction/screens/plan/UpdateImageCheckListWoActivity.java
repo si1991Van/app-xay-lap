@@ -175,6 +175,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
                     WoDTOResponse response = WoDTOResponse.class.cast(result);
                     if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
                         Toast.makeText(UpdateImageCheckListWoActivity.this, getString(R.string.update_checklist_success), Toast.LENGTH_SHORT).show();
+                        setResult(1024);
                         finish();
                     } else {
                         Toast.makeText(UpdateImageCheckListWoActivity.this, getString(R.string.update_checklist_fail), Toast.LENGTH_SHORT).show();

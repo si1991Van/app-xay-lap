@@ -83,7 +83,6 @@ public class CheckListWoFragment extends Fragment {
             Intent intent = new Intent(getContext(), UpdateImageCheckListWoActivity.class);
             intent.putExtra("WoMappingChecklistDTO", woMappingChecklistDTO);
             intent.putExtra("WoDTO", woDTO);
-//            intent.putExtra("Position", position);
             startActivityForResult(intent, 123);
 
         });
@@ -122,38 +121,11 @@ public class CheckListWoFragment extends Fragment {
         });
     }
 
-//    private void updateCheckList(){
-//        woDTORequest.setLstChecklistsOfWo(lstChecklistsOfWo);
-//        ApiManager.getInstance().updateCheckListWo(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
-//            @Override
-//            public <T> void onResponse(T result) {
-//                try {
-//                    WoDTOResponse response = WoDTOResponse.class.cast(result);
-//                    if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
-//                        Toast.makeText(getContext(), getString(R.string.update_checklist_success), Toast.LENGTH_SHORT).show();
-//                        getActivity().finish();
-//                    } else {
-//                        Toast.makeText(getContext(), getString(R.string.update_checklist_fail), Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getContext(), getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
-//                }
-//                progressBar.setLoading(false);
-//            }
-//
-//            @Override
-//            public void onError(int statusCode) {
-//                Toast.makeText(getContext(), getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
-//                progressBar.setLoading(false);
-//            }
-//        });
-//
-//    }
-//
-//    @OnClick(R.id.btnSave)
-//    public void onClickSave(){
-//        updateCheckList();
-//    }
-    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1024){
+            getCheckListWo();
+        }
+    }
 }

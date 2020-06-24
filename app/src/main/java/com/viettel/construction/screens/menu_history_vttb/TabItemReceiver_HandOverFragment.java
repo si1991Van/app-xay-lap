@@ -28,7 +28,13 @@ public class TabItemReceiver_HandOverFragment
     public void setReceiver(boolean receiver) {
         isReceiver = receiver;
     }
-    
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
     @Override
     public int getLayoutID() {
         return R.layout.fragment_tiep_nhan_vttb;
