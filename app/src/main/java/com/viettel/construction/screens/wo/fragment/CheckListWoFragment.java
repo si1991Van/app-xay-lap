@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CheckListWoFragment extends Fragment {
 
@@ -44,6 +44,10 @@ public class CheckListWoFragment extends Fragment {
     public RecyclerView rcvData;
 
     @Nullable
+    @BindView(R.id.txtNoData)
+    TextView txtNoData;
+
+    @Nullable
     @BindView(R.id.btnSave)
     public Button btnSave;
 
@@ -52,13 +56,13 @@ public class CheckListWoFragment extends Fragment {
     private List<WoMappingChecklistDTO> lstChecklistsOfWo = new ArrayList<>();
     private WoMappingChecklistDTO woMappingChecklistDTO;
     private ChecklistsWoAdapter adapter;
-    private String type;
+//    private String type;
 
 
-    public  CheckListWoFragment(WoDTO dto, String type)  {
+    public  CheckListWoFragment(WoDTO dto)  {
         super();
         this.woDTO = dto;
-        this.type = type;
+//        this.type = type;
     }
 
 
@@ -67,7 +71,6 @@ public class CheckListWoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checklist_wo, container, false);
         ButterKnife.bind(this, view);
-
 //        btnSave.setVisibility(woDTO.getState().equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.GONE);
         initAdapterCheckLists();
         getCheckListWo();
@@ -79,7 +82,7 @@ public class CheckListWoFragment extends Fragment {
     private void initAdapterCheckLists(){
         adapter = new ChecklistsWoAdapter(getContext(), lstChecklistsOfWo, woDTO.getState(), (object, position) -> {
             woMappingChecklistDTO = object;
-            if (type.equals("1")) return;
+//            if (woDTO.getState().equals("1")) return;
             Intent intent = new Intent(getContext(), UpdateImageCheckListWoActivity.class);
             intent.putExtra("WoMappingChecklistDTO", woMappingChecklistDTO);
             intent.putExtra("WoDTO", woDTO);
@@ -104,6 +107,7 @@ public class CheckListWoFragment extends Fragment {
                         if (response.getLstChecklistsOfWo() != null){
                             lstChecklistsOfWo = response.getLstChecklistsOfWo();
                             adapter.setListData(lstChecklistsOfWo);
+                            txtNoData.setVisibility(lstChecklistsOfWo != null && lstChecklistsOfWo.size() > 0 ? View.GONE : View.VISIBLE);
                         }
                     } else {
                         Toast.makeText(getContext(), getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
@@ -125,7 +129,8 @@ public class CheckListWoFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1024){
-            getCheckListWo();
+//            getCheckListWo();
+            getActivity().finish();
         }
     }
 }

@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.viettel.construction.R;
+import com.viettel.construction.model.api.wo.ImgChecklistDTO;
 import com.viettel.construction.server.util.StringUtil;
 
 import java.util.List;
@@ -27,11 +28,11 @@ import butterknife.ButterKnife;
  */
 
 public class ImageCheckListWoAdapter extends RecyclerView.Adapter<ImageCheckListWoAdapter.ImageViewHolder> {
-    private List<String> mList;
+    private List<ImgChecklistDTO> mList;
     private Context mContext;
     private RequestOptions requestOptions;
 
-    public ImageCheckListWoAdapter(List<String> mList, Context context) {
+    public ImageCheckListWoAdapter(List<ImgChecklistDTO> mList, Context context) {
 
         this.mList = mList;
         this.mContext = context;
@@ -62,7 +63,7 @@ public class ImageCheckListWoAdapter extends RecyclerView.Adapter<ImageCheckList
     public void onBindViewHolder(final ImageViewHolder holder, final int position) {
 //        ConstructionImageInfo image = (String) mList.get(position);
         //  1 : is server =======  image name is filePath of image
-        Glide.with(mContext).setDefaultRequestOptions(requestOptions.override(200, 200)).asBitmap().load(StringUtil.setImage(mList.get(position))).into(new SimpleTarget<Bitmap>() {
+        Glide.with(mContext).setDefaultRequestOptions(requestOptions.override(200, 200)).asBitmap().load(StringUtil.setImage(mList.get(position).getImgBase64())).into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> glideAnimation) {
                 holder.IVItem.setImageBitmap(resource);
@@ -85,7 +86,7 @@ public class ImageCheckListWoAdapter extends RecyclerView.Adapter<ImageCheckList
         return mList == null || mList.size() == 0 ? 0 : mList.size();
     }
 
-    public void setData(List<String> mData){
+    public void setData(List<ImgChecklistDTO> mData){
         this.mList = mData;
         notifyDataSetChanged();
     }

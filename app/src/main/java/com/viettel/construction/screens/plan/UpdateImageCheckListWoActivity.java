@@ -23,6 +23,7 @@ import com.viettel.construction.model.api.ConstructionImageInfo;
 import com.viettel.construction.model.api.plan.WoDTO;
 import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
+import com.viettel.construction.model.api.wo.ImgChecklistDTO;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
 import com.viettel.construction.screens.wo.adapter.ImageCheckListWoAdapter;
 import com.viettel.construction.server.api.ApiManager;
@@ -58,7 +59,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     Button btnUpdateCheckList;
 
     private String filePath = "";
-    private List<String> lstImg = new ArrayList<>();
+    private List<ImgChecklistDTO> lstImg = new ArrayList<>();
     private WoMappingChecklistDTO dto;
     private WoDTO woDTO;
     private ImageCheckListWoAdapter mAdapter;
@@ -103,7 +104,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         imgBack.setOnClickListener(view -> {
             finish();
         });
-        spStatus.setSelection(dto.getState() == "NEW" ? 0 : 1);
+
         codeSpinner(itemStatus, spStatus, dto);
     }
 
@@ -111,7 +112,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(UpdateImageCheckListWoActivity.this, R.layout.spinner_item, item);
         langAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(langAdapter);
-
+        spinner.setSelection(dto.getState().equals("NEW") ? 0 : 1);
         spinner.setEnabled(state.equals(VConstant.StateWO.Processing) ? true : false);
         spinner.setClickable(state.equals(VConstant.StateWO.Processing) ? true : false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -132,17 +133,6 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     }
 
 
-//    @OnClick(R.id.imgCamera)
-//    public void onClickCamera() {
-//        try {
-//            if (checkRuntimePermission()) {
-//                accessLocation();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @OnClick(R.id.btnUpdateCheckList)
     public void onClickSave() {
         updateCheckList();
@@ -154,27 +144,15 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         if (requestCode == VConstant.REQUEST_CODE_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
                 filePath = mPhotoFile.getPath();
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String pictureName = "IMG_" + timeStamp + ".jpg";
                 Bitmap bitmap = ImageUtils.decodeBitmapFromFile(filePath, 200, 200);
-                Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, latitude, longitude, null, null);
-                lstImg.add(StringUtil.getStringImage(bitmap));
+                Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, latitude, longitude);
+                ImgChecklistDTO imgChecklistDTO = new ImgChecklistDTO();
+                imgChecklistDTO.setImgBase64(StringUtil.getStringImage(newBitmap));
+                imgChecklistDTO.setLatitude(latitude);
+                imgChecklistDTO.setLongtitude(longitude);
+                lstImg.add(imgChecklistDTO);
                 dto.setLstImgs(lstImg);
                 mAdapter.setData(lstImg);
-
-//                filePath = mPhotoFile.getPath();
-//                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//                String pictureName = "IMG_" + timeStamp + ".jpg";
-//                Bitmap bitmap = ImageUtils.decodeBitmapFromFile(filePath, 200, 200);
-//                Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, latitude, longitude, mObjWork.getConstructionCode(), mObjWork.getWorkItemName());
-//                ConstructionImageInfo imageInfo = new ConstructionImageInfo();
-//                imageInfo.setStatus(0);
-//                imageInfo.setBase64String(StringUtil.getStringImage(newBitmap));
-//                imageInfo.setImageName(pictureName);
-//                imageInfo.setLatitude(latitude);
-//                imageInfo.setLongtitude(longitude);
-//                mListUrl.add(0, imageInfo);
-//                mAdapter.notifyItemInserted(0);
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 /** Picture wasn't taken*/

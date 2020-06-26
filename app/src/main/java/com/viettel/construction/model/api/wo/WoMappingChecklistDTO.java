@@ -12,7 +12,7 @@ public class WoMappingChecklistDTO implements Serializable {
     private String checklistName;
     private String state;
     private long status;
-    private List<String> lstImgs;
+    private List<ImgChecklistDTO> lstImgs;
 
     public long getId() {
         return id;
@@ -70,17 +70,12 @@ public class WoMappingChecklistDTO implements Serializable {
         this.status = status;
     }
 
-    public List<String> getLstImgs() {
+    public List<ImgChecklistDTO> getLstImgs() {
         return lstImgs;
     }
 
-    public void setLstImgs(List<String> lstImgs) {
+    public void setLstImgs(List<ImgChecklistDTO> lstImgs) {
         this.lstImgs = lstImgs;
     }
 
-//    public List<String> addImge(String path){
-//        List<String> lst = new ArrayList<>();
-//        lst.add(path);
-//        return lst;
-//    }
 }
