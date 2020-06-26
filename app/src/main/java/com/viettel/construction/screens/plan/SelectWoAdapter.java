@@ -20,14 +20,14 @@ public class SelectWoAdapter extends RecyclerView.Adapter<SelectWoAdapter.ViewHo
     private Context context;
     private LayoutInflater inflater;
     private List<WoDTO> woMappingPlanDTOList;
-    private List<WoDTO> listAdd;
+    private callBackInterface callBackInterface;
     private List<WoDTO> listOld;
 
-    public SelectWoAdapter(Context context, List<WoDTO> listOld, List<WoDTO> list, List<WoDTO> listAdd) {
+    public SelectWoAdapter(Context context, List<WoDTO> listOld, List<WoDTO> list, callBackInterface callBackInterface) {
         this.context = context;
         this.woMappingPlanDTOList = list;
-        this.listAdd = listAdd;
         this.listOld = listOld;
+        this.callBackInterface = callBackInterface;
         inflater = LayoutInflater.from(context);
     }
 
@@ -42,9 +42,9 @@ public class SelectWoAdapter extends RecyclerView.Adapter<SelectWoAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindData(woMappingPlanDTOList.get(position));
         if (listOld != null && listOld.size() > 0) {
-            listAdd = listOld;
+//            listAdd = listOld;
             for (WoDTO dto : listOld) {
-                if (dto.getWoName().equals(woMappingPlanDTOList.get(position).getWoName())) {
+                if (dto.getWoCode().equals(woMappingPlanDTOList.get(position).getWoCode())) {
                     holder.cbPlan.setChecked(true);
                 }
             }
@@ -53,9 +53,9 @@ public class SelectWoAdapter extends RecyclerView.Adapter<SelectWoAdapter.ViewHo
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
-                    listAdd.add(woMappingPlanDTOList.get(position));
+                    callBackInterface.add(woMappingPlanDTOList.get(position));
                 }else {
-                    listAdd.remove(woMappingPlanDTOList.get(position));
+                    callBackInterface.remove(woMappingPlanDTOList.get(position));
                 }
             }
         });
@@ -88,4 +88,8 @@ public class SelectWoAdapter extends RecyclerView.Adapter<SelectWoAdapter.ViewHo
     }
 
 
+    public interface callBackInterface {
+        void add(WoDTO dto);
+        void remove(WoDTO dto);
+    }
 }

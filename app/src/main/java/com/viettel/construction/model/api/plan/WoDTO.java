@@ -39,7 +39,8 @@ public class WoDTO implements Serializable {
     private long moneyFlowValue;
     private long apConstructionType;
     private long apWorkSrc;
-    private boolean isInPlan;
+    private boolean inPlan;
+    private boolean canFinish;
 
 
 
@@ -332,10 +333,18 @@ public class WoDTO implements Serializable {
     }
 
     public boolean isInPlan() {
-        return isInPlan;
+        return inPlan;
     }
 
     public void setInPlan(boolean inPlan) {
-        isInPlan = inPlan;
+        this.inPlan = inPlan;
+    }
+
+    public boolean isCanFinish() {
+        return canFinish;
+    }
+
+    public void setCanFinish(boolean canFinish) {
+        this.canFinish = canFinish;
     }
 }

@@ -284,7 +284,6 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
 
     @Override
     public void addListWo(List<WoDTO> list) {
-        listWo.clear();
         listWo = list;
         setUpView(listWo);
     }

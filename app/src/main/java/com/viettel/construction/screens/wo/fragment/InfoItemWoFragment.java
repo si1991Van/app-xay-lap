@@ -86,15 +86,15 @@ public class InfoItemWoFragment extends Fragment {
     private WoDTO itemWoDTO;
     private WoDTORequest woDTORequest = new WoDTORequest();
     private List<AppParamDTO> lstParamDTOS;
-    private String type;
+//    private String type;
     private DialogCancel dialogCancel;
     private DialogPleaseComment dialogPleaseComment;
 
-    public  InfoItemWoFragment(WoDTO dto, List<AppParamDTO> lst, String type)  {
+    public  InfoItemWoFragment(WoDTO dto, List<AppParamDTO> lst)  {
         super();
         this.itemWoDTO = dto;
         this.lstParamDTOS = lst;
-        this.type = type;
+//        this.type = type;
     }
 
     @Nullable
@@ -102,7 +102,7 @@ public class InfoItemWoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_info_item_wo, container, false);
         ButterKnife.bind(this, view);
-        lnBottom.setVisibility(type.equals("1") ? View.GONE : View.VISIBLE);
+//        lnBottom.setVisibility(type.equals("1") ? View.GONE : View.VISIBLE);
         setDataView(itemWoDTO);
         return view;
     }
@@ -171,14 +171,14 @@ public class InfoItemWoFragment extends Fragment {
                     tvReport.setVisibility(View.GONE);
                     break;
                 case VConstant.StateWO.Accept_ft:
-                    tvProcess.setVisibility(View.VISIBLE);
+                    tvProcess.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);
                     tvAccept.setVisibility(View.GONE);
                     tvReject.setVisibility(View.GONE);
                     tvFinish.setVisibility(View.GONE);
                     tvReport.setVisibility(View.GONE);
                     break;
                 case VConstant.StateWO.Processing:
-                    tvFinish.setVisibility(View.VISIBLE);
+                    tvFinish.setVisibility(itemWoDTO.isCanFinish() ? View.VISIBLE : View.GONE);
                     tvReport.setVisibility(View.VISIBLE);
                     tvProcess.setVisibility(View.GONE);
                     tvAccept.setVisibility(View.GONE);

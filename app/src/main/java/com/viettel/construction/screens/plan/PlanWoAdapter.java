@@ -44,6 +44,11 @@ public class PlanWoAdapter extends RecyclerView.Adapter<PlanWoAdapter.ViewHolder
         });
     }
 
+    public void setData(List<WoDTO> mdata){
+        this.woMappingPlanDTOList = mdata;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return woMappingPlanDTOList.size();

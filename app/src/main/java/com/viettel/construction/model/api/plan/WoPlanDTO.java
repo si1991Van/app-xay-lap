@@ -6,6 +6,7 @@ import java.util.List;
 public class WoPlanDTO implements Serializable {
 
     private long id;
+    private long ftId;
     private long staffId;
     private String code;
     private String name;
@@ -122,5 +123,13 @@ public class WoPlanDTO implements Serializable {
 
     public void setListData(List<WoMappingPlanDTO> listData) {
         this.listData = listData;
+    }
+
+    public long getFtId() {
+        return ftId;
+    }
+
+    public void setFtId(long ftId) {
+        this.ftId = ftId;
     }
 }
