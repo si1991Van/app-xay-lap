@@ -44,7 +44,7 @@ public class DetailItemWoActivity extends BaseCameraActivity {
 
     private WoDTO itemWoDTO;
     private WoDTORequest woDTORequest = new WoDTORequest();
-    private String type = "";
+//    private String type = "";
     private List<AppParamDTO> lstParamDTOS = new ArrayList<>();
     private DetailItemWoPagerAdapter viewPagerAdapter;
 
@@ -55,7 +55,7 @@ public class DetailItemWoActivity extends BaseCameraActivity {
         ButterKnife.bind(this);
         if (getIntent().getExtras() != null) {
             itemWoDTO = (WoDTO) getIntent().getExtras().getSerializable("Item_WO");
-            type = getIntent().getExtras().getString("Type");
+//            type = getIntent().getExtras().getString("Type");
             if (itemWoDTO.getState().equals(VConstant.StateWO.Processing)) {
                 getForComboBox();
             }else {
@@ -69,7 +69,7 @@ public class DetailItemWoActivity extends BaseCameraActivity {
     }
 
     private void initView(){
-        viewPagerAdapter = new DetailItemWoPagerAdapter(getSupportFragmentManager(), itemWoDTO, lstParamDTOS, type);
+        viewPagerAdapter = new DetailItemWoPagerAdapter(getSupportFragmentManager(), itemWoDTO, lstParamDTOS);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

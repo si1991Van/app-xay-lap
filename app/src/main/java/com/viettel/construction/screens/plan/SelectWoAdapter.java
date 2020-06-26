@@ -21,11 +21,13 @@ public class SelectWoAdapter extends RecyclerView.Adapter<SelectWoAdapter.ViewHo
     private LayoutInflater inflater;
     private List<WoDTO> woMappingPlanDTOList;
     private List<WoDTO> listAdd;
+    private List<WoDTO> listOld;
 
-    public SelectWoAdapter(Context context, List<WoDTO> list, List<WoDTO> listAdd) {
+    public SelectWoAdapter(Context context, List<WoDTO> listOld, List<WoDTO> list, List<WoDTO> listAdd) {
         this.context = context;
         this.woMappingPlanDTOList = list;
         this.listAdd = listAdd;
+        this.listOld = listOld;
         inflater = LayoutInflater.from(context);
     }
 
@@ -39,6 +41,14 @@ public class SelectWoAdapter extends RecyclerView.Adapter<SelectWoAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindData(woMappingPlanDTOList.get(position));
+        if (listOld != null && listOld.size() > 0) {
+            listAdd = listOld;
+            for (WoDTO dto : listOld) {
+                if (dto.getWoName().equals(woMappingPlanDTOList.get(position).getWoName())) {
+                    holder.cbPlan.setChecked(true);
+                }
+            }
+        }
         holder.cbPlan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.BaseCameraActivity;
 import com.viettel.construction.common.VConstant;
+import com.viettel.construction.model.api.ConstructionImageInfo;
 import com.viettel.construction.model.api.plan.WoDTO;
 import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
@@ -29,7 +30,9 @@ import com.viettel.construction.server.service.IOnRequestListener;
 import com.viettel.construction.server.util.StringUtil;
 import com.viettel.construction.util.ImageUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +52,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     @BindView(R.id.spStatus)
     Spinner spStatus;
 
-    @BindView(R.id.imgCamera)
+    @BindView(R.id.btn_camera)
     ImageView imgCamera;
     @BindView(R.id.btnUpdateCheckList)
     Button btnUpdateCheckList;
@@ -62,7 +65,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     private String state;
     private int position;
 
-    private String[] itemStatus = {"Mới", "Hoàn thành"};
+    private String[] itemStatus = {"Mới", "Kết thúc"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,16 +132,16 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     }
 
 
-    @OnClick(R.id.imgCamera)
-    public void onClickCamera() {
-        try {
-            if (checkRuntimePermission()) {
-                accessLocation();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @OnClick(R.id.imgCamera)
+//    public void onClickCamera() {
+//        try {
+//            if (checkRuntimePermission()) {
+//                accessLocation();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @OnClick(R.id.btnUpdateCheckList)
     public void onClickSave() {
@@ -151,10 +154,28 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         if (requestCode == VConstant.REQUEST_CODE_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
                 filePath = mPhotoFile.getPath();
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String pictureName = "IMG_" + timeStamp + ".jpg";
                 Bitmap bitmap = ImageUtils.decodeBitmapFromFile(filePath, 200, 200);
+                Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, latitude, longitude, null, null);
                 lstImg.add(StringUtil.getStringImage(bitmap));
                 dto.setLstImgs(lstImg);
                 mAdapter.setData(lstImg);
+
+//                filePath = mPhotoFile.getPath();
+//                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//                String pictureName = "IMG_" + timeStamp + ".jpg";
+//                Bitmap bitmap = ImageUtils.decodeBitmapFromFile(filePath, 200, 200);
+//                Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, latitude, longitude, mObjWork.getConstructionCode(), mObjWork.getWorkItemName());
+//                ConstructionImageInfo imageInfo = new ConstructionImageInfo();
+//                imageInfo.setStatus(0);
+//                imageInfo.setBase64String(StringUtil.getStringImage(newBitmap));
+//                imageInfo.setImageName(pictureName);
+//                imageInfo.setLatitude(latitude);
+//                imageInfo.setLongtitude(longitude);
+//                mListUrl.add(0, imageInfo);
+//                mAdapter.notifyItemInserted(0);
+
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 /** Picture wasn't taken*/
             }

@@ -36,7 +36,7 @@ public class WOItemAdapter
         holder.tvName.setText(woDTO.getWoName());
         holder.tvProgress.setText("3/10");
         holder.tvPerformer.setText(VConstant.getDTO().getFullName());
-
+        if (woDTO == null || woDTO.getState() == null) return;
         switch (woDTO.getState()){
             case VConstant.StateWO.Assign_cd:
                 holder.tvStatus.setText(context.getString(R.string.assign_cd));
@@ -121,10 +121,6 @@ public class WOItemAdapter
         public WOViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(itemView);
-//            tvCodeWo = itemView.findViewById(R.id.tv_code_wo);
-//            tvName = itemView.findViewById(R.id.tv_name_wo);
-//            tvProgress = itemView.findViewById(R.id.tv_performer);
-//            tvStatus = itemView.findViewById(R.id.tv_status);
         }
 
 

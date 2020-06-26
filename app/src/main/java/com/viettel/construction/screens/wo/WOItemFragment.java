@@ -58,6 +58,10 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
     @BindView(R.id.imgFilter)
     ImageView imgFilter;
 
+    @Nullable
+    @BindView(R.id.txtNoData)
+    TextView txtNoData;
+
     private String scheduleType = "0";
 
     private WoPlanDTO item;
@@ -273,7 +277,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
     public void onItemRecyclerViewclick(WoDTO item) {
         Intent intent = new Intent(getContext(), DetailItemWoActivity.class);
         intent.putExtra("Item_WO", item);
-        intent.putExtra("Type", scheduleType);
+//        intent.putExtra("Type", scheduleType);
 
         startActivity(intent);
     }
@@ -416,6 +420,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
                         adapter.notifyDataSetChanged();
                         title = "Tất cả (" + listData.size() + ")";
                         txtHeader.setText(title);
+                        txtNoData.setVisibility(listData != null && listData.size() > 0 ? View.GONE : View.VISIBLE);
                     }
                 }else {
                     Toast.makeText(getContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show();

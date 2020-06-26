@@ -39,6 +39,8 @@ public class WoDTO implements Serializable {
     private long moneyFlowValue;
     private long apConstructionType;
     private long apWorkSrc;
+    private boolean isInPlan;
+
 
 
     public long getWoId() {
@@ -329,4 +331,11 @@ public class WoDTO implements Serializable {
         this.woTypeName = woTypeName;
     }
 
+    public boolean isInPlan() {
+        return isInPlan;
+    }
+
+    public void setInPlan(boolean inPlan) {
+        isInPlan = inPlan;
+    }
 }

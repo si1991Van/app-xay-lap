@@ -279,6 +279,7 @@ public abstract class FragmentListBase<MD, Res> extends Fragment
     public void setHeader() {
         txtHeader.setText(String.format(getHeaderTitle(),
                 adapter.getItemCount() + ""));
+        txtNoData.setVisibility(listData != null ? View.GONE : View.VISIBLE);
         if (adapter.getItemCount() == 0) {
             txtNoData.setVisibility(View.VISIBLE);
         } else

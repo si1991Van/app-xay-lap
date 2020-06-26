@@ -73,6 +73,7 @@
             android:hint="Đối tượng xin ý kiến"
             android:imeOptions="actionDone"
             android:inputType="text"
+            android:visibility="gone"
             android:lines="1"
             android:maxLines="1" />
 

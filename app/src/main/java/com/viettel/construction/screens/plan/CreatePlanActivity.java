@@ -199,7 +199,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         WoDTORequest woDTORequest = new WoDTORequest();
         woDTORequest.setSysUserRequest(VConstant.getUser());
         FilterDTORequest filterDTORequest = new FilterDTORequest();
-        filterDTORequest.setState(VConstant.StateWO.Assign_ft);
+        filterDTORequest.setState(VConstant.StateWO.Accept_ft);
         woDTORequest.setFilter(filterDTORequest);
         ApiManager.getInstance().getListWO(woDTORequest ,WoDTOResponse.class, new IServerResultListener() {
             @Override
@@ -260,7 +260,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
 
     @OnClick(R.id.btnAddWO)
     public void onClickAddWo(){
-        dialogShowListWO = new DialogShowListWO(CreatePlanActivity.this, lisAllWo,this);
+        dialogShowListWO = new DialogShowListWO(CreatePlanActivity.this, listWo, lisAllWo,this);
         dialogShowListWO.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         dialogShowListWO.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogShowListWO.show();

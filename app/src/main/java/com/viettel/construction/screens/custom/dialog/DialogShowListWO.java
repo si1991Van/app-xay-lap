@@ -35,7 +35,7 @@ public class DialogShowListWO extends BaseDialog {
 
     SelectWoAdapter adapter;
 
-    public DialogShowListWO(@NonNull Context context, List<WoDTO> list, OnClickDialogForConfirm onClickDialog) {
+    public DialogShowListWO(@NonNull Context context, List<WoDTO> listOld, List<WoDTO> list, OnClickDialogForConfirm onClickDialog) {
         super(context);
         setContentView(R.layout.dialog_show_list_wo);
         this.onClickDialog = onClickDialog;
@@ -52,12 +52,12 @@ public class DialogShowListWO extends BaseDialog {
             }
             dismiss();
         });
-        initAdapter(listAll);
+        initAdapter(listAll, listOld);
     }
 
-    private void initAdapter(List<WoDTO> list) {
+    private void initAdapter(List<WoDTO> list, List<WoDTO> listOld) {
         //recyclerview
-        adapter = new SelectWoAdapter(getContext(), list, listSelect);
+        adapter = new SelectWoAdapter(getContext(), listOld, list, listSelect);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager2);

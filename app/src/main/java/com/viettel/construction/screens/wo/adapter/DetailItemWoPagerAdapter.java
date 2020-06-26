@@ -17,13 +17,13 @@ public class DetailItemWoPagerAdapter extends FragmentStatePagerAdapter {
 
     private WoDTO dto;
     private List<AppParamDTO> lstParamDTOS;
-    private String type;
+//    private String type;
 
-    public DetailItemWoPagerAdapter(FragmentManager fm, WoDTO dto, List<AppParamDTO> list, String type) {
+    public DetailItemWoPagerAdapter(FragmentManager fm, WoDTO dto, List<AppParamDTO> list) {
         super(fm);
         this.dto = dto;
         this.lstParamDTOS = list;
-        this.type = type;
+//        this.type = type;
     }
 
     @Override
@@ -31,10 +31,10 @@ public class DetailItemWoPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment ;
         switch (position){
             case 0:
-                fragment = new InfoItemWoFragment(dto, lstParamDTOS, type);
+                fragment = new InfoItemWoFragment(dto, lstParamDTOS);
                 return fragment;
             case 1:
-                fragment = new CheckListWoFragment(dto, type);
+                fragment = new CheckListWoFragment(dto);
                 return fragment;
             case 2:
                 fragment = new LogWorkWoFragment(dto);

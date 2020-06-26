@@ -105,7 +105,7 @@ public class ChecklistsWoAdapter extends RecyclerView.Adapter<ChecklistsWoAdapte
                         txtStatus.setText("Mới");
                         break;
                     case "DONE":
-                        txtStatus.setText("Hoàn thành");
+                        txtStatus.setText("Kết thúc");
                         break;
                         default:
                             txtStatus.setText("Mới");
