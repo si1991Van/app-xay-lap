@@ -41,7 +41,7 @@ public class WoDTO implements Serializable {
     private long apWorkSrc;
     private boolean inPlan;
     private boolean canFinish;
-
+    private int remainLength;
 
 
     public long getWoId() {
@@ -346,5 +346,13 @@ public class WoDTO implements Serializable {
 
     public void setCanFinish(boolean canFinish) {
         this.canFinish = canFinish;
+    }
+
+    public int getRemainLength() {
+        return remainLength;
+    }
+
+    public void setRemainLength(int remainLength) {
+        this.remainLength = remainLength;
     }
 }

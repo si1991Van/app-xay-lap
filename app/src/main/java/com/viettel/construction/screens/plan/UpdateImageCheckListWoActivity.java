@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +60,12 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     ImageView imgCamera;
     @BindView(R.id.btnUpdateCheckList)
     Button btnUpdateCheckList;
+    @BindView(R.id.lnMass)
+    LinearLayout lnMass;
+    @BindView(R.id.lnStatus)
+    LinearLayout lnStatus;
+    @BindView(R.id.ed_total)
+    EditText edTotal;
 
     private String filePath = "";
     private List<ImgChecklistDTO> lstImg = new ArrayList<>();
@@ -84,9 +93,9 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
             }
             imgCamera.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.INVISIBLE);
             btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.GONE);
+            initView();
+            initAdapterImage();
         }
-        initView();
-        initAdapterImage();
     }
 
     private void initAdapterImage() {
@@ -104,8 +113,12 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         imgBack.setOnClickListener(view -> {
             finish();
         });
-
         codeSpinner(itemStatus, spStatus, dto);
+        if (dto.getQuantityByDate() == 1){
+            dto.setState(null);
+        }
+        lnMass.setVisibility(dto.getQuantityByDate() == 1 ? View.VISIBLE : View.GONE);
+        lnStatus.setVisibility(dto.getQuantityByDate() == 1 ? View.GONE : View.VISIBLE);
     }
 
     private void codeSpinner(String[] item, Spinner spinner, WoMappingChecklistDTO dto) {
@@ -135,7 +148,17 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
 
     @OnClick(R.id.btnUpdateCheckList)
     public void onClickSave() {
-        updateCheckList();
+        if (dto.getQuantityByDate() == 1){
+            if (Integer.parseInt(edTotal.getText().toString()) > woDTO.getRemainLength()){
+                Toast.makeText(UpdateImageCheckListWoActivity.this, "Khối lượng không được lớn hơn tổng khối lượng hiện tại!",
+                        Toast.LENGTH_LONG).show();
+            }else {
+                updateCheckList();
+            }
+        }else {
+            updateCheckList();
+        }
+
     }
 
     @Override
@@ -164,9 +187,13 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         WoDTORequest woDTORequest = new WoDTORequest();
         woDTORequest.setSysUserRequest(VConstant.getUser());
         List<WoMappingChecklistDTO> woMappingChecklistDTOS = new ArrayList<>();
+        if (!TextUtils.isEmpty(edTotal.getText().toString())) {
+            dto.setQuantityByDate(Integer.parseInt(edTotal.getText().toString()));
+        }
         woMappingChecklistDTOS.add(dto);
         woDTORequest.setLstChecklistsOfWo(woMappingChecklistDTOS);
         woDTORequest.setWoDTO(woDTO);
+
         ApiManager.getInstance().updateCheckListWo(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
             @Override
             public <T> void onResponse(T result) {

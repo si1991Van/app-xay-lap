@@ -12,6 +12,7 @@ public class WoMappingChecklistDTO implements Serializable {
     private String checklistName;
     private String state;
     private long status;
+    private long quantityByDate;
     private List<ImgChecklistDTO> lstImgs;
 
     public long getId() {
@@ -78,4 +79,11 @@ public class WoMappingChecklistDTO implements Serializable {
         this.lstImgs = lstImgs;
     }
 
+    public long getQuantityByDate() {
+        return quantityByDate;
+    }
+
+    public void setQuantityByDate(long quantityByDate) {
+        this.quantityByDate = quantityByDate;
+    }
 }
