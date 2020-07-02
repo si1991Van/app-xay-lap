@@ -19,6 +19,7 @@ public class WoPlanDTO implements Serializable {
     private String toDate;
     private long status;
     private List<WoMappingPlanDTO> listData;
+    private String woOkNumber;
 
 
     public long getId() {
@@ -131,5 +132,13 @@ public class WoPlanDTO implements Serializable {
 
     public void setFtId(long ftId) {
         this.ftId = ftId;
+    }
+
+    public String getWoOkNumber() {
+        return woOkNumber;
+    }
+
+    public void setWoOkNumber(String woOkNumber) {
+        this.woOkNumber = woOkNumber;
     }
 }

@@ -111,7 +111,7 @@ public class InfoItemWoFragment extends Fragment {
         if (itemWoDTO == null) return;
         tvCode.setText(itemWoDTO.getWoCode());
         tvName.setText(itemWoDTO.getWoName());
-        tvProgress.setText("3/10");
+        tvProgress.setText(itemWoDTO.getDoneCheckListNumber());
         tvPerformer.setText(VConstant.getDTO().getFullName());
         switch (itemWoDTO.getState()) {
             case VConstant.StateWO.Assign_cd:

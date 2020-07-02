@@ -114,11 +114,16 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
             finish();
         });
         codeSpinner(itemStatus, spStatus, dto);
-        if (dto.getQuantityByDate() == 1){
-            dto.setState(null);
+        if (dto.getQuantityByDate() != null) {
+            lnMass.setVisibility(dto.getQuantityByDate().equals("1") ? View.VISIBLE : View.GONE);
+            lnStatus.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
+            recyclerView.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
+            imgCamera.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
+
+            edTotal.setFocusable(state.equals(VConstant.StateWO.Processing) ? true : false);
+            edTotal.setEnabled(state.equals(VConstant.StateWO.Processing) ? true : false);
+            edTotal.setText(String.valueOf(dto.getQuantityLength()));
         }
-        lnMass.setVisibility(dto.getQuantityByDate() == 1 ? View.VISIBLE : View.GONE);
-        lnStatus.setVisibility(dto.getQuantityByDate() == 1 ? View.GONE : View.VISIBLE);
     }
 
     private void codeSpinner(String[] item, Spinner spinner, WoMappingChecklistDTO dto) {
@@ -148,15 +153,15 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
 
     @OnClick(R.id.btnUpdateCheckList)
     public void onClickSave() {
-        if (dto.getQuantityByDate() == 1){
+        if (dto.getQuantityByDate() == null){
+            updateCheckList();
+        }else if (dto.getQuantityByDate().equals("1")){
             if (Integer.parseInt(edTotal.getText().toString()) > woDTO.getRemainLength()){
                 Toast.makeText(UpdateImageCheckListWoActivity.this, "Khối lượng không được lớn hơn tổng khối lượng hiện tại!",
                         Toast.LENGTH_LONG).show();
             }else {
                 updateCheckList();
             }
-        }else {
-            updateCheckList();
         }
 
     }
@@ -187,8 +192,9 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         WoDTORequest woDTORequest = new WoDTORequest();
         woDTORequest.setSysUserRequest(VConstant.getUser());
         List<WoMappingChecklistDTO> woMappingChecklistDTOS = new ArrayList<>();
-        if (!TextUtils.isEmpty(edTotal.getText().toString())) {
-            dto.setQuantityByDate(Integer.parseInt(edTotal.getText().toString()));
+        if (!TextUtils.isEmpty(edTotal.getText().toString()) && Integer.parseInt(edTotal.getText().toString()) > 0) {
+            dto.setQuantityLength(Integer.parseInt(edTotal.getText().toString()));
+            dto.setState("DONE");
         }
         woMappingChecklistDTOS.add(dto);
         woDTORequest.setLstChecklistsOfWo(woMappingChecklistDTOS);

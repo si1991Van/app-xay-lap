@@ -21,6 +21,7 @@ import com.viettel.construction.model.api.plan.WoPlanDTO;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class PlanItemAdapter
         extends AdapterFragmentListBase<WoPlanDTO,
@@ -38,9 +39,9 @@ public class PlanItemAdapter
     public void onBindViewHolder(PlanViewHolder holder, int position) {
         WoPlanDTO item = getListData().get(position);
 
-        holder.tvCodeWo.setText(item.getCode()!= null ? item.getCode() : "COGTRIH_SL");
-        holder.tvName.setText(item.getName()!= null ? item.getName() :"XD mong cot duoi dat");
-        holder.tvStatus.setText("3/10");
+        holder.tvCodeWo.setText(item.getCode()!= null ? item.getCode() : "...");
+        holder.tvName.setText(item.getName()!= null ? item.getName() :"...");
+        holder.tvStatus.setText(item.getWoOkNumber() != null ? item.getWoOkNumber() : "...");
         holder.rlItem.setOnClickListener((v) -> {
             try {
                 itemPlanClick.onItemClick(getListData().get(position));
@@ -80,19 +81,18 @@ public class PlanItemAdapter
         TextView tvName;
         @BindView(R.id.tv_status)
         TextView tvStatus;
-
         @BindView(R.id.txtEdit)
         TextView txtEdit;
         @BindView(R.id.txtDelete)
         TextView txtDelete;
         @BindView(R.id.rlItem)
         RelativeLayout rlItem;
-
         @BindView(R.id.swipe)
         SwipeLayout swipeLayout;
 
         public PlanViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(itemView);
         }
 
 

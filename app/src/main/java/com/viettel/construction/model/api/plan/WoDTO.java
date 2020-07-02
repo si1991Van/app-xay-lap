@@ -41,7 +41,8 @@ public class WoDTO implements Serializable {
     private long apWorkSrc;
     private boolean inPlan;
     private boolean canFinish;
-    private int remainLength;
+    private double remainLength;
+    private String doneChecklistNumber;
 
 
     public long getWoId() {
@@ -348,11 +349,19 @@ public class WoDTO implements Serializable {
         this.canFinish = canFinish;
     }
 
-    public int getRemainLength() {
+    public double getRemainLength() {
         return remainLength;
     }
 
-    public void setRemainLength(int remainLength) {
+    public void setRemainLength(double remainLength) {
         this.remainLength = remainLength;
+    }
+
+    public String getDoneCheckListNumber() {
+        return doneChecklistNumber;
+    }
+
+    public void setDoneCheckListNumber(String doneCheckListNumber) {
+        this.doneChecklistNumber = doneCheckListNumber;
     }
 }

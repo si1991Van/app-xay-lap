@@ -84,12 +84,13 @@
         android:layout_marginLeft="@dimen/dimen_16"
         android:layout_marginRight="@dimen/dimen_16"
         android:layout_marginBottom="@dimen/dimen_16"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Khối lương (m): "
+            android:text="Khối lượng (m): "
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:textSize="16sp"
@@ -104,7 +105,7 @@
             android:background="@drawable/searchbox_border"
             android:inputType="numberDecimal"
             android:layout_marginLeft="@dimen/dimen_8"
-            android:text="0"
+            android:text=""
             android:paddingLeft="@dimen/dimen_10"
             android:paddingRight="@dimen/dimen_10"
             android:textColor="@color/black" />

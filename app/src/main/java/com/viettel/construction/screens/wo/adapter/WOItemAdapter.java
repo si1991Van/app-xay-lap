@@ -34,7 +34,7 @@ public class WOItemAdapter
 
         holder.tvCodeWo.setText(woDTO.getWoCode());
         holder.tvName.setText(woDTO.getWoName());
-        holder.tvProgress.setText("3/10");
+        holder.tvProgress.setText(woDTO.getDoneCheckListNumber());
         holder.tvPerformer.setText(VConstant.getDTO().getFullName());
         if (woDTO == null || woDTO.getState() == null) return;
         switch (woDTO.getState()){

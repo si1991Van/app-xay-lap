@@ -84,7 +84,7 @@ public class VConstant {
     public static final int REQUEST_CODE_CAMERA = 101;
     //URL API
 //    public static final String BASE_URL = "http://10.61.19.230:9702/coms-service/service/";
-    public static final String BASE_URL = "http://10.61.18.229:8084/coms-service/service/";
+    public static final String BASE_URL = "http://10.61.18.229:8086/coms-service/service/";
 
     //real
 //    public static final String BASE_URL = "http://10.30.145.74:8752/coms-service/service/";
