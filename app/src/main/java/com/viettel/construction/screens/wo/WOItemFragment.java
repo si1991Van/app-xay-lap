@@ -305,8 +305,6 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
     public void onItemRecyclerViewclick(WoDTO item) {
         Intent intent = new Intent(getContext(), DetailItemWoActivity.class);
         intent.putExtra("Item_WO", item);
-//        intent.putExtra("Type", scheduleType);
-
         startActivity(intent);
     }
 
@@ -325,15 +323,11 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-//                if (position == 0) {
-//                    data = listData;
-//                } else {
                 apConstructionType = position == 0 ? "Loại công trình" : lstApContructionType.get(position).getCode();
-                data = filterByItem(menuStatus, apWorkSrc, lstApContructionType.get(position).getCode());
-//                    data = filterByApContructionType(lstApContructionType.get(position).getCode());
-//                }
+                data = filterByItem(menuStatus, apWorkSrc, apConstructionType);
                 adapter.setListData(data);
                 adapter.notifyDataSetChanged();
+                txtNoData.setVisibility(data == null || data.size() == 0 ? View.VISIBLE : View.GONE);
             }
 
             @Override
@@ -348,15 +342,11 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         spTypeWo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if (i == 0){
-//                    data = listData;
-//                }else {
-                apWorkSrc = i == 0 ? "Nguồn việc" : lstApContructionType.get(i).getCode();
-                data = filterByItem(menuStatus, lstApContructionType.get(i).getCode(), apConstructionType);
-//                    data = filterByApWorkSrc(lstApContructionType.get(i).getCode());
-//                }
+                apWorkSrc = i == 0 ? "Nguồn việc" : lstApWorkSrc.get(i).getCode();
+                data = filterByItem(menuStatus, apWorkSrc, apConstructionType);
                 adapter.setListData(data);
                 adapter.notifyDataSetChanged();
+                txtNoData.setVisibility(data == null || data.size() == 0 ? View.VISIBLE : View.GONE);
             }
 
             @Override
@@ -366,16 +356,6 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         });
     }
 
-    private List<WoDTO> filterByApContructionType(String name) {
-        List<WoDTO> dataSearch = new ArrayList<>();
-        for (WoDTO woDTO : listData) {
-            if (name.equals(String.valueOf(woDTO.getApConstructionType()))) {
-                dataSearch.add(woDTO);
-            }
-        }
-        return dataSearch;
-    }
-
     private List<WoDTO> filterByItem(String state, String apWorkSrc, String apConstructionType) {
         List<WoDTO> dataSearch = new ArrayList<>();
         for (WoDTO woDTO : listData) {
@@ -383,60 +363,24 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
             if (state.equals(woDTO.getState()) && apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc())) && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))) {
                 dataSearch.add(woDTO);
             } else {
-                if (state.equals(woDTO.getState()) && apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc()))) {
+                if (state.equals(woDTO.getState()) && apWorkSrc.equals("Nguồn việc") && apConstructionType.equals("Loại công trình")){
                     dataSearch.add(woDTO);
-                } else if (apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc())) && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))) {
+                }else if (state.equals(woDTO.getState()) && apWorkSrc.equals("Nguồn việc") && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))){
                     dataSearch.add(woDTO);
-                } else if (state.equals(woDTO.getState()) && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))) {
+                }else if (state.equals(woDTO.getState()) && apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc())) && apConstructionType.equals("Loại công trình")){
                     dataSearch.add(woDTO);
-                } else if (state.equals(woDTO.getState())) {
+                }else if (state.equals("Tất cả") && apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc())) && apConstructionType.equals("Loại công trình")){
                     dataSearch.add(woDTO);
-                } else if (apWorkSrc.equals(woDTO.getState())) {
+                }else if (state.equals("Tất cả") && apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc())) && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))){
                     dataSearch.add(woDTO);
-                } else if (apConstructionType.equals(String.valueOf(woDTO.getApWorkSrc()))) {
+                }else if (state.equals("Tất cả") && apWorkSrc.equals("Nguồn việc") && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))){
                     dataSearch.add(woDTO);
-                } else if (state.equals("Tất cả") && apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc()))) {
-                    dataSearch.add(woDTO);
-                } else if (state.equals("Tất cả") && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))) {
-                    dataSearch.add(woDTO);
-                } else if (apWorkSrc.equals("Nguồn việc") && state.equals(woDTO.getState())) {
-                    dataSearch.add(woDTO);
-                } else if (apWorkSrc.equals("Nguồn việc") && apConstructionType.equals(String.valueOf(woDTO.getApConstructionType()))) {
-                    dataSearch.add(woDTO);
-                } else if (apConstructionType.equals("Loại công trình") && apWorkSrc.equals(String.valueOf(woDTO.getApWorkSrc()))) {
-                    dataSearch.add(woDTO);
-                } else if (apConstructionType.equals("Loại công trình") && state.equals(woDTO.getState())) {
-                    dataSearch.add(woDTO);
-                } else if (state.equals("Tất cả")) {
-                    dataSearch.add(woDTO);
-                } else if (apWorkSrc.equals("Nguồn việc")) {
-                    dataSearch.add(woDTO);
-                } else if (apConstructionType.equals("Loại công trình")) {
+                }else if (state.equals("Tất cả") && apWorkSrc.equals("Nguồn việc") && apConstructionType.equals("Loại công trình")){
                     dataSearch.add(woDTO);
                 }
             }
         }
 
-        return dataSearch;
-    }
-
-    private List<WoDTO> filterByStatus(String state, boolean isByMonth) {
-        List<WoDTO> dataSearch = new ArrayList<>();
-        for (WoDTO woDTO : listData) {
-            if (state.equals(woDTO.getState())) {
-                dataSearch.add(woDTO);
-            }
-        }
-        return dataSearch;
-    }
-
-    private List<WoDTO> filterByApWorkSrc(String name) {
-        List<WoDTO> dataSearch = new ArrayList<>();
-        for (WoDTO woDTO : listData) {
-            if (name.equals(String.valueOf(woDTO.getApWorkSrc()))) {
-                dataSearch.add(woDTO);
-            }
-        }
         return dataSearch;
     }
 
@@ -463,7 +407,6 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
                             lstApContructionType = response.getLstDataForComboBox();
                             paramDTO.setName("Loại công trình");
                             lstApContructionType.add(0, paramDTO);
-
                             adapterApContructionType.setData(response.getLstDataForComboBox());
                         }
                     }

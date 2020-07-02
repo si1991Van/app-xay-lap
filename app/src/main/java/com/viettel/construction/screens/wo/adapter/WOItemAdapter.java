@@ -42,6 +42,7 @@ public class WOItemAdapter
         holder.lnCD1.setVisibility(woDTO.getCdLevel1Name() == null ? View.GONE : View.VISIBLE);
         holder.lnCd2.setVisibility(woDTO.getCdLevel2Name() == null ? View.GONE : View.VISIBLE);
         holder.lnCd3.setVisibility(woDTO.getCdLevel3Name() == null ? View.GONE : View.VISIBLE);
+        holder.lnProgress.setVisibility(woDTO.getDoneCheckListNumber() == null ? View.GONE : View.VISIBLE);
 
         if (woDTO == null || woDTO.getState() == null) return;
         switch (woDTO.getState()){
@@ -135,6 +136,8 @@ public class WOItemAdapter
         LinearLayout lnCd2;
         @BindView(R.id.lnCD3)
         LinearLayout lnCd3;
+        @BindView(R.id.lnProgress)
+        LinearLayout lnProgress;
 
         public WOViewHolder(View itemView) {
             super(itemView);
