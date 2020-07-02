@@ -23,7 +23,9 @@ public class WoDTO implements Serializable {
     private String quantityValue;
     private String cdLevel1;
     private String cdLevel2;
+    private String cdLevel1Name;
     private String cdLevel2Name;
+    private String cdLevel3Name;
     private long ftId;
     private String ftName;
     private String acceptTime;
@@ -364,4 +366,22 @@ public class WoDTO implements Serializable {
     public void setDoneCheckListNumber(String doneCheckListNumber) {
         this.doneChecklistNumber = doneCheckListNumber;
     }
+
+    public String getCdLevel1Name() {
+        return cdLevel1Name;
+    }
+
+    public void setCdLevel1Name(String cdLevel1Name) {
+        this.cdLevel1Name = cdLevel1Name;
+    }
+
+    public String getCdLevel3Name() {
+        return cdLevel3Name;
+    }
+
+    public void setCdLevel3Name(String cdLevel3Name) {
+        this.cdLevel3Name = cdLevel3Name;
+    }
+
+
 }

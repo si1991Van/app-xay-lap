@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -35,7 +36,13 @@ public class WOItemAdapter
         holder.tvCodeWo.setText(woDTO.getWoCode());
         holder.tvName.setText(woDTO.getWoName());
         holder.tvProgress.setText(woDTO.getDoneCheckListNumber());
-        holder.tvPerformer.setText(VConstant.getDTO().getFullName());
+        holder.tvCD1.setText(woDTO.getCdLevel1Name());
+        holder.tvCD2.setText(woDTO.getCdLevel2Name());
+        holder.tvCD3.setText(woDTO.getCdLevel3Name());
+        holder.lnCD1.setVisibility(woDTO.getCdLevel1Name() == null ? View.GONE : View.VISIBLE);
+        holder.lnCd2.setVisibility(woDTO.getCdLevel2Name() == null ? View.GONE : View.VISIBLE);
+        holder.lnCd3.setVisibility(woDTO.getCdLevel3Name() == null ? View.GONE : View.VISIBLE);
+
         if (woDTO == null || woDTO.getState() == null) return;
         switch (woDTO.getState()){
             case VConstant.StateWO.Assign_cd:
@@ -113,10 +120,21 @@ public class WOItemAdapter
         TextView tvName;
         @BindView(R.id.tv_progress)
         TextView tvProgress;
-        @BindView(R.id.tv_performer)
-        TextView tvPerformer;
         @BindView(R.id.tv_status)
         TextView tvStatus;
+        @BindView(R.id.tv_cd1)
+        TextView tvCD1;
+        @BindView(R.id.tv_cd2)
+        TextView tvCD2;
+        @BindView(R.id.tv_cd3)
+        TextView tvCD3;
+
+        @BindView(R.id.lnCD1)
+        LinearLayout lnCD1;
+        @BindView(R.id.lnCD2)
+        LinearLayout lnCd2;
+        @BindView(R.id.lnCD3)
+        LinearLayout lnCd3;
 
         public WOViewHolder(View itemView) {
             super(itemView);

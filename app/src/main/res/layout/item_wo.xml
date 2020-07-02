@@ -86,21 +86,74 @@ android:paddingRight="4dp">
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lnCD1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_4"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_per_in_charge"
             style="@style/BlackText_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="@string/person_in_charge" />
+            android:layout_gravity="center_vertical"
+            android:text="CD 1" />
 
         <TextView
-            android:id="@+id/tv_performer"
+            android:id="@+id/tv_cd1"
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ellipsize="end"
+            android:maxLines="2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnCD2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="center_vertical"
+            android:text="CD 2" />
+
+        <TextView
+            android:id="@+id/tv_cd2"
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ellipsize="end"
+            android:maxLines="2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnCD3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="center_vertical"
+            android:text="CD 3" />
+
+        <TextView
+            android:id="@+id/tv_cd3"
             style="@style/BlackText_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
