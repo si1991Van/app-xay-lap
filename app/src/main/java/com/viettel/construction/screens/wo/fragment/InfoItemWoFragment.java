@@ -21,12 +21,15 @@ import com.viettel.construction.model.api.plan.WoDTO;
 import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.version.AppParamDTO;
+import com.viettel.construction.model.api.wo.WoSimpleFtDTO;
 import com.viettel.construction.screens.custom.dialog.DialogCancel;
+import com.viettel.construction.screens.custom.dialog.DialogGiaoViec;
 import com.viettel.construction.screens.custom.dialog.DialogPleaseComment;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -86,11 +89,12 @@ public class InfoItemWoFragment extends Fragment {
     private WoDTO itemWoDTO;
     private WoDTORequest woDTORequest = new WoDTORequest();
     private List<AppParamDTO> lstParamDTOS;
-//    private String type;
+    private List<WoSimpleFtDTO> ftDTOList = new ArrayList<>();
+    private long ftId;
     private DialogCancel dialogCancel;
     private DialogPleaseComment dialogPleaseComment;
 
-    public  InfoItemWoFragment(WoDTO dto, List<AppParamDTO> lst)  {
+    public InfoItemWoFragment(WoDTO dto, List<AppParamDTO> lst) {
         super();
         this.itemWoDTO = dto;
         this.lstParamDTOS = lst;
@@ -107,7 +111,7 @@ public class InfoItemWoFragment extends Fragment {
         return view;
     }
 
-    private void setDataView(WoDTO itemWoDTO){
+    private void setDataView(WoDTO itemWoDTO) {
         if (itemWoDTO == null) return;
         tvCode.setText(itemWoDTO.getWoCode());
         tvName.setText(itemWoDTO.getWoName());
@@ -161,7 +165,8 @@ public class InfoItemWoFragment extends Fragment {
         tvQoutaTime.setText(String.valueOf(itemWoDTO.getQoutaTime()));
         tvTotalMonthPlanName.setText(itemWoDTO.getTotalMonthPlanName());
         woDTORequest.setSysUserRequest(VConstant.getUser());
-        if (itemWoDTO.getFtId() == VConstant.getUser().getSysUserId()) {
+
+        if (itemWoDTO.isFt()) {
             switch (itemWoDTO.getState()) {
                 case VConstant.StateWO.Assign_ft:
                     tvAccept.setVisibility(View.VISIBLE);
@@ -169,13 +174,16 @@ public class InfoItemWoFragment extends Fragment {
                     tvProcess.setVisibility(View.GONE);
                     tvFinish.setVisibility(View.GONE);
                     tvReport.setVisibility(View.GONE);
+                    tvHandover.setVisibility(View.GONE);
                     break;
                 case VConstant.StateWO.Accept_ft:
+                    lnBottom.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);
                     tvProcess.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);
                     tvAccept.setVisibility(View.GONE);
                     tvReject.setVisibility(View.GONE);
                     tvFinish.setVisibility(View.GONE);
                     tvReport.setVisibility(View.GONE);
+                    tvHandover.setVisibility(View.GONE);
                     break;
                 case VConstant.StateWO.Processing:
                     tvFinish.setVisibility(itemWoDTO.isCanFinish() ? View.VISIBLE : View.GONE);
@@ -183,22 +191,51 @@ public class InfoItemWoFragment extends Fragment {
                     tvProcess.setVisibility(View.GONE);
                     tvAccept.setVisibility(View.GONE);
                     tvReject.setVisibility(View.GONE);
+                    tvHandover.setVisibility(View.GONE);
                     break;
                 default:
                     lnBottom.setVisibility(View.GONE);
                     break;
             }
-        }else if (itemWoDTO.getFtId() != VConstant.getUser().getSysUserId()){
-            // check CD
+        } else {
+            switch (itemWoDTO.getState()) {
+                case VConstant.StateWO.Assign_cd:
+                    tvHandover.setVisibility(View.GONE);
+                    tvFinish.setVisibility(View.GONE);
+                    tvReport.setVisibility(View.GONE);
+                    tvProcess.setVisibility(View.GONE);
+                    tvAccept.setVisibility(View.VISIBLE);
+                    tvReject.setVisibility(View.GONE);
+                    break;
+                case VConstant.StateWO.Assign_ft:
+                case VConstant.StateWO.Accept_cd:
+                case VConstant.StateWO.Reject_ft:
+                    tvHandover.setVisibility(View.VISIBLE);
+                    tvFinish.setVisibility(View.GONE);
+                    tvReport.setVisibility(View.GONE);
+                    tvProcess.setVisibility(View.GONE);
+                    tvAccept.setVisibility(View.GONE);
+                    tvReject.setVisibility(View.GONE);
+                    // check CD
+                    getListFtToAssign();
+                    break;
+                default:
+                    lnBottom.setVisibility(View.GONE);
+                    break;
+            }
+
         }
 
     }
 
 
-    private void updateWo(String state, String content){
+    private void updateWo(String state, String content) {
         itemWoDTO.setState(state);
         itemWoDTO.setAcceptTime(getDataToday());
         woDTORequest.setOpinionContent(content);
+        if (!itemWoDTO.isFt()){
+            itemWoDTO.setFtId(ftId);
+        }
         woDTORequest.setWoDTO(itemWoDTO);
         ApiManager.getInstance().updateWo(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
             @Override
@@ -225,7 +262,7 @@ public class InfoItemWoFragment extends Fragment {
 
     }
 
-    private void updateProcessing(String state, String content, String type, String userId){
+    private void updateProcessing(String state, String content, String type, String userId) {
         itemWoDTO.setState(state);
         itemWoDTO.setAcceptTime(getDataToday());
         woDTORequest.setOpinionContent(content);
@@ -260,25 +297,25 @@ public class InfoItemWoFragment extends Fragment {
 
     @OnClick(R.id.tv_Accept)
     public void onClickAcceptFt() {
-        updateWo(VConstant.StateWO.Accept_ft, null);
+        updateWo(itemWoDTO.isFt() ? VConstant.StateWO.Accept_ft : VConstant.StateWO.Accept_cd, null);
     }
 
     @OnClick(R.id.tv_Process)
     public void onClickProcess() {
-        updateWo(VConstant.StateWO.Processing,  null);
+        updateWo(VConstant.StateWO.Processing, null);
     }
 
     @OnClick(R.id.tv_Finish)
     public void onClickFinish() {
-        updateWo(VConstant.StateWO.Ok,  null);
+        updateWo(VConstant.StateWO.Ok, null);
     }
 
     @OnClick(R.id.tv_Reject)
-    public void onReject(){
+    public void onReject() {
         dialogCancel = new DialogCancel(getContext(), s -> {
-            if (TextUtils.isEmpty(s)){
+            if (TextUtils.isEmpty(s)) {
                 Toast.makeText(getContext(), "Nội dung không được để trống", Toast.LENGTH_LONG).show();
-            }else {
+            } else {
                 updateWo(VConstant.StateWO.Reject_ft, s);
                 dialogCancel.dismiss();
             }
@@ -289,15 +326,15 @@ public class InfoItemWoFragment extends Fragment {
     }
 
     @OnClick(R.id.tv_Report)
-    public void onReport(){
+    public void onReport() {
         dialogPleaseComment = new DialogPleaseComment(getContext(), lstParamDTOS, new DialogPleaseComment.OnClickDialogPleaseComment() {
             @Override
             public void OnClickDialogPleaseComment(String type, String content, String userId) {
-                if (TextUtils.isEmpty(content)){
+                if (TextUtils.isEmpty(content)) {
                     Toast.makeText(getContext(), "Nội dung không được để trống", Toast.LENGTH_LONG).show();
-                }else if (type.equals("Loại ý kiến")){
+                } else if (type.equals("Loại ý kiến")) {
                     Toast.makeText(getContext(), "Phải chọn loại ý kiến!", Toast.LENGTH_LONG).show();
-                }else {
+                } else {
                     updateProcessing(VConstant.StateWO.Opinion_rq, content, type, String.valueOf(VConstant.getUser().getSysUserId()));
                     dialogPleaseComment.dismiss();
                 }
@@ -308,12 +345,51 @@ public class InfoItemWoFragment extends Fragment {
     }
 
 
+    @OnClick(R.id.tv_handover)
+    public void onClickHandover() {
+        DialogGiaoViec dialogGiaoViec = new DialogGiaoViec(getContext(), ftDTOList, ftId -> {
+            this.ftId = ftId;
+            updateWo(VConstant.StateWO.Assign_ft, null);
+            getActivity().finish();
+        });
+        dialogGiaoViec.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialogGiaoViec.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogGiaoViec.show();
+    }
 
-    private String getDataToday(){
+
+    private String getDataToday() {
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         String currentDateandTime = sdf.format(currentTime);
         return currentDateandTime;
     }
 
+
+    private void getListFtToAssign() {
+        woDTORequest.setGroupId(Integer.parseInt(itemWoDTO.getCdLevel3()));
+        ApiManager.getInstance().getListFtToAssign(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                try {
+                    WoDTOResponse response = WoDTOResponse.class.cast(result);
+                    if (response.getResultInfo().getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                        if (response.getListFtToAssign() != null) {
+                            ftDTOList = response.getListFtToAssign();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                Toast.makeText(getContext(), getString(R.string.error_mes), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
