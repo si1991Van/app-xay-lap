@@ -13,6 +13,7 @@ public class WoDTORequest {
     private String opinionType;
     private String opinionContent;
     private String opinionObject;
+    private long groupId;
 
 
     public SysUserRequest getSysUserRequest() {
@@ -69,6 +70,14 @@ public class WoDTORequest {
 
     public void setOpinionObject(String opinionObject) {
         this.opinionObject = opinionObject;
+    }
+
+    public long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
     }
 }
 

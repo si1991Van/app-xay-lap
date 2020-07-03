@@ -28,7 +28,6 @@ public class DialogShowListWO extends BaseDialog {
 
     private RecyclerView recyclerView;
     private ImageView imgClose;
-//    private List<WoDTO> listSelect = new ArrayList<>();
 
     private OnClickDialogForConfirm onClickDialog;
 
@@ -69,25 +68,6 @@ public class DialogShowListWO extends BaseDialog {
             dismiss();
         });
     }
-
-//    private void initAdapter(List<WoDTO> list) {
-//        //recyclerview
-//        adapter = new SelectWoAdapter(getContext(), listSelect, list, new SelectWoAdapter.callBackInterface() {
-//            @Override
-//            public void add(WoDTO dto) {
-//                listSelect.add(dto);
-//            }
-//
-//            @Override
-//            public void remove(WoDTO dto) {
-//                listSelect.remove(dto);
-//            }
-//        });
-//        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
-//        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(linearLayoutManager2);
-//        recyclerView.setAdapter(adapter);
-//    }
 
     public interface OnClickDialogForConfirm {
 

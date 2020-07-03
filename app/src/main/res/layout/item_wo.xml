@@ -61,6 +61,7 @@ android:paddingRight="4dp">
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lnProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_4"

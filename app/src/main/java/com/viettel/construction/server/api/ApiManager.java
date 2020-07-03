@@ -2539,4 +2539,15 @@ public class ApiManager {
                 , convertModelRequestWo(woDTORequest)
                 , requestListener);
     }
+
+    public  <T> void getListFtToAssign(WoDTORequest woDTORequest, final Class<T> clazz, final IOnRequestListener requestListener) {
+        String url = getUrl(VConstant.END_URL_GET_LIST_FT_TO_ASSIGN);
+        Map<String, String> header = new HashMap<>();
+        Log.d(TAG, "updateAcceptance - url : " + url);
+        header.put("Content-Type", "application/json");
+        ApiClient.getInstance().post(url
+                , clazz, header
+                , convertModelRequestWo(woDTORequest)
+                , requestListener);
+    }
 }

@@ -290,8 +290,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="giao viec"
-            android:textColor="@color/black_base"
+            android:text="Giao việc"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_accept"
             android:visibility="gone"
             android:gravity="center"/>
         <TextView

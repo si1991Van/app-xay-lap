@@ -4,6 +4,7 @@ import com.viettel.construction.model.api.ResultInfo;
 import com.viettel.construction.model.api.SysUserRequest;
 import com.viettel.construction.model.api.version.AppParamDTO;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
+import com.viettel.construction.model.api.wo.WoSimpleFtDTO;
 import com.viettel.construction.model.api.wo.WoWorkLogsBO;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public class WoDTOResponse {
     private List<WoMappingChecklistDTO> lstChecklistsOfWo;
     private List<AppParamDTO> lstDataForComboBox;
     private List<WoWorkLogsBO> logs;
+
+    private List<WoSimpleFtDTO> listFtToAssign;
 
     public ResultInfo getResultInfo() {
         return resultInfo;
@@ -62,5 +65,13 @@ public class WoDTOResponse {
 
     public void setLogs(List<WoWorkLogsBO> logs) {
         this.logs = logs;
+    }
+
+    public List<WoSimpleFtDTO> getListFtToAssign() {
+        return listFtToAssign;
+    }
+
+    public void setListFtToAssign(List<WoSimpleFtDTO> listFtToAssign) {
+        this.listFtToAssign = listFtToAssign;
     }
 }

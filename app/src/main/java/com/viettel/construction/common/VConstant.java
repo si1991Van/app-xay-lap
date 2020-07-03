@@ -199,6 +199,7 @@ public class VConstant {
     public static final String END_URL_UPDATE_CHECKLIST_WO = "woService/updateChecklist";
     public static final String END_URL_UPDATE_OPINION_WO = "woService/updateOpinion";
     public static final String END_URL_LIST_WORKLOGS_WO = "woService/listWorklogs";
+    public static final String END_URL_GET_LIST_FT_TO_ASSIGN = "woService/getListFtToAssign";
     //
 
     public static final String FORMAT_TIME_CURRENT = "yyyy-mm-dd'T'HH:mm:ss.SSS";
