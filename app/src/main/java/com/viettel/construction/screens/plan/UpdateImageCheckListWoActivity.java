@@ -92,7 +92,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
                 lstImg = dto.getLstImgs();
             }
             imgCamera.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.INVISIBLE);
-            btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.GONE);
+            btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) && !dto.getQuantityByDate().equals("1") ? View.VISIBLE : View.GONE);
             initView();
             initAdapterImage();
         }
@@ -118,8 +118,6 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
             lnMass.setVisibility(dto.getQuantityByDate().equals("1") ? View.VISIBLE : View.GONE);
             lnStatus.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
             recyclerView.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
-            imgCamera.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
-
             edTotal.setFocusable(state.equals(VConstant.StateWO.Processing) ? true : false);
             edTotal.setEnabled(state.equals(VConstant.StateWO.Processing) ? true : false);
             edTotal.setText(String.valueOf(dto.getQuantityLength()));
