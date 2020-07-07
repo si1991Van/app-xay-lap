@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.viettel.construction.model.api.wo.WoSimpleFtDTO;
 import com.viettel.construction.screens.custom.dialog.DialogCancel;
 import com.viettel.construction.screens.custom.dialog.DialogGiaoViec;
 import com.viettel.construction.screens.custom.dialog.DialogPleaseComment;
+import com.viettel.construction.screens.custom.dialog.DialogRattingWO;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
 
@@ -82,6 +84,8 @@ public class InfoItemWoFragment extends Fragment {
     TextView tvQoutaTime;
     @BindView(R.id.tv_totalMonthPlanName)
     TextView tvTotalMonthPlanName;
+    @BindView(R.id.tvDone)
+    TextView tvDone;
     @BindView(R.id.lnBottom)
     LinearLayout lnBottom;
 
@@ -116,7 +120,7 @@ public class InfoItemWoFragment extends Fragment {
         tvCode.setText(itemWoDTO.getWoCode());
         tvName.setText(itemWoDTO.getWoName());
         tvProgress.setText(itemWoDTO.getDoneCheckListNumber());
-        tvPerformer.setText(VConstant.getDTO().getFullName());
+
         switch (itemWoDTO.getState()) {
             case VConstant.StateWO.Assign_cd:
                 tvStatus.setText(getString(R.string.assign_cd));
@@ -164,9 +168,9 @@ public class InfoItemWoFragment extends Fragment {
                 getString(R.string.updating_date));
         tvQoutaTime.setText(String.valueOf(itemWoDTO.getQoutaTime()));
         tvTotalMonthPlanName.setText(itemWoDTO.getTotalMonthPlanName());
+        tvPerformer.setText(itemWoDTO.getFtName() != null ? itemWoDTO.getFtName() : getString(R.string.updating_date));
         woDTORequest.setSysUserRequest(VConstant.getUser());
-
-        if (itemWoDTO.isFt()) {
+        if (itemWoDTO.getRoleForWo() == 1) {
             switch (itemWoDTO.getState()) {
                 case VConstant.StateWO.Assign_ft:
                     tvAccept.setVisibility(View.VISIBLE);
@@ -193,11 +197,20 @@ public class InfoItemWoFragment extends Fragment {
                     tvReject.setVisibility(View.GONE);
                     tvHandover.setVisibility(View.GONE);
                     break;
+                case VConstant.StateWO.Done:
+                    tvDone.setVisibility(View.VISIBLE);
+                    tvFinish.setVisibility(View.GONE);
+                    tvReport.setVisibility(View.GONE);
+                    tvProcess.setVisibility(View.GONE);
+                    tvAccept.setVisibility(View.GONE);
+                    tvReject.setVisibility(View.GONE);
+                    tvHandover.setVisibility(View.GONE);
+                    break;
                 default:
                     lnBottom.setVisibility(View.GONE);
                     break;
             }
-        } else {
+        } else if (itemWoDTO.getRoleForWo() == 2){
             switch (itemWoDTO.getState()) {
                 case VConstant.StateWO.Assign_cd:
                     tvHandover.setVisibility(View.GONE);
@@ -206,6 +219,7 @@ public class InfoItemWoFragment extends Fragment {
                     tvProcess.setVisibility(View.GONE);
                     tvAccept.setVisibility(View.VISIBLE);
                     tvReject.setVisibility(View.GONE);
+                    tvDone.setVisibility(View.GONE);
                     break;
                 case VConstant.StateWO.Assign_ft:
                 case VConstant.StateWO.Accept_cd:
@@ -216,9 +230,60 @@ public class InfoItemWoFragment extends Fragment {
                     tvProcess.setVisibility(View.GONE);
                     tvAccept.setVisibility(View.GONE);
                     tvReject.setVisibility(View.GONE);
+                    tvDone.setVisibility(View.GONE);
                     // check CD
                     getListFtToAssign();
                     break;
+                case VConstant.StateWO.Done:
+                    tvDone.setVisibility(View.VISIBLE);
+                    tvHandover.setVisibility(View.GONE);
+                    tvFinish.setVisibility(View.GONE);
+                    tvReport.setVisibility(View.GONE);
+                    tvProcess.setVisibility(View.GONE);
+                    tvAccept.setVisibility(View.GONE);
+                    tvReject.setVisibility(View.GONE);
+                    break;
+
+                default:
+                    lnBottom.setVisibility(View.GONE);
+                    break;
+            }
+
+        }
+        else {
+            switch (itemWoDTO.getState()) {
+                case VConstant.StateWO.Assign_ft:
+                    tvHandover.setVisibility(View.VISIBLE);
+                    tvFinish.setVisibility(View.GONE);
+                    tvReport.setVisibility(View.GONE);
+                    tvProcess.setVisibility(View.GONE);
+                    tvAccept.setVisibility(View.VISIBLE);
+                    tvReject.setVisibility(View.VISIBLE);
+                    tvDone.setVisibility(View.GONE);
+                    getListFtToAssign();
+                    break;
+                case VConstant.StateWO.Assign_cd:
+                    tvHandover.setVisibility(View.GONE);
+                    tvFinish.setVisibility(View.GONE);
+                    tvReport.setVisibility(View.GONE);
+                    tvProcess.setVisibility(View.GONE);
+                    tvAccept.setVisibility(View.VISIBLE);
+                    tvReject.setVisibility(View.GONE);
+                    tvDone.setVisibility(View.GONE);
+                    break;
+                case VConstant.StateWO.Accept_cd:
+                case VConstant.StateWO.Reject_ft:
+                    tvHandover.setVisibility(View.VISIBLE);
+                    tvFinish.setVisibility(View.GONE);
+                    tvReport.setVisibility(View.GONE);
+                    tvProcess.setVisibility(View.GONE);
+                    tvAccept.setVisibility(View.GONE);
+                    tvReject.setVisibility(View.GONE);
+                    tvDone.setVisibility(View.GONE);
+                    // check CD
+                    getListFtToAssign();
+                    break;
+
                 default:
                     lnBottom.setVisibility(View.GONE);
                     break;
@@ -233,8 +298,15 @@ public class InfoItemWoFragment extends Fragment {
         itemWoDTO.setState(state);
         itemWoDTO.setAcceptTime(getDataToday());
         woDTORequest.setOpinionContent(content);
-        if (!itemWoDTO.isFt()){
-            itemWoDTO.setFtId(ftId);
+        switch (itemWoDTO.getState()){
+            case VConstant.StateWO.Assign_cd:
+                itemWoDTO.setFtId(ftId);
+                break;
+            case VConstant.StateWO.Assign_ft:
+                if (itemWoDTO.getRoleForWo() == 0 || itemWoDTO.getRoleForWo() == 2){
+                    itemWoDTO.setFtId(ftId);
+                }
+                break;
         }
         woDTORequest.setWoDTO(itemWoDTO);
         ApiManager.getInstance().updateWo(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
@@ -297,7 +369,15 @@ public class InfoItemWoFragment extends Fragment {
 
     @OnClick(R.id.tv_Accept)
     public void onClickAcceptFt() {
-        updateWo(itemWoDTO.isFt() ? VConstant.StateWO.Accept_ft : VConstant.StateWO.Accept_cd, null);
+        switch (itemWoDTO.getState()){
+            case VConstant.StateWO.Assign_cd:
+                updateWo(VConstant.StateWO.Accept_cd, null);
+                break;
+            case VConstant.StateWO.Assign_ft:
+                updateWo(VConstant.StateWO.Accept_ft, null);
+                break;
+
+        }
     }
 
     @OnClick(R.id.tv_Process)
@@ -307,7 +387,7 @@ public class InfoItemWoFragment extends Fragment {
 
     @OnClick(R.id.tv_Finish)
     public void onClickFinish() {
-        updateWo(VConstant.StateWO.Ok, null);
+        updateWo(VConstant.StateWO.Done, null);
     }
 
     @OnClick(R.id.tv_Reject)
@@ -357,6 +437,17 @@ public class InfoItemWoFragment extends Fragment {
         dialogGiaoViec.show();
     }
 
+    @OnClick(R.id.tvDone)
+    public void onClickDone(){
+        DialogRattingWO dialogRattingWO = new DialogRattingWO(getContext(), new DialogRattingWO.OnClickDialogForCancel() {
+            @Override
+            public void onClickConfirmOfCancel(String status, String content) {
+                Log.e("Tag: ", status);
+                updateWo(String.valueOf(status), content);
+            }
+        });
+        dialogRattingWO.show();
+    }
 
     private String getDataToday() {
         Date currentTime = Calendar.getInstance().getTime();
@@ -392,4 +483,6 @@ public class InfoItemWoFragment extends Fragment {
             }
         });
     }
+
+
 }
