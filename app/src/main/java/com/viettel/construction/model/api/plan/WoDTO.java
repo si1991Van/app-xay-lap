@@ -46,7 +46,8 @@ public class WoDTO implements Serializable {
     private boolean canFinish;
     private double remainLength;
     private String doneChecklistNumber;
-    private boolean ft;
+//    private boolean ft;
+    private int roleForWo;
 
 
     public long getWoId() {
@@ -385,13 +386,6 @@ public class WoDTO implements Serializable {
         this.cdLevel3Name = cdLevel3Name;
     }
 
-    public boolean isFt() {
-        return ft;
-    }
-
-    public void setFt(boolean ft) {
-        ft = ft;
-    }
 
     public String getCdLevel3() {
         return cdLevel3;
@@ -401,4 +395,11 @@ public class WoDTO implements Serializable {
         this.cdLevel3 = cdLevel3;
     }
 
+    public int getRoleForWo() {
+        return roleForWo;
+    }
+
+    public void setRoleForWo(int roleForWo) {
+        this.roleForWo = roleForWo;
+    }
 }

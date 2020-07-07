@@ -92,7 +92,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
                 lstImg = dto.getLstImgs();
             }
             imgCamera.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.INVISIBLE);
-            btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) && !dto.getQuantityByDate().equals("1") ? View.VISIBLE : View.GONE);
+            btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) && "1".equals(dto.getQuantityByDate()) ? View.GONE : View.VISIBLE);
             initView();
             initAdapterImage();
         }
@@ -115,9 +115,9 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         });
         codeSpinner(itemStatus, spStatus, dto);
         if (dto.getQuantityByDate() != null) {
-            lnMass.setVisibility(dto.getQuantityByDate().equals("1") ? View.VISIBLE : View.GONE);
-            lnStatus.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
-            recyclerView.setVisibility(dto.getQuantityByDate().equals("1") ? View.GONE : View.VISIBLE);
+            lnMass.setVisibility("1".equals(dto.getQuantityByDate()) ? View.VISIBLE : View.GONE);
+            lnStatus.setVisibility("1".equals(dto.getQuantityByDate()) ? View.GONE : View.VISIBLE);
+            recyclerView.setVisibility("1".equals(dto.getQuantityByDate()) ? View.GONE : View.VISIBLE);
             edTotal.setFocusable(state.equals(VConstant.StateWO.Processing) ? true : false);
             edTotal.setEnabled(state.equals(VConstant.StateWO.Processing) ? true : false);
             edTotal.setText(String.valueOf(dto.getQuantityLength()));
@@ -153,7 +153,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     public void onClickSave() {
         if (dto.getQuantityByDate() == null){
             updateCheckList();
-        }else if (dto.getQuantityByDate().equals("1")){
+        }else if ("1".equals(dto.getQuantityByDate())){
             if (Integer.parseInt(edTotal.getText().toString()) > woDTO.getRemainLength()){
                 Toast.makeText(UpdateImageCheckListWoActivity.this, "Khối lượng không được lớn hơn tổng khối lượng hiện tại!",
                         Toast.LENGTH_LONG).show();
