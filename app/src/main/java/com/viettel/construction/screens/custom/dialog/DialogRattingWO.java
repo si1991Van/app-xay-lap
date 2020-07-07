@@ -37,7 +37,7 @@ public class DialogRattingWO extends BaseDialog{
         super.onClick(v);
         if (v.getId() == R.id.txt_dialog_confirm_of_cancle) {
             int idRadioItemSelect = mRadioReasonAvaiableReason.getCheckedRadioButtonId();
-            String message = (idRadioItemSelect == R.id.radio_done) ? VConstant.StateWO.Done : VConstant.StateWO.Ng;
+            String message = (idRadioItemSelect == R.id.radio_done) ? VConstant.StateWO.Ok : VConstant.StateWO.Ng;
             if (message.equals(VConstant.StateWO.Ng)){
                 if (TextUtils.isEmpty(edContent.getText().toString())){
                     Toast.makeText(getContext(), "Nội dung không được để trống!", Toast.LENGTH_LONG).show();
