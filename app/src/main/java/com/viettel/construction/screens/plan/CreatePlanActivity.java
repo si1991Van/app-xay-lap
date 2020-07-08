@@ -83,7 +83,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         txtHeader = findViewById(R.id.txtHeader);
         imgBack = findViewById(R.id.imgBack);
         txtSave = findViewById(R.id.txtSave);
-        txtHeader.setText("Tạo mới kế hoạch");
+
         initView();
     }
 
@@ -96,6 +96,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         if (bundle == null){
             spPlanType("Tuần");
             edToDate.setText(setDataToday());
+            txtHeader.setText("Tạo mới kế hoạch");
             return;
         }
         if (bundle.getSerializable("EDIT_PLAN") != null) {
@@ -105,8 +106,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
             spPlanType(item.getPlanType());
             edToDate.setText(item.getFromDate() == null ? setDataToday() : item.getFromDate());
             getListWoByPlanId();
-
-
+            txtHeader.setText("Sửa kế hoạch");
         }
     }
 

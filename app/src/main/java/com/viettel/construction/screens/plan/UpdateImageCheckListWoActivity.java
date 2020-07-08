@@ -92,7 +92,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
                 lstImg = dto.getLstImgs();
             }
             imgCamera.setVisibility(state.equals(VConstant.StateWO.Processing) && !"1".equals(dto.getQuantityByDate()) ? View.VISIBLE : View.INVISIBLE);
-            btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.GONE : View.VISIBLE);
+            btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.GONE);
             initView();
             initAdapterImage();
         }
