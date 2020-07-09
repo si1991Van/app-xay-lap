@@ -49,12 +49,14 @@ import com.viettel.construction.screens.home.HomeCameraActivity;
 
 public class BaseChartFragment extends BaseCameraFragment {
 
-    public String[] mParties, mParties2, mParties3, mParties4, mParties5;
+    public String[] mParties, mParties2, mParties3, mParties4, mParties5, mPartiesWO, mPartiesPlan;
     public int[] colorChar1;
     public int[] colorChar2;
     public int[] colorChar3;
     public int[] colorChar4;
     public int[] colorChar5;
+    public int[] colorCharWO;
+    public int[] colorCharPlan;
     public EventBus bus = EventBus.getDefault();
     public Calendar myCalendar;
     private DatePickerDialog datePickerDialog;
@@ -108,6 +110,21 @@ public class BaseChartFragment extends BaseCameraFragment {
                         getResources().getColor(R.color.c10),
                         getResources().getColor(R.color.c19)
                 };
+        colorCharPlan = new int[]
+                {
+                        getResources().getColor(R.color.c10),
+                        getResources().getColor(R.color.c19)
+                };
+        colorCharWO = new int[]
+                {
+                        getResources().getColor(R.color.c20),
+                        getResources().getColor(R.color.c8),
+                        getResources().getColor(R.color.c14),
+                        getResources().getColor(R.color.c19),
+                        getResources().getColor(R.color.c10),
+                        getResources().getColor(R.color.c24)
+                };
+
 
         mParties = new String[]{
                 getActivity().getString(R.string.on_schedule),
@@ -132,6 +149,21 @@ public class BaseChartFragment extends BaseCameraFragment {
         mParties5 = new String[]{
                 "Chưa nhận",
                 "Đã nhận"
+        };
+
+        mPartiesWO = new String[]{
+                "Chờ TN",
+                "Đã TN",
+                "Từ chối",
+                "Đang TH",
+                "Hoàn thành",
+                "Chưa HT",
+
+        };
+
+        mPartiesPlan = new String[]{
+                "Chưa Hoàn thành",
+                "Hoàn thành"
         };
     }
 
@@ -459,7 +491,7 @@ public class BaseChartFragment extends BaseCameraFragment {
 
             switch (pieChart.getId()) {
                 case R.id.chartCongViec:
-                    colorTemp = colorChar1;
+                    colorTemp = colorCharPlan;
                     break;
                 case R.id.chartXuatKho:
                     colorTemp = colorChar2;
@@ -471,7 +503,7 @@ public class BaseChartFragment extends BaseCameraFragment {
 //                    colorTemp = colorChar3;
 //                    break;
                 default:
-                    colorTemp = colorChar4;
+                    colorTemp = colorCharWO;
                     break;
             }
 

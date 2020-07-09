@@ -30,6 +30,7 @@ import com.viettel.construction.model.api.ConstructionScheduleItemDTO;
 import com.viettel.construction.model.api.CountConstructionTaskDTO;
 import com.viettel.construction.model.api.ResultApi;
 import com.viettel.construction.model.api.ResultInfo;
+import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.screens.menu_acceptance.AcceptanceLevel1Fragment;
 import com.viettel.construction.screens.menu_bgmb.TabPageBGMBFragment;
 import com.viettel.construction.screens.menu_construction.TabPageConstructionFragment;
@@ -113,6 +114,10 @@ public class TabDashboardChartFragment extends BaseChartFragment {
 
     @BindView(R.id.txtCompleted)
     TextView txtCompleted;
+    @BindView(R.id.txtWoAssignFT)
+    TextView txtWoAssignFT;
+    @BindView(R.id.txtRejectFt)
+    TextView txtRejectFt;
 
 
     @Override
@@ -124,7 +129,7 @@ public class TabDashboardChartFragment extends BaseChartFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_dashboard1, container, false);
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ButterKnife.bind(this, view);
         txtHeader.setText("Dashboard");
         if (getActivity() != null)
@@ -486,7 +491,65 @@ public class TabDashboardChartFragment extends BaseChartFragment {
             }
         });
 
+        getChartWO();
 
+    }
+
+
+
+    private void getChartWO(){
+        ApiManager.getInstance().getDataForChart(WoDTOResponse.class, new IOnRequestListener() {
+            @Override
+            public <T> void onResponse(T result) {
+                try {
+                    List<Integer> list = new ArrayList<>();
+                    List<Integer> listPlan = new ArrayList<>();
+                    WoDTOResponse response = WoDTOResponse.class.cast(result);
+                    ResultInfo resultInfo = response.getResultInfo();
+                    if (resultInfo.getStatus().equals(VConstant.RESULT_STATUS_OK)) {
+                        list.clear();
+                        listPlan.clear();
+                        if (response.getMapDataWoForChart() != null){
+                            list.add(response.getMapDataWoForChart().getASSIGN_FT());
+                            list.add(response.getMapDataWoForChart().getACCEPT_FT());
+                            list.add(response.getMapDataWoForChart().getREJECT_FT());
+                            list.add(response.getMapDataWoForChart().getPROCESSING());
+                            list.add(response.getMapDataWoForChart().getOK());
+                            list.add(response.getMapDataWoForChart().getNG());
+                            txtWoAssignFT.setText(getActivity().getString(R.string.on_wo_assign_ft, response.getMapDataWoForChart().getASSIGN_FT()));
+                            txtUnImplemented.setText(getActivity().getString(R.string.on_wo_accept_ft, response.getMapDataWoForChart().getACCEPT_FT()));
+                            txtRejectFt.setText(getActivity().getString(R.string.on_wo_reject_ft, response.getMapDataWoForChart().getREJECT_FT()));
+                            txtPending.setText(getActivity().getString(R.string.on_wo_processing, response.getMapDataWoForChart().getPROCESSING()));
+                            txtCompleted.setText(getActivity().getString(R.string.on_wo_ok, response.getMapDataWoForChart().getOK()));
+                            txtInProgress.setText(getActivity().getString(R.string.on_wo_ng, response.getMapDataWoForChart().getNG()));
+
+
+
+
+                            initChart4(list, chartHangMuc, 0f, 0f, mPartiesWO, 6, false);
+                        }
+                        if (response.getMapDataWoPlanForChart() != null){
+                            listPlan.add(response.getMapDataWoPlanForChart().getUNDONE());
+                            listPlan.add(response.getMapDataWoPlanForChart().getDONE());
+
+                            txtOnSchedule.setText(getActivity().getString(R.string.on_plan_undone, response.getMapDataWoPlanForChart().getUNDONE()));
+                            txtBehindSchedule.setText(getActivity().getString(R.string.on_plan_done, response.getMapDataWoPlanForChart().getDONE()));
+
+                            initChartBGMB(listPlan, chartCongViec, 0, 0, mParties5, 2, false);
+
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("Tag: ", "co loi");
+                }
+            }
+
+            @Override
+            public void onError(int statusCode) {
+                Log.e("Tag: ", statusCode + "");
+            }
+        });
     }
 
     @Override

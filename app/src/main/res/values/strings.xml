@@ -439,4 +439,14 @@
     <string name="updating_date">Đang cập nhật</string>
 
 
+    <string name="on_plan_undone">Chưa hoàn thành (%d)</string>
+    <string name="on_plan_done">Đã thành (%d)</string>
+
+    <string name="on_wo_assign_ft">Chờ TN (%d)</string>
+    <string name="on_wo_accept_ft">Đã TN (%d)</string>
+    <string name="on_wo_reject_ft">Từ chối (%d)</string>
+    <string name="on_wo_processing">Đang TH (%d)</string>
+    <string name="on_wo_ok">Hoàn thành (%d)</string>
+    <string name="on_wo_ng">Chưa HT (%d)</string>
+
 </resources>

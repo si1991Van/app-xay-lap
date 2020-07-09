@@ -3,6 +3,8 @@ package com.viettel.construction.model.api.plan;
 import com.viettel.construction.model.api.ResultInfo;
 import com.viettel.construction.model.api.SysUserRequest;
 import com.viettel.construction.model.api.version.AppParamDTO;
+import com.viettel.construction.model.api.wo.MapDataWoForChartDTO;
+import com.viettel.construction.model.api.wo.MapDataWoPlanForChartDTO;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
 import com.viettel.construction.model.api.wo.WoSimpleFtDTO;
 import com.viettel.construction.model.api.wo.WoWorkLogsBO;
@@ -16,8 +18,10 @@ public class WoDTOResponse {
     private List<WoMappingChecklistDTO> lstChecklistsOfWo;
     private List<AppParamDTO> lstDataForComboBox;
     private List<WoWorkLogsBO> logs;
-
     private List<WoSimpleFtDTO> listFtToAssign;
+
+    private MapDataWoForChartDTO mapDataWoForChart;
+    private MapDataWoPlanForChartDTO mapDataWoPlanForChart;
 
     public ResultInfo getResultInfo() {
         return resultInfo;
@@ -73,5 +77,21 @@ public class WoDTOResponse {
 
     public void setListFtToAssign(List<WoSimpleFtDTO> listFtToAssign) {
         this.listFtToAssign = listFtToAssign;
+    }
+
+    public MapDataWoForChartDTO getMapDataWoForChart() {
+        return mapDataWoForChart;
+    }
+
+    public void setMapDataWoForChart(MapDataWoForChartDTO mapDataWoForChart) {
+        this.mapDataWoForChart = mapDataWoForChart;
+    }
+
+    public MapDataWoPlanForChartDTO getMapDataWoPlanForChart() {
+        return mapDataWoPlanForChart;
+    }
+
+    public void setMapDataWoPlanForChart(MapDataWoPlanForChartDTO mapDataWoPlanForChart) {
+        this.mapDataWoPlanForChart = mapDataWoPlanForChart;
     }
 }
