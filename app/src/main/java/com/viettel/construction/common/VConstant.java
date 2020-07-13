@@ -37,7 +37,13 @@ public class VConstant {
         public static final String Done = "DONE";
         public static final String Ng = "NG";
         public static final String Ok = "OK";
-        public static final String Opinion_rq = "OPINION_RQ";
+        public static final String Opinion_rq1 = "OPINION_RQ_1";
+        public static final String Opinion_rq2 = "OPINION_RQ_2";
+        public static final String Opinion_rq3 = "OPINION_RQ_3";
+        public static final String Opinion_rq4 = "OPINION_RQ_4";
+
+        public static final String Accepted = "ACCEPTED";
+        public static final String Rejected = "REJECTED";
 
 
     }

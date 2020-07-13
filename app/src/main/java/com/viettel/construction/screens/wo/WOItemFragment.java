@@ -240,8 +240,8 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
                 break;
             case R.id.Opinion_rq:
                 type = 8;
-                menuStatus = VConstant.StateWO.Opinion_rq;
-                data = filterByItem(VConstant.StateWO.Opinion_rq, apWorkSrc, apConstructionType);
+                menuStatus = VConstant.StateWO.Opinion_rq4;
+                data = filterByItem(VConstant.StateWO.Opinion_rq4, apWorkSrc, apConstructionType);
 //                data = filterByStatus(VConstant.StateWO.Opinion_rq, false);
                 break;
             case R.id.ok:
