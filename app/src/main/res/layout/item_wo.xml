@@ -87,6 +87,57 @@ android:paddingRight="4dp">
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lnStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Thời gian bắt đầu" />
+
+        <TextView
+            android:id="@+id/tv_startTime"
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ellipsize="end"
+            android:text="3/10"
+            android:maxLines="2" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lnEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Thời gian kết thúc" />
+
+        <TextView
+            android:id="@+id/tv_EndTime"
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ellipsize="end"
+            android:text="3/10"
+            android:maxLines="2" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lnCD1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,6 +206,32 @@ android:paddingRight="4dp">
 
         <TextView
             android:id="@+id/tv_cd3"
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ellipsize="end"
+            android:maxLines="2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnCD4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BlackText_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="center_vertical"
+            android:text="CD 4" />
+
+        <TextView
+            android:id="@+id/tv_cd4"
             style="@style/BlackText_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

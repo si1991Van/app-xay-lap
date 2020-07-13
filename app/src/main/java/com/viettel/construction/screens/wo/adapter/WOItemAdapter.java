@@ -39,9 +39,11 @@ public class WOItemAdapter
         holder.tvCD1.setText(woDTO.getCdLevel1Name());
         holder.tvCD2.setText(woDTO.getCdLevel2Name());
         holder.tvCD3.setText(woDTO.getCdLevel3Name());
+        holder.tvCD4.setText(woDTO.getCdLevel4Name());
         holder.lnCD1.setVisibility(woDTO.getCdLevel1Name() == null ? View.GONE : View.VISIBLE);
         holder.lnCd2.setVisibility(woDTO.getCdLevel2Name() == null ? View.GONE : View.VISIBLE);
         holder.lnCd3.setVisibility(woDTO.getCdLevel3Name() == null ? View.GONE : View.VISIBLE);
+        holder.lnCd4.setVisibility(woDTO.getCdLevel4Name() == null ? View.GONE : View.VISIBLE);
         holder.lnProgress.setVisibility(woDTO.getDoneCheckListNumber() == null ? View.GONE : View.VISIBLE);
 
         if (woDTO == null || woDTO.getState() == null) return;
@@ -76,7 +78,7 @@ public class WOItemAdapter
                 holder.tvStatus.setText(context.getString(R.string.processing));
                 holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
-            case VConstant.StateWO.Opinion_rq:
+            case VConstant.StateWO.Opinion_rq4:
                 holder.tvStatus.setText(context.getString(R.string.opinion_rq));
                 holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
@@ -95,9 +97,10 @@ public class WOItemAdapter
             default:
                 break;
         }
-
-
-
+        holder.lnStartTime.setVisibility(woDTO.getStartTime() == null ? View.GONE : View.VISIBLE);
+        holder.lnEndTime.setVisibility(woDTO.getEndTime() == null ? View.GONE : View.VISIBLE);
+        holder.tvStartTime.setText(woDTO.getStartTime());
+        holder.tvEndTime.setText(woDTO.getEndTime());
         holder.itemView.setOnClickListener((v) -> {
             try {
                 itemRecyclerviewClick.onItemRecyclerViewclick(getListData().get(position));
@@ -129,6 +132,8 @@ public class WOItemAdapter
         TextView tvCD2;
         @BindView(R.id.tv_cd3)
         TextView tvCD3;
+        @BindView(R.id.tv_cd4)
+        TextView tvCD4;
 
         @BindView(R.id.lnCD1)
         LinearLayout lnCD1;
@@ -136,8 +141,18 @@ public class WOItemAdapter
         LinearLayout lnCd2;
         @BindView(R.id.lnCD3)
         LinearLayout lnCd3;
+        @BindView(R.id.lnCD4)
+        LinearLayout lnCd4;
         @BindView(R.id.lnProgress)
         LinearLayout lnProgress;
+        @BindView(R.id.lnStartTime)
+        LinearLayout lnStartTime;
+        @BindView(R.id.lnEndTime)
+        LinearLayout lnEndTime;
+        @BindView(R.id.tv_startTime)
+        TextView tvStartTime;
+        @BindView(R.id.tv_EndTime)
+        TextView tvEndTime;
 
         public WOViewHolder(View itemView) {
             super(itemView);

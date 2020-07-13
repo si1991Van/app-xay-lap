@@ -24,12 +24,15 @@ public class WoDTO implements Serializable {
     private String cdLevel1;
     private String cdLevel2;
     private String cdLevel3;
+    private String cdLevel4;
     private String cdLevel1Name;
     private String cdLevel2Name;
     private String cdLevel3Name;
+    private String cdLevel4Name;
     private long ftId;
     private String ftName;
     private String acceptTime;
+    private String startTime;
     private String endTime;
     private String executeLat;
     private String executeLong;
@@ -46,8 +49,8 @@ public class WoDTO implements Serializable {
     private boolean canFinish;
     private double remainLength;
     private String doneChecklistNumber;
-//    private boolean ft;
     private int roleForWo;
+    private String opinionResult;
 
 
     public long getWoId() {
@@ -401,5 +404,37 @@ public class WoDTO implements Serializable {
 
     public void setRoleForWo(int roleForWo) {
         this.roleForWo = roleForWo;
+    }
+
+    public String getCdLevel4() {
+        return cdLevel4;
+    }
+
+    public void setCdLevel4(String cdLevel4) {
+        this.cdLevel4 = cdLevel4;
+    }
+
+    public String getCdLevel4Name() {
+        return cdLevel4Name;
+    }
+
+    public void setCdLevel4Name(String cdLevel4Name) {
+        this.cdLevel4Name = cdLevel4Name;
+    }
+
+    public String getOpinionResult() {
+        return opinionResult;
+    }
+
+    public void setOpinionResult(String opinionResult) {
+        this.opinionResult = opinionResult;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 }

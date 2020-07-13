@@ -145,7 +145,10 @@ public class InfoItemWoFragment extends Fragment {
             case VConstant.StateWO.Processing:
                 tvStatus.setText(getString(R.string.processing));
                 break;
-            case VConstant.StateWO.Opinion_rq:
+            case VConstant.StateWO.Opinion_rq1:
+            case VConstant.StateWO.Opinion_rq2:
+            case VConstant.StateWO.Opinion_rq3:
+            case VConstant.StateWO.Opinion_rq4:
                 tvStatus.setText(getString(R.string.opinion_rq));
                 break;
             case VConstant.StateWO.Ok:
@@ -180,6 +183,21 @@ public class InfoItemWoFragment extends Fragment {
                     tvReport.setVisibility(View.GONE);
                     tvHandover.setVisibility(View.GONE);
                     break;
+                case VConstant.StateWO.Opinion_rq1:
+                case VConstant.StateWO.Opinion_rq2:
+                case VConstant.StateWO.Opinion_rq3:
+                case VConstant.StateWO.Opinion_rq4:
+                    if (VConstant.StateWO.Accepted.equals(itemWoDTO.getOpinionResult())){
+                        tvDone.setVisibility(View.GONE);
+                        tvFinish.setVisibility(View.GONE);
+                        tvReport.setVisibility(View.GONE);
+                        tvProcess.setVisibility(View.VISIBLE);
+                        tvAccept.setVisibility(View.GONE);
+                        tvReject.setVisibility(View.GONE);
+                        tvHandover.setVisibility(View.GONE);
+                    }
+                    break;
+                case VConstant.StateWO.Ng:
                 case VConstant.StateWO.Accept_ft:
                     lnBottom.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);
                     tvProcess.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);
@@ -250,7 +268,7 @@ public class InfoItemWoFragment extends Fragment {
             }
 
         }
-        else {
+        else if (itemWoDTO.getRoleForWo() == 0){
             switch (itemWoDTO.getState()) {
                 case VConstant.StateWO.Assign_ft:
                     tvHandover.setVisibility(View.VISIBLE);
@@ -296,7 +314,12 @@ public class InfoItemWoFragment extends Fragment {
 
     private void updateWo(String state, String content) {
         itemWoDTO.setState(state);
-        itemWoDTO.setAcceptTime(getDataToday());
+        if (VConstant.StateWO.Accept_ft.equals(state)) {
+            itemWoDTO.setAcceptTime(getDataToday());
+        }
+        if (VConstant.StateWO.Processing.equals(state)){
+            itemWoDTO.setStartTime(getDataToday());
+        }
         woDTORequest.setOpinionContent(content);
         switch (itemWoDTO.getState()){
             case VConstant.StateWO.Assign_cd:
@@ -415,7 +438,11 @@ public class InfoItemWoFragment extends Fragment {
                 } else if (type.equals("Loại ý kiến")) {
                     Toast.makeText(getContext(), "Phải chọn loại ý kiến!", Toast.LENGTH_LONG).show();
                 } else {
-                    updateProcessing(VConstant.StateWO.Opinion_rq, content, type, String.valueOf(VConstant.getUser().getSysUserId()));
+
+                    updateProcessing(itemWoDTO.getCdLevel4() != null ? VConstant.StateWO.Opinion_rq4 :
+                            itemWoDTO.getCdLevel3() != null ? VConstant.StateWO.Opinion_rq3 :
+                            itemWoDTO.getCdLevel2() != null ? VConstant.StateWO.Opinion_rq2 :
+                            VConstant.StateWO.Opinion_rq1, content, type, String.valueOf(VConstant.getUser().getSysUserId()));
                     dialogPleaseComment.dismiss();
                 }
             }
@@ -458,7 +485,8 @@ public class InfoItemWoFragment extends Fragment {
 
 
     private void getListFtToAssign() {
-        woDTORequest.setGroupId(Integer.parseInt(itemWoDTO.getCdLevel3()));
+        if (itemWoDTO.getCdLevel4() == null ) return;
+        woDTORequest.setGroupId(Integer.parseInt(itemWoDTO.getCdLevel4()));
         ApiManager.getInstance().getListFtToAssign(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
             @Override
             public <T> void onResponse(T result) {
