@@ -207,7 +207,8 @@ public class InfoItemWoFragment extends Fragment {
                         tvHandover.setVisibility(View.GONE);
                     }
                     break;
-                case VConstant.StateWO.Ng:
+//                case VConstant.StateWO.Ng:
+                case VConstant.StateWO.CD_NG:
                 case VConstant.StateWO.Accept_ft:
                     lnBottom.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);
                     tvProcess.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);
