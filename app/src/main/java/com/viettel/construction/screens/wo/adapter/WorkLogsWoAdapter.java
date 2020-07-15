@@ -81,7 +81,8 @@ public class WorkLogsWoAdapter extends RecyclerView.Adapter<WorkLogsWoAdapter.Wo
         public void setData(WoWorkLogsBO item){
             if (item != null) {
                 int str = VConstant.getDTO().getEmail().lastIndexOf("@");
-                txtName.setText(VConstant.getDTO().getEmail().substring(0, str) + " - " + item.getLogTimeStr());
+//                txtName.setText(VConstant.getDTO().getEmail().substring(0, str) + " - " + item.getLogTimeStr());
+                txtName.setText(item.getUserCreated() + " - " + item.getLogTimeStr());
                 txtContent.setText(item.getContent());
             }
         }

@@ -195,6 +195,16 @@ public class InfoItemWoFragment extends Fragment {
                         tvAccept.setVisibility(View.GONE);
                         tvReject.setVisibility(View.GONE);
                         tvHandover.setVisibility(View.GONE);
+                    }else if (itemWoDTO.getOpinionResult() == null){
+                        lnBottom.setVisibility(View.GONE);
+                    }else if (VConstant.StateWO.Rejected.equals(itemWoDTO.getOpinionResult())){
+                        tvDone.setVisibility(View.GONE);
+                        tvFinish.setVisibility(View.GONE);
+                        tvReport.setVisibility(View.GONE);
+                        tvProcess.setVisibility(View.GONE);
+                        tvAccept.setVisibility(View.GONE);
+                        tvReject.setVisibility(View.GONE);
+                        tvHandover.setVisibility(View.GONE);
                     }
                     break;
                 case VConstant.StateWO.Ng:
@@ -320,6 +330,7 @@ public class InfoItemWoFragment extends Fragment {
         if (VConstant.StateWO.Processing.equals(state)){
             itemWoDTO.setStartTime(getDataToday());
         }
+        itemWoDTO.setLoggedInUser(VConstant.getDTO().getEmployeeCode());
         woDTORequest.setOpinionContent(content);
         switch (itemWoDTO.getState()){
             case VConstant.StateWO.Assign_cd:
@@ -360,6 +371,7 @@ public class InfoItemWoFragment extends Fragment {
     private void updateProcessing(String state, String content, String type, String userId) {
         itemWoDTO.setState(state);
         itemWoDTO.setAcceptTime(getDataToday());
+        itemWoDTO.setLoggedInUser(VConstant.getDTO().getEmployeeCode());
         woDTORequest.setOpinionContent(content);
         woDTORequest.setOpinionType(type);
         woDTORequest.setOpinionObject(userId);

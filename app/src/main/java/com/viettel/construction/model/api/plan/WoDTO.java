@@ -51,6 +51,11 @@ public class WoDTO implements Serializable {
     private String doneChecklistNumber;
     private int roleForWo;
     private String opinionResult;
+    private String acceptTimeStr;
+    private String endTimeStr;
+    private String startTimeStr;
+    private String woNameId;
+    private String loggedInUser;
 
 
     public long getWoId() {
@@ -436,5 +441,45 @@ public class WoDTO implements Serializable {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public String getAcceptTimeStr() {
+        return acceptTimeStr;
+    }
+
+    public void setAcceptTimeStr(String acceptTimeStr) {
+        this.acceptTimeStr = acceptTimeStr;
+    }
+
+    public String getEndTimeStr() {
+        return endTimeStr;
+    }
+
+    public void setEndTimeStr(String endTimeStr) {
+        this.endTimeStr = endTimeStr;
+    }
+
+    public String getStartTimeStr() {
+        return startTimeStr;
+    }
+
+    public void setStartTimeStr(String startTimeStr) {
+        this.startTimeStr = startTimeStr;
+    }
+
+    public String getWoNameId() {
+        return woNameId;
+    }
+
+    public void setWoNameId(String woNameId) {
+        this.woNameId = woNameId;
+    }
+
+    public String getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(String loggedInUser) {
+        this.loggedInUser = loggedInUser;
     }
 }

@@ -62,7 +62,7 @@ public class DetailItemWoActivity extends BaseCameraActivity {
                 initView();
             }
             txtHeader.setText(itemWoDTO.getWoName());
-
+            txtHeader.setSelected(true);
         }
 
 

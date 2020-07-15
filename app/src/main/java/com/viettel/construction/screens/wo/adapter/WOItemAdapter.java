@@ -78,6 +78,9 @@ public class WOItemAdapter
                 holder.tvStatus.setText(context.getString(R.string.processing));
                 holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
+            case VConstant.StateWO.Opinion_rq1:
+            case VConstant.StateWO.Opinion_rq2:
+            case VConstant.StateWO.Opinion_rq3:
             case VConstant.StateWO.Opinion_rq4:
                 holder.tvStatus.setText(context.getString(R.string.opinion_rq));
                 holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -97,10 +100,10 @@ public class WOItemAdapter
             default:
                 break;
         }
-        holder.lnStartTime.setVisibility(woDTO.getStartTime() == null ? View.GONE : View.VISIBLE);
-        holder.lnEndTime.setVisibility(woDTO.getEndTime() == null ? View.GONE : View.VISIBLE);
-        holder.tvStartTime.setText(woDTO.getStartTime());
-        holder.tvEndTime.setText(woDTO.getEndTime());
+        holder.lnStartTime.setVisibility(woDTO.getStartTimeStr() == null ? View.GONE : View.VISIBLE);
+        holder.lnEndTime.setVisibility(woDTO.getEndTimeStr() == null ? View.GONE : View.VISIBLE);
+        holder.tvStartTime.setText(woDTO.getStartTimeStr());
+        holder.tvEndTime.setText(woDTO.getEndTimeStr());
         holder.itemView.setOnClickListener((v) -> {
             try {
                 itemRecyclerviewClick.onItemRecyclerViewclick(getListData().get(position));
