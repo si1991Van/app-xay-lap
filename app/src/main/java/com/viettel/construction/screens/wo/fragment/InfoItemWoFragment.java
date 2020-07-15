@@ -160,6 +160,9 @@ public class InfoItemWoFragment extends Fragment {
             case VConstant.StateWO.Done:
                 tvStatus.setText(getString(R.string.done));
                 break;
+            case VConstant.StateWO.CD_NG:
+                tvStatus.setText(getString(R.string.cd_ng));
+                break;
         }
         tvTypeWo.setText(itemWoDTO.getWoTypeName());
 
@@ -207,7 +210,7 @@ public class InfoItemWoFragment extends Fragment {
                         tvHandover.setVisibility(View.GONE);
                     }
                     break;
-//                case VConstant.StateWO.Ng:
+                case VConstant.StateWO.Ng:
                 case VConstant.StateWO.CD_NG:
                 case VConstant.StateWO.Accept_ft:
                     lnBottom.setVisibility(itemWoDTO.isInPlan() ? View.VISIBLE : View.GONE);

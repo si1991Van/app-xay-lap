@@ -425,6 +425,7 @@
     <string name="ok">Kết thúc</string>
     <string name="done">Hoàn thành</string>
     <string name="ng">Chưa hoàn thành</string>
+    <string name="cd_ng">Điều phốt duyệt chưa OK</string>
     //plan
     <string name="delete_plan">Đã xóa kế hoạch thành công</string>
     <string name="delete_fail_plan">Xóa kế hoạch thất bại</string>
