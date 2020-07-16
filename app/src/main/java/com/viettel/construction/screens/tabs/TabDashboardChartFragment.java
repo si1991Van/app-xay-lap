@@ -119,6 +119,26 @@ public class TabDashboardChartFragment extends BaseChartFragment {
     @BindView(R.id.txtRejectFt)
     TextView txtRejectFt;
 
+    @BindView(R.id.chartWO)
+    PieChart chartWO;
+    @BindView(R.id.txtWoAcceptFt)
+    TextView txtWoAcceptFt;
+    @BindView(R.id.txtWoNg)
+    TextView txtWoNg;
+    @BindView(R.id.txtWoProcessing)
+    TextView txtWoProcessing;
+    @BindView(R.id.txtWoDone)
+    TextView txtWoDone;
+
+    @BindView(R.id.chartPlaning)
+    PieChart chartPlaning;
+    @BindView(R.id.txt_plan_done)
+    TextView txt_plan_done;
+    @BindView(R.id.txt_plan_ng)
+    TextView txt_plan_ng;
+
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -233,8 +253,8 @@ public class TabDashboardChartFragment extends BaseChartFragment {
 
     @OnClick(R.id.lnCongViec)
     public void clickChartCongViec() {
-//        commitChange(new DashboardCV1ChartFragment(), true);
-        commitChange(new PlanningItemFragment(), true);
+        commitChange(new DashboardCV1ChartFragment(), true);
+//        commitChange(new PlanningItemFragment(), true);
     }
 
 //    @OnClick(R.id.lnVTTB)
@@ -249,6 +269,7 @@ public class TabDashboardChartFragment extends BaseChartFragment {
         commitChange(new AcceptanceLevel1Fragment(), true);
     }
 
+
     @OnClick(R.id.lnXuatKho)
     public void clickChartXuatKho() {
         commitChange(new TabPageExWareHouseFragment(), true);
@@ -256,10 +277,17 @@ public class TabDashboardChartFragment extends BaseChartFragment {
 
     @OnClick(R.id.lnHangMuc)
     public void clickHangMuc() {
-
-//        commitChange(new TabPageConstructionFragment(), true);
+        commitChange(new TabPageConstructionFragment(), true);
+    }
+    @OnClick(R.id.lnWO)
+    public void clickWO() {
         // di den man hinh danh sach WO
         commitChange(new WOItemFragment(), true);
+    }
+
+    @OnClick(R.id.lnPlaning)
+    public void clickPlaning() {
+        commitChange(new PlanningItemFragment(), true);
     }
 
     private void initDataForChart() {
@@ -517,25 +545,21 @@ public class TabDashboardChartFragment extends BaseChartFragment {
                             list.add(response.getMapDataWoForChart().getOK());
                             list.add(response.getMapDataWoForChart().getNG());
                             txtWoAssignFT.setText(getActivity().getString(R.string.on_wo_assign_ft, response.getMapDataWoForChart().getASSIGN_FT()));
-                            txtUnImplemented.setText(getActivity().getString(R.string.on_wo_accept_ft, response.getMapDataWoForChart().getACCEPT_FT()));
+                            txtWoAcceptFt.setText(getActivity().getString(R.string.on_wo_accept_ft, response.getMapDataWoForChart().getACCEPT_FT()));
                             txtRejectFt.setText(getActivity().getString(R.string.on_wo_reject_ft, response.getMapDataWoForChart().getREJECT_FT()));
-                            txtPending.setText(getActivity().getString(R.string.on_wo_processing, response.getMapDataWoForChart().getPROCESSING()));
-                            txtCompleted.setText(getActivity().getString(R.string.on_wo_ok, response.getMapDataWoForChart().getOK()));
-                            txtInProgress.setText(getActivity().getString(R.string.on_wo_ng, response.getMapDataWoForChart().getNG()));
-
-
-
-
-                            initChart4(list, chartHangMuc, 0f, 0f, mPartiesWO, 6, false);
+                            txtWoProcessing.setText(getActivity().getString(R.string.on_wo_processing, response.getMapDataWoForChart().getPROCESSING()));
+                            txtWoDone.setText(getActivity().getString(R.string.on_wo_ok, response.getMapDataWoForChart().getOK()));
+                            txtWoNg.setText(getActivity().getString(R.string.on_wo_ng, response.getMapDataWoForChart().getNG()));
+                            initChart4(list, chartWO, 0f, 0f, mPartiesWO, 6, false);
                         }
                         if (response.getMapDataWoPlanForChart() != null){
                             listPlan.add(response.getMapDataWoPlanForChart().getUNDONE());
                             listPlan.add(response.getMapDataWoPlanForChart().getDONE());
 
-                            txtOnSchedule.setText(getActivity().getString(R.string.on_plan_undone, response.getMapDataWoPlanForChart().getUNDONE()));
-                            txtBehindSchedule.setText(getActivity().getString(R.string.on_plan_done, response.getMapDataWoPlanForChart().getDONE()));
+                            txt_plan_ng.setText(getActivity().getString(R.string.on_plan_undone, response.getMapDataWoPlanForChart().getUNDONE()));
+                            txt_plan_done.setText(getActivity().getString(R.string.on_plan_done, response.getMapDataWoPlanForChart().getDONE()));
 
-                            initChartBGMB(listPlan, chartCongViec, 0, 0, mParties5, 2, false);
+                            initChartBGMB(listPlan, chartPlaning, 0, 0, mParties5, 2, false);
 
                         }
                     }
