@@ -331,7 +331,7 @@ public class InfoItemWoFragment extends Fragment {
         if (VConstant.StateWO.Accept_ft.equals(state)) {
             itemWoDTO.setAcceptTime(getDataToday());
         }
-        if (VConstant.StateWO.Processing.equals(state)){
+        if (VConstant.StateWO.Processing.equals(state) || VConstant.StateWO.Done.equals(state)){
             itemWoDTO.setStartTime(getDataToday());
         }
         itemWoDTO.setLoggedInUser(VConstant.getDTO().getEmployeeCode());
