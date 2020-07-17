@@ -80,6 +80,10 @@ public class InfoItemWoFragment extends Fragment {
 
     @BindView(R.id.tv_finishDate)
     TextView tvFinishDate;
+    @BindView(R.id.tv_startDate)
+    TextView tv_startDate;
+    @BindView(R.id.tv_endDate)
+    TextView tv_endDate;
     @BindView(R.id.tv_qoutaTime)
     TextView tvQoutaTime;
     @BindView(R.id.tv_totalMonthPlanName)
@@ -168,9 +172,13 @@ public class InfoItemWoFragment extends Fragment {
 
         tvTypeConstructionWo.setText(itemWoDTO.getConstructionName());
         tvCatWorkWo.setText(itemWoDTO.getCatWorkItemTypeName());
-        tvCreatedDate.setText(itemWoDTO.getCreatedDate() != null ? itemWoDTO.getCreatedDate() :
+        tvCreatedDate.setText(itemWoDTO.getAcceptTimeStr() != null ? itemWoDTO.getAcceptTimeStr() :
                 getString(R.string.updating_date));
         tvFinishDate.setText(itemWoDTO.getFinishDate() != null ? itemWoDTO.getFinishDate() :
+                getString(R.string.updating_date));
+        tv_endDate.setText(itemWoDTO.getEndTimeStr() != null ? itemWoDTO.getEndTimeStr() :
+                getString(R.string.updating_date));
+        tv_startDate.setText(itemWoDTO.getStartTimeStr() != null ? itemWoDTO.getStartTimeStr() :
                 getString(R.string.updating_date));
         tvQoutaTime.setText(String.valueOf(itemWoDTO.getQoutaTime()));
         tvTotalMonthPlanName.setText(itemWoDTO.getTotalMonthPlanName());
