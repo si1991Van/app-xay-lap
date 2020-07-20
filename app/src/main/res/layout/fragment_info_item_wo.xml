@@ -189,8 +189,6 @@
                     android:layout_margin="@dimen/dimen_5"/>
 
             </LinearLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -204,6 +202,25 @@
                     android:text="Ngày tiếp nhận" />
                 <TextView
                     android:id="@+id/tv_createdDate"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Ngày thực hiện" />
+                <TextView
+                    android:id="@+id/tv_startDate"
                     style="@style/BlackText_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -260,13 +277,14 @@
                     android:textStyle="bold"
                     android:text="Hạn hoàn thành" />
                 <TextView
-                    android:id="@+id/tv_finishDate"
+                    android:id="@+id/tv_endDate"
                     style="@style/BlackText_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_5"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -286,6 +304,7 @@
                     android:layout_margin="@dimen/dimen_5"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
