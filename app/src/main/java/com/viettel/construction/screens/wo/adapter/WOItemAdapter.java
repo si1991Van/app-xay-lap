@@ -104,10 +104,10 @@ public class WOItemAdapter
             default:
                 break;
         }
-        holder.lnStartTime.setVisibility(woDTO.getStartTimeStr() == null ? View.GONE : View.VISIBLE);
-        holder.lnEndTime.setVisibility(woDTO.getEndTimeStr() == null ? View.GONE : View.VISIBLE);
-        holder.tvStartTime.setText(woDTO.getStartTimeStr());
-        holder.tvEndTime.setText(woDTO.getEndTimeStr());
+        holder.lnEndTime.setVisibility(woDTO.getFinishDate() == null ? View.GONE : View.VISIBLE);
+        holder.lnStartTime.setVisibility(View.GONE);
+//        holder.tvStartTime.setText(woDTO.getFinishDate());
+        holder.tvEndTime.setText(woDTO.getFinishDate());
         holder.itemView.setOnClickListener((v) -> {
             try {
                 itemRecyclerviewClick.onItemRecyclerViewclick(getListData().get(position));
