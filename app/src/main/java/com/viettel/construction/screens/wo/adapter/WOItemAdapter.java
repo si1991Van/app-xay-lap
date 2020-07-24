@@ -101,6 +101,10 @@ public class WOItemAdapter
                 holder.tvStatus.setText(context.getString(R.string.cd_ng));
                 holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
+            case VConstant.StateWO.CD_OK:
+                holder.tvStatus.setText(context.getString(R.string.cd_ok));
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                break;
             default:
                 break;
         }

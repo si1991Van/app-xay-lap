@@ -37,6 +37,7 @@ public class VConstant {
         public static final String Done = "DONE";
         public static final String Ng = "NG";
         public static final String CD_NG = "CD_NG";
+        public static final String CD_OK = "CD_OK";
         public static final String Ok = "OK";
         public static final String Opinion_rq1 = "OPINION_RQ_1";
         public static final String Opinion_rq2 = "OPINION_RQ_2";

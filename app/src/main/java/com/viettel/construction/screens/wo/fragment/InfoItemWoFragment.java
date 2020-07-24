@@ -167,6 +167,9 @@ public class InfoItemWoFragment extends Fragment {
             case VConstant.StateWO.CD_NG:
                 tvStatus.setText(getString(R.string.cd_ng));
                 break;
+            case VConstant.StateWO.CD_OK:
+                tvStatus.setText(getString(R.string.cd_ok));
+                break;
         }
         tvTypeWo.setText(itemWoDTO.getWoTypeName());
 
@@ -339,8 +342,11 @@ public class InfoItemWoFragment extends Fragment {
         if (VConstant.StateWO.Accept_ft.equals(state)) {
             itemWoDTO.setAcceptTime(getDataToday());
         }
-        if (VConstant.StateWO.Processing.equals(state) || VConstant.StateWO.Done.equals(state)){
+        if (VConstant.StateWO.Processing.equals(state)){
             itemWoDTO.setStartTime(getDataToday());
+        }
+        if (VConstant.StateWO.Done.equals(state)){
+            itemWoDTO.setEndTime(getDataToday());
         }
         itemWoDTO.setLoggedInUser(VConstant.getDTO().getEmployeeCode());
         woDTORequest.setOpinionContent(content);

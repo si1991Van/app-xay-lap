@@ -80,35 +80,71 @@
     <LinearLayout
         android:id="@+id/lnMass"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_16"
         android:layout_marginRight="@dimen/dimen_16"
         android:layout_marginBottom="@dimen/dimen_16"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:visibility="visible"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Khối lượng (m): "
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-        <EditText
-            android:id="@+id/ed_total"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_44"
-            android:layout_centerInParent="true"
-            android:background="@drawable/searchbox_border"
-            android:inputType="numberDecimal"
-            android:layout_marginLeft="@dimen/dimen_8"
-            android:text=""
-            android:paddingLeft="@dimen/dimen_10"
-            android:paddingRight="@dimen/dimen_10"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đã ghi nhận (m): "
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_44"
+                android:layout_centerInParent="true"
+                android:background="@drawable/searchbox_border"
+                android:inputType="numberDecimal"
+                android:layout_marginLeft="@dimen/dimen_8"
+                android:text=""
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_10"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Khối lượng (m): "
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/ed_total"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_44"
+                android:layout_centerInParent="true"
+                android:background="@drawable/searchbox_border"
+                android:inputType="numberDecimal"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:text=""
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_10"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

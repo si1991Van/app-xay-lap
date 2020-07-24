@@ -66,6 +66,8 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     LinearLayout lnStatus;
     @BindView(R.id.ed_total)
     EditText edTotal;
+    @BindView(R.id.txt_total)
+    TextView txtTotal;
 
     private String filePath = "";
     private List<ImgChecklistDTO> lstImg = new ArrayList<>();
@@ -120,7 +122,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
             recyclerView.setVisibility("1".equals(dto.getQuantityByDate()) ? View.GONE : View.VISIBLE);
             edTotal.setFocusable(state.equals(VConstant.StateWO.Processing) ? true : false);
             edTotal.setEnabled(state.equals(VConstant.StateWO.Processing) ? true : false);
-            edTotal.setText(String.valueOf(dto.getQuantityLength()));
+            txtTotal.setText(String.valueOf(dto.getQuantityLength()));
         }
     }
 
@@ -191,7 +193,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         woDTORequest.setSysUserRequest(VConstant.getUser());
         List<WoMappingChecklistDTO> woMappingChecklistDTOS = new ArrayList<>();
         if (!TextUtils.isEmpty(edTotal.getText().toString()) && Integer.parseInt(edTotal.getText().toString()) > 0) {
-            dto.setQuantityLength(Integer.parseInt(edTotal.getText().toString()));
+            dto.setAddedQuantityLength(Integer.parseInt(edTotal.getText().toString()));
             dto.setState("DONE");
         }
         woMappingChecklistDTOS.add(dto);
