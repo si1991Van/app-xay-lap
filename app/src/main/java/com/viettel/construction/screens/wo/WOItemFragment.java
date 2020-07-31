@@ -77,7 +77,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
             scheduleType = getArguments().getString("type");
             item = (WoPlanDTO) getArguments().getSerializable("PLAN_WO");
             lnFile.setVisibility(scheduleType.equals("1") ? View.GONE : View.VISIBLE);
-            imgFilter.setVisibility(scheduleType.equals("1") ? View.INVISIBLE : View.VISIBLE);
+//            imgFilter.setVisibility(scheduleType.equals("1") ? View.INVISIBLE : View.VISIBLE);
 
         } else {
             getForComboBox(VConstant.ParTypeWo.AP_CONSTRUCTION_TYPE);
@@ -92,6 +92,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
     public void onResume() {
         try {
             super.onResume();
+
             if (scheduleType.equals("1")) {
                 getListWoByPlanId();
             } else {
@@ -280,6 +281,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         if (resultInfo.getStatus().equals(VConstant.RESULT_STATUS_OK)) {
             if (result.getLstWos() != null) {
                 data = result.getLstWos();
+                title = "Tất cả (" + listData.size() + ")";
             }
         }
         return data;

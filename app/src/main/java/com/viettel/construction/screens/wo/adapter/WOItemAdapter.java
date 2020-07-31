@@ -36,13 +36,19 @@ public class WOItemAdapter
         holder.tvCodeWo.setText(woDTO.getWoCode());
         holder.tvName.setText(woDTO.getWoName());
         holder.tvProgress.setText(woDTO.getDoneCheckListNumber());
-        holder.tvCD1.setText(woDTO.getCdLevel1Name());
-        holder.tvCD2.setText(woDTO.getCdLevel2Name());
-        holder.tvCD3.setText(woDTO.getCdLevel3Name());
+        holder.tvCD1.setText(woDTO.getConstructionCode());
+        if (woDTO.getProjectCode() != null && woDTO.getContractCode() != null) {
+            holder.tvCD2.setText(woDTO.getProjectCode() + "/" + woDTO.getContractCode());
+        }else if (woDTO.getProjectCode() != null){
+            holder.tvCD2.setText(woDTO.getProjectCode());
+        }else if(woDTO.getContractCode() != null){
+            holder.tvCD2.setText(woDTO.getContractCode());
+        }
+        holder.tvCD3.setText(woDTO.getConstructionName());
         holder.tvCD4.setText(woDTO.getCdLevel4Name());
-        holder.lnCD1.setVisibility(woDTO.getCdLevel1Name() == null ? View.GONE : View.VISIBLE);
-        holder.lnCd2.setVisibility(woDTO.getCdLevel2Name() == null ? View.GONE : View.VISIBLE);
-        holder.lnCd3.setVisibility(woDTO.getCdLevel3Name() == null ? View.GONE : View.VISIBLE);
+        holder.lnCD1.setVisibility(woDTO.getConstructionCode() == null ? View.GONE : View.VISIBLE);
+        holder.lnCd2.setVisibility(woDTO.getProjectCode() == null && woDTO.getContractCode() == null ? View.GONE : View.VISIBLE);
+        holder.lnCd3.setVisibility(woDTO.getConstructionName() == null ? View.GONE : View.VISIBLE);
         holder.lnCd4.setVisibility(woDTO.getCdLevel4Name() == null ? View.GONE : View.VISIBLE);
         holder.lnProgress.setVisibility(woDTO.getDoneCheckListNumber() == null ? View.GONE : View.VISIBLE);
 
@@ -82,7 +88,13 @@ public class WOItemAdapter
             case VConstant.StateWO.Opinion_rq2:
             case VConstant.StateWO.Opinion_rq3:
             case VConstant.StateWO.Opinion_rq4:
-                holder.tvStatus.setText(context.getString(R.string.opinion_rq));
+                if (VConstant.StateWO.Accepted.equals(woDTO.getOpinionResult())){
+                    holder.tvStatus.setText(context.getString(R.string.opinion_accepted));
+                }else if (VConstant.StateWO.Rejected.equals(woDTO.getOpinionResult())){
+                    holder.tvStatus.setText(context.getString(R.string.opinion_reject));
+                }else {
+                    holder.tvStatus.setText(context.getString(R.string.opinion_rq));
+                }
                 holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
             case VConstant.StateWO.Ok:

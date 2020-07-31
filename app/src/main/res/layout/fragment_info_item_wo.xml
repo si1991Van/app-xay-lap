@@ -179,6 +179,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:text="Mã công trình" />
+
+                <TextView
+                    android:id="@+id/tv_code_construction_wo"
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BlackText_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="Hạng mục" />
 
                 <TextView

@@ -450,5 +450,7 @@
     <string name="on_wo_processing">Đang TH (%d)</string>
     <string name="on_wo_ok">Hoàn thành (%d)</string>
     <string name="on_wo_ng">Chưa HT (%d)</string>
+    <string name="opinion_accepted">CD đã duyệt ý kiến</string>
+    <string name="opinion_reject">CD từ chối ý kiến</string>
 
 </resources>

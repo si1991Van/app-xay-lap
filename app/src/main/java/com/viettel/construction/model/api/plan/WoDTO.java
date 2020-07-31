@@ -12,6 +12,7 @@ public class WoDTO implements Serializable {
     private String state;
     private long constructionId;
     private String constructionName;
+    private String constructionCode;
     private long catWorkItemTypeId;
     private String catWorkItemTypeName;
     private String stationCode;
@@ -56,6 +57,8 @@ public class WoDTO implements Serializable {
     private String startTimeStr;
     private String woNameId;
     private String loggedInUser;
+    private String projectCode;
+    private String contractCode;
 
 
     public long getWoId() {
@@ -481,5 +484,29 @@ public class WoDTO implements Serializable {
 
     public void setLoggedInUser(String loggedInUser) {
         this.loggedInUser = loggedInUser;
+    }
+
+    public String getConstructionCode() {
+        return constructionCode;
+    }
+
+    public void setConstructionCode(String constructionCode) {
+        this.constructionCode = constructionCode;
+    }
+
+    public String getProjectCode() {
+        return projectCode;
+    }
+
+    public void setProjectCode(String projectCode) {
+        this.projectCode = projectCode;
+    }
+
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
     }
 }

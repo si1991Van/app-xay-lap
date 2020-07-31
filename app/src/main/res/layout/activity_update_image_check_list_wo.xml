@@ -84,7 +84,7 @@
         android:layout_marginLeft="@dimen/dimen_16"
         android:layout_marginRight="@dimen/dimen_16"
         android:layout_marginBottom="@dimen/dimen_16"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout

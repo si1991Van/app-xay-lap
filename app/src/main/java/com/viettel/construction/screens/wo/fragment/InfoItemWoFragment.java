@@ -73,6 +73,8 @@ public class InfoItemWoFragment extends Fragment {
     TextView tvTypeWo;
     @BindView(R.id.tv_type_construction_wo)
     TextView tvTypeConstructionWo;
+    @BindView(R.id.tv_code_construction_wo)
+    TextView tvCodeConstructionWo;
     @BindView(R.id.tv_catWork_wo)
     TextView tvCatWorkWo;
     @BindView(R.id.tv_createdDate)
@@ -153,7 +155,13 @@ public class InfoItemWoFragment extends Fragment {
             case VConstant.StateWO.Opinion_rq2:
             case VConstant.StateWO.Opinion_rq3:
             case VConstant.StateWO.Opinion_rq4:
-                tvStatus.setText(getString(R.string.opinion_rq));
+                if (VConstant.StateWO.Accepted.equals(itemWoDTO.getOpinionResult())){
+                    tvStatus.setText(getString(R.string.opinion_accepted));
+                }else if (VConstant.StateWO.Rejected.equals(itemWoDTO.getOpinionResult())){
+                    tvStatus.setText(getString(R.string.opinion_reject));
+                }else {
+                    tvStatus.setText(getString(R.string.opinion_rq));
+                }
                 break;
             case VConstant.StateWO.Ok:
                 tvStatus.setText(getString(R.string.ok));
@@ -174,6 +182,8 @@ public class InfoItemWoFragment extends Fragment {
         tvTypeWo.setText(itemWoDTO.getWoTypeName());
 
         tvTypeConstructionWo.setText(itemWoDTO.getConstructionName());
+        tvCodeConstructionWo.setText(itemWoDTO.getConstructionCode());
+
         tvCatWorkWo.setText(itemWoDTO.getCatWorkItemTypeName());
         tvCreatedDate.setText(itemWoDTO.getAcceptTimeStr() != null ? itemWoDTO.getAcceptTimeStr() :
                 getString(R.string.updating_date));
@@ -390,12 +400,11 @@ public class InfoItemWoFragment extends Fragment {
         itemWoDTO.setState(state);
         itemWoDTO.setAcceptTime(getDataToday());
         itemWoDTO.setLoggedInUser(VConstant.getDTO().getEmployeeCode());
+        itemWoDTO.setOpinionResult("");
         woDTORequest.setOpinionContent(content);
         woDTORequest.setOpinionType(type);
         woDTORequest.setOpinionObject(userId);
         woDTORequest.setWoDTO(itemWoDTO);
-
-
         ApiManager.getInstance().updateOpinion(woDTORequest, WoDTOResponse.class, new IOnRequestListener() {
             @Override
             public <T> void onResponse(T result) {
