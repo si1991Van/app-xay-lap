@@ -37,6 +37,7 @@ public class TabPageBgmbConstruction_ItemFragment extends FragmentListBase<Const
     @Override
     public void initData() {
         super.initData();
+        loadData();
         if (getActivity() != null)
             getActivity().registerReceiver(receiverReLoading,
                     new IntentFilter(ParramConstant.BgmbReload));

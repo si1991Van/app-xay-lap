@@ -30,4 +30,5 @@ public class ImgChecklistDTO implements Serializable {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
 }

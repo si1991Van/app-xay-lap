@@ -37,6 +37,7 @@ public class DashboardListMyTaskFragment
     @Override
     public void initData() {
         super.initData();
+        loadData();
         if (getArguments() != null) {
             mKey = getArguments().getInt(VConstant.BUNDLE_KEY_FILTER);
             Log.e("Key1", mKey + "");

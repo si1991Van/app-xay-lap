@@ -42,6 +42,7 @@ public class ConstructionLevel2Fragment extends
     @Override
     public void initData() {
         super.initData();
+        loadData();
         if (getArguments() != null) {
             constructionScheduleItemDTO = (ConstructionScheduleItemDTO) getArguments().getSerializable("CONSTRUCTION_MANAGEMENT_OBJ_2");
             scheduleType = getArguments().getString("type");

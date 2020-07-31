@@ -37,6 +37,12 @@ public class TabPageConstructionItemFragment extends
     }
 
     @Override
+    public void initData() {
+        super.initData();
+        loadData();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         // load lại nếu như có công việc đang thực hiện chuyển sang tạm dừng

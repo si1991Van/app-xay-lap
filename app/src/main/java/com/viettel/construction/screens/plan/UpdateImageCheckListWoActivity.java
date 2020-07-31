@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.viettel.construction.R;
 import com.viettel.construction.appbase.BaseCameraActivity;
+import com.viettel.construction.common.ParramConstant;
 import com.viettel.construction.common.VConstant;
 import com.viettel.construction.model.api.ConstructionImageInfo;
 import com.viettel.construction.model.api.plan.WoDTO;
@@ -28,6 +29,8 @@ import com.viettel.construction.model.api.plan.WoDTORequest;
 import com.viettel.construction.model.api.plan.WoDTOResponse;
 import com.viettel.construction.model.api.wo.ImgChecklistDTO;
 import com.viettel.construction.model.api.wo.WoMappingChecklistDTO;
+import com.viettel.construction.model.db.ImageCapture;
+import com.viettel.construction.screens.commons.SelectImagesActivity;
 import com.viettel.construction.screens.wo.adapter.ImageCheckListWoAdapter;
 import com.viettel.construction.server.api.ApiManager;
 import com.viettel.construction.server.service.IOnRequestListener;
@@ -42,6 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 
 public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
 
@@ -58,6 +62,8 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
 
     @BindView(R.id.btn_camera)
     ImageView imgCamera;
+    @BindView(R.id.btnSelectImage)
+    ImageView btnSelectImage;
     @BindView(R.id.btnUpdateCheckList)
     Button btnUpdateCheckList;
     @BindView(R.id.lnMass)
@@ -94,6 +100,7 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
                 lstImg = dto.getLstImgs();
             }
             imgCamera.setVisibility(state.equals(VConstant.StateWO.Processing) && !"1".equals(dto.getQuantityByDate()) ? View.VISIBLE : View.INVISIBLE);
+            btnSelectImage.setVisibility(state.equals(VConstant.StateWO.Processing) && !"1".equals(dto.getQuantityByDate()) ? View.VISIBLE : View.INVISIBLE);
             btnUpdateCheckList.setVisibility(state.equals(VConstant.StateWO.Processing) ? View.VISIBLE : View.GONE);
             initView();
             initAdapterImage();
@@ -150,6 +157,11 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
         });
     }
 
+    @OnClick(R.id.btnSelectImage)
+    public void selectedImage() {
+        Intent selectImage = new Intent(this, SelectImagesActivity.class);
+        startActivityForResult(selectImage, ParramConstant.SelectedImage_RequestCode);
+    }
 
     @OnClick(R.id.btnUpdateCheckList)
     public void onClickSave() {
@@ -169,23 +181,49 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VConstant.REQUEST_CODE_CAMERA) {
-            if (resultCode == Activity.RESULT_OK) {
-                filePath = mPhotoFile.getPath();
-                Bitmap bitmap = ImageUtils.decodeBitmapFromFile(filePath, 200, 200);
-                Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, latitude, longitude);
-                ImgChecklistDTO imgChecklistDTO = new ImgChecklistDTO();
-                imgChecklistDTO.setImgBase64(StringUtil.getStringImage(newBitmap));
-                imgChecklistDTO.setLatitude(latitude);
-                imgChecklistDTO.setLongtitude(longitude);
-                lstImg.add(imgChecklistDTO);
-                dto.setLstImgs(lstImg);
-                mAdapter.setData(lstImg);
+        switch (requestCode){
+            case VConstant.REQUEST_CODE_CAMERA:
+                if (resultCode == Activity.RESULT_OK) {
+                    filePath = mPhotoFile.getPath();
+                    Bitmap bitmap = ImageUtils.decodeBitmapFromFile(filePath, 200, 200);
+                    Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, latitude, longitude);
+                    ImgChecklistDTO imgChecklistDTO = new ImgChecklistDTO();
+                    imgChecklistDTO.setImgBase64(StringUtil.getStringImage(newBitmap));
+                    imgChecklistDTO.setLatitude(latitude);
+                    imgChecklistDTO.setLongtitude(longitude);
+                    lstImg.add(imgChecklistDTO);
+                    dto.setLstImgs(lstImg);
+                    mAdapter.setData(lstImg);
 
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                /** Picture wasn't taken*/
-            }
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    /** Picture wasn't taken*/
+                }
+                break;
+                case ParramConstant.SelectedImage_RequestCode:
+                    if (data != null) {
+                        List<ImageCapture> lsData =
+                                (List<ImageCapture>) data.getSerializableExtra(ParramConstant.SelectedImage_Key);
+                        if (lsData != null && lsData.size() > 0) {
+                            for (ImageCapture img : lsData) {
+                                    //Nếu đã chọn rồi thì thôi
+                                    Bitmap bitmap = StringUtil.setImage(img.getImageData());
+                                    Bitmap newBitmap = ImageUtils.drawTextOnImage(bitmap, img.getLattitude(), img.getLongtitude());
+                                    ImgChecklistDTO imgChecklistDTO = new ImgChecklistDTO();
+                                    imgChecklistDTO.setImgBase64(StringUtil.getStringImage(newBitmap));
+                                    imgChecklistDTO.setLatitude(img.getLattitude());
+                                    imgChecklistDTO.setLongtitude(img.getLongtitude());
+                                    lstImg.add(imgChecklistDTO);
+                                    dto.setLstImgs(lstImg);
+                                    mAdapter.setData(lstImg);
+
+                            }
+                            mAdapter.notifyDataSetChanged();
+                            filePath = "have image";// trick to pass save function
+                        }
+                    }
+                    break;
         }
+
     }
 
     private void updateCheckList() {

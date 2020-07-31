@@ -92,7 +92,7 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
     public void onResume() {
         try {
             super.onResume();
-
+            type = 0;
             if (scheduleType.equals("1")) {
                 getListWoByPlanId();
             } else {
@@ -281,7 +281,6 @@ public class WOItemFragment extends FragmentListBase<WoDTO,
         if (resultInfo.getStatus().equals(VConstant.RESULT_STATUS_OK)) {
             if (result.getLstWos() != null) {
                 data = result.getLstWos();
-                title = "Tất cả (" + listData.size() + ")";
             }
         }
         return data;

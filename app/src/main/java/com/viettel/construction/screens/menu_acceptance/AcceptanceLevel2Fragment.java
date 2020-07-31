@@ -30,6 +30,7 @@ public class AcceptanceLevel2Fragment
     @Override
     public void initData() {
         super.initData();
+        loadData();
         if (getArguments() != null) {
             dto = (ConstructionAcceptanceCertDetailDTO) getArguments().getSerializable("ConstructionAcceptanceCertDetailDTO");
         }

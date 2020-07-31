@@ -133,6 +133,7 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
     }
 
     private void updateAndInsertPlan(){
+
         if (item == null){
             WoPlanDTO woPlanDTO = new WoPlanDTO();
             setData(woPlanDTO);
@@ -277,7 +278,11 @@ public class CreatePlanActivity extends BaseCameraActivity implements DialogShow
         if (TextUtils.isEmpty(edNameWo.getText().toString())){
             Toast.makeText(CreatePlanActivity.this, "Tên kế hoạch không được để trống!", Toast.LENGTH_LONG).show();
         }else {
-            updateAndInsertPlan();
+            if (listWo == null || listWo.size() == 0){
+                Toast.makeText(CreatePlanActivity.this, "Bạn phải chọn ít nhất một wo!", Toast.LENGTH_LONG).show();
+            }else {
+                updateAndInsertPlan();
+            }
         }
     }
 

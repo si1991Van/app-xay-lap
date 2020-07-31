@@ -44,6 +44,7 @@ public class ConstructionLevel1Fragment
     @Override
     public void initData() {
         super.initData();
+        loadData();
         if (getArguments() != null) {
             constructionScheduleDTO = (ConstructionScheduleDTO) getArguments().getSerializable("CONSTRUCTION_MANAGEMENT_OBJ");
             scheduleType = getArguments().getString("type");
