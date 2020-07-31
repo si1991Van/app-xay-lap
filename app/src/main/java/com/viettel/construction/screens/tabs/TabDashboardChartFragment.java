@@ -234,6 +234,29 @@ public class TabDashboardChartFragment extends BaseChartFragment {
             }
         });
 
+        chartWO.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                clickWO();
+            }
+
+            @Override
+            public void onNothingSelected() {
+                clickWO();
+            }
+        });
+        chartPlaning.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                clickPlaning();
+            }
+
+            @Override
+            public void onNothingSelected() {
+                clickPlaning();
+            }
+        });
+
         //
         initDataForChart();
     }
