@@ -166,7 +166,12 @@ public class UpdateImageCheckListWoActivity extends BaseCameraActivity {
     @OnClick(R.id.btnUpdateCheckList)
     public void onClickSave() {
         if (dto.getQuantityByDate() == null){
-            updateCheckList();
+            if (lstImg == null || lstImg.size() == 0){
+                Toast.makeText(UpdateImageCheckListWoActivity.this, "Bạn phải chup it nhất một hình ảnh!",
+                        Toast.LENGTH_LONG).show();
+            }else {
+                updateCheckList();
+            }
         }else if ("1".equals(dto.getQuantityByDate())){
             if (Integer.parseInt(edTotal.getText().toString()) > woDTO.getRemainLength()){
                 Toast.makeText(UpdateImageCheckListWoActivity.this, "Khối lượng không được lớn hơn tổng khối lượng hiện tại!",
